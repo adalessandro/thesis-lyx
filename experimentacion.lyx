@@ -1,0 +1,5122 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{a4wide}
+\usepackage[graf, intHoriz, sinLU, showDirectores, showCoDirectores]{caratula}
+\usepackage{hyperref}
+
+\let\oldhat\hat
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\hat}[1]{\oldhat{\mathbf{#1}}}
+
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics pdftex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle plain
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Experimentación y resultados
+\end_layout
+
+\begin_layout Standard
+A partir de la solución propuesta para la resolución del problema planteado,
+ se diseñaron diferentes experimentos que permiten evaluar la precisión,
+ robustez y eficiencia de todos los métodos involucrados en la detección
+ y cierre de ciclos.
+ Los resultados se presentan de forma constructiva, representando el rumbo
+ que se tomo durante desarrollo de este trabajo.
+\end_layout
+
+\begin_layout Standard
+Los experimentos se llevan a cabo sobre el entorno de desarrollo ROS (
+\emph on
+Robot Operating System
+\emph default
+), el cual provee las herramientas necesarias para comprobar el desempeño
+ del sistema en distintos tipos de escenarios.
+ Se utilizan colecciones de datos recolectados durante trayectos realizado
+ por diferentes robots o vehículos.
+ A estas colecciones de datos de dominio público se las llama
+\emph on
+ datasets
+\emph default
+.
+ Los datos recolectados corresponden a las mediciones efectuadas por los
+ diferentes sensores montados en el robot móvil o vehículo.
+ ROS posibilita la confección y posterior reproducción de estos 
+\emph on
+datasets
+\emph default
+, permitiendo evaluar el desempeño del sistema en diferentes condiciones.
+\end_layout
+
+\begin_layout Standard
+En todos los casos, el hardware utilizado para el procesamiento de los experimen
+tos corresponde a una computadora estándar de escritorio Intel(R) Core(TM)
+ i7-860 de 2.80GHz de frecuencia y 16GB de memoria.
+\end_layout
+
+\begin_layout Section
+Elección del descriptor y entrenamiento del vocabulario visual
+\end_layout
+
+\begin_layout Standard
+En todos los experimentos se utiliza el detector de esquinas Shi-Tomasi
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SHITOMASI"
+
+\end_inset
+
+ y el descriptor binario BRIEF 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BRIEF"
+
+\end_inset
+
+ para la detección y extracción de características visuales de las imágenes.
+ Este descriptor es rápido de calcular y comparar, lo que permite al sistema
+ operar en tiempo real extrayendo cientos de características visuales en
+ cada cuadro.
+ BRIEF no es invariante a rotación, sin embargo esto no representa un problema
+ ya que se trabaja con 
+\emph on
+datasets
+\emph default
+ obtenidos por robots terrestres, por lo que la cámara realiza una trayectoria
+ en un plano y no presenta rotaciones en el eje de balanceo (
+\emph on
+roll
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
+El vocabulario visual (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:visual_vocabulary"
+
+\end_inset
+
+) fue entrenado en 6 niveles con 10 
+\emph on
+clusters
+\emph default
+ por nivel, utilizando más de 10 mil imágenes provenientes de dos diferentes
+ 
+\emph on
+datasets
+\emph default
+.
+ El MIT Stata Center Dataset 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fallon2013stata"
+
+\end_inset
+
+ que consta de un robot desplazándose por las instalaciones académicas del
+ 
+\emph on
+Massachusetts Institute of Technology
+\emph default
+ (MIT) y The Málaga Urban Dataset 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "blanco2014malaga"
+
+\end_inset
+
+ que provee imágenes de un ambiente urbano capturadas por un vehículo transitand
+o por las calles de la ciudad de Málaga.
+ El vocabulario resultante consta de aproximadamente 1 millón de palabras.
+\end_layout
+
+\begin_layout Section
+The KITTI dataset
+\end_layout
+
+\begin_layout Standard
+The KITTI Vision Benchmark Suite 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2013vision"
+
+\end_inset
+
+ es una colección de 
+\emph on
+datasets
+\emph default
+ capturados por un vehículo transitando por las calles de la ciudad de Karlsruhe
+, Alemania.
+ El 
+\emph on
+dataset
+\emph default
+ consta de imágenes estéreo con una resolución de 1344×391 
+\emph on
+pixeles
+\emph default
+ a una frecuencia de 10 
+\emph on
+frames
+\emph default
+ por segundo (10Hz).
+ La colección se compone de 10 secuencias que proporcionan información de
+ la
+\emph on
+ 
+\emph default
+trayectoria real
+\emph on
+ 
+\emph default
+(
+\emph on
+ground truth
+\emph default
+), por lo cual se conoce la localización precisa del vehículo en cada momento.
+ Asimismo, ocurren ciclos en la trayectoria en 6 de estas secuencias (las
+ secuencias: 00, 02, 05, 06, 07 y 09).
+\end_layout
+
+\begin_layout Standard
+The KITTI Vision Benchmark Suite no provee información de 
+\emph on
+ground truth
+\emph default
+ sobre la ocurrencia de ciclos en la trayectoria.
+ Arroyo et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "arroyo2014fast"
+
+\end_inset
+
+ realiza un análisis de las secuencias y propone un 
+\emph on
+ground truth
+\emph default
+ de ciclos donde define, para cada imagen, candidatos de alta similitud.
+ Se utilizará esta asociación entre imágenes como 
+\emph on
+ground truth
+\emph default
+ de la ocurrencia de ciclos en las experimentaciones.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "33.33text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/kitti01.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "33.33col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/kitti02.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "33.33text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/kitti03.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "33.33text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/kitti04.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "33.33col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/kitti05.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "33.33text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/kitti06.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ejemplos del KITTI 
+\emph on
+dataset
+\emph default
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_examples"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Desempeño de los métodos PnP
+\end_layout
+
+\begin_layout Standard
+La validación de un ciclo erróneo podría atentar contra la estabilidad del
+ sistema completo.
+ Los métodos PnP determinarán, en última instancia, si un ciclo es validado
+ por lo que resulta importante comprobar su desempeño.
+ En la literatura, la evaluación de este tipo de métodos es generalmente
+ llevado a cabo en ambientes simulados donde se incluye ruido en las mediciones
+ de manera artificial 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kneip2011p3p,kneip2014upnp"
+
+\end_inset
+
+.
+ Se plantea, entonces, evaluar la efectividad de estos métodos al estimar
+ las transformaciones relativas entre las cámaras involucradas en los ciclos
+ de las distintas secuencias del KITTI 
+\emph on
+dataset
+\emph default
+.
+ Se seleccionan para esto secuencias que presenten una cantidad de ciclos
+ considerable para las pruebas.
+ En total, se utilizan 4530, 4568, 1453 y 1100 asociaciones entre imágenes
+ del 
+\emph on
+ground truth
+\emph default
+ correspondientes a las secuencias 00, 02, 05 y 06 respectivamente.
+\end_layout
+
+\begin_layout Standard
+Se evalúa la efectividad de dos métodos P3P: P3PKNEIP 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kneip2011p3p"
+
+\end_inset
+
+ y P3PGAO 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gao2003p3p"
+
+\end_inset
+
+; y dos métodos generales PnP: UPNP 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kneip2014upnp"
+
+\end_inset
+
+ y EPNP 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lepetit2009epnp"
+
+\end_inset
+
+.
+ Los métodos P3P son aplicados bajo un esquema RANSAC de 50 iteraciones,
+ con un 
+\emph on
+threshold
+\emph default
+ de re-proyección de 1 píxel
+\emph on
+.
+
+\emph default
+ Las asociaciones de imágenes que no cumplieran con un mínimo de 80% de
+ 
+\emph on
+inliers
+\emph default
+ son descartadas.
+ Los métodos PnP son utilizados sobre el conjunto de correspondencias 
+\emph on
+inliers
+\emph default
+ determinadas previamente por el método P3PKNEIP 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kneip2011p3p"
+
+\end_inset
+
+.
+ Dada la selección aleatoria de correspondencias del esquema RANSAC, existen
+ discrepancias entre las asociaciones de imágenes consideradas por cada
+ método.
+ Es decir, una asociación de imágenes que cumplió con el mínimo de 80% de
+ 
+\emph on
+inliers
+\emph default
+ utilizando alguno de los métodos, podría no cumplirlo al utilizar un método
+ distinto.
+ La cantidad de 
+\emph on
+inliers
+\emph default
+ requeridos para la validación restringe considerablemente la cantidad de
+ asociaciones del 
+\emph on
+ground truth
+\emph default
+ que son validadas por los distintos método.
+ Las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pnp_kitti00"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pnp_kitti02"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pnp_kitti05"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pnp_kitti06"
+
+\end_inset
+
+ exponen la precisión de los diferentes métodos al estimar la transformación
+ entre imágenes asociadas por el 
+\emph on
+ground truth
+\emph default
+.
+ Se puede observar un parejo desempeño entre los métodos minimales P3P y
+ los generales PnP.
+ Los errores promedio en la traslación se encuentran entre los 0.9 y 3 metros,
+ siendo la secuencia 02 la que presenta mayores errores promedio.
+ Los errores promedio en la orientación se encuentran entre los 0.8 y 2 grados.
+ Se registra una mejora en la concentración de errores de traslación utilizando
+ el método UPNP en la secuencia 02 (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pnp_kitti02"
+
+\end_inset
+
+).
+ P3PKNEIP y P3PGAO superan en desempeño a los métodos generales PnP en la
+ secuencia 00 (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pnp_kitti00"
+
+\end_inset
+
+) donde EPNP muestra errores de hasta 8 metros en la traslación.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/pnp/kitti_00_translation.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/pnp/kitti_00_orientation.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Errores de estimación entre asociaciones de imágenes validadas del 
+\emph on
+ground truth
+\emph default
+ en la secuencia KITTI 00.
+ Se incluye la cantidad de validaciones efectuadas por cada método.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pnp_kitti00"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/pnp/kitti_02_translation.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/pnp/kitti_02_orientation.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Errores de estimación entre asociaciones de imágenes validadas del 
+\emph on
+ground truth
+\emph default
+ en la secuencia KITTI 02.
+ Se incluye la cantidad de validaciones efectuadas por cada método.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pnp_kitti02"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/pnp/kitti_05_translation.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/pnp/kitti_05_orientation.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Errores de estimación entre asociaciones de imágenes validadas del 
+\emph on
+ground truth
+\emph default
+ en la secuencia KITTI 05.
+ Se incluye la cantidad de validaciones efectuadas por cada método.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pnp_kitti05"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/pnp/kitti_06_translation.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/pnp/kitti_06_orientation.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Errores de estimación entre asociaciones de imágenes validadas del 
+\emph on
+ground truth
+\emph default
+ en la secuencia KITTI 06.
+ Se incluye la cantidad de validaciones efectuadas por cada método.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pnp_kitti06"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La consistencia de los resultados obtenidos entre los diferentes métodos
+ dan evidencia de la efectividad de los parámetros utilizados para la validación
+ de ciclos.
+ Se considera que las asociaciones de imágenes validadas del 
+\emph on
+ground truth
+\emph default
+ presentan un alto grado de similitud y los métodos fueron capaces de trabajar
+ de manera efectiva sobre estas.
+\end_layout
+
+\begin_layout Standard
+En base a los resultados obtenidos y aquellos presentados por Kneip et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kneip2011p3p,kneip2014upnp"
+
+\end_inset
+
+, se utilizan los métodos P3PKNEIP y UPNP para el cálculo de la transformación
+ relativa en experimentaciones posteriores.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Cantidad de asociaciones de imágenes del 
+\emph on
+ground truth 
+\emph default
+validadas por cada método.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:valid_pnp"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="5">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="2cm">
+<column alignment="center" valignment="top" width="2cm">
+<column alignment="center" valignment="top" width="2cm">
+<column alignment="center" valignment="top" width="2cm">
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Método
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#Asociaciones Validadas
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI00 
+\size scriptsize
+(total:4530)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI02 
+\size scriptsize
+(total:4568)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI05 
+\size scriptsize
+(total:1453)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI06 
+\size footnotesize
+(total:1100)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P3PKNEIP
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+443
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+55
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+353
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+182
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P3PGAO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+460
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+62
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+334
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+189
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P3PKNEIP+UPNP
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+448
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+67
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+326
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+177
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P3PKNEIP+EPNP
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+467
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+62
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+317
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+183
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Precisión en la detección y cantidad de ciclos reconocidos
+\end_layout
+
+\begin_layout Standard
+Para evaluar la eficiencia de la detección y validación de ciclos, se realizó
+ la ejecución del sistema S-PTAM sobre cada uno de los 6 
+\emph on
+datasets
+\emph default
+ que presentan ciclos.
+ La información de 
+\emph on
+ground truth
+\emph default
+ sobre la ocurrencia de ciclos presenta una asociación entre imágenes que
+ resulta demasiado estricta en la práctica.
+ Por esto, como se proponen los autores del 
+\emph on
+ground truth
+\emph default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "arroyo2014fast"
+
+\end_inset
+
+, se considera una detección positiva cuando los cuadros involucrados se
+ encuentran en la vecindad temporal (1 segundo) de alguna asociación presente
+ en el 
+\emph on
+ground truth
+\emph default
+.
+ Podrían existir varias asociaciones de ciclo para una misma imagen, por
+ lo que el número de ciclos totales de una secuencia se calcula como la
+ cantidad de imágenes que posean al menos una asociación de similitud en
+ el 
+\emph on
+ground truth
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Dado el comportamiento de selección de 
+\emph on
+keyframes
+\emph default
+ propio de S-PTAM (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:seleccion_keyframes"
+
+\end_inset
+
+), existen cuadros que no son agregados al mapa
+\emph on
+ 
+\emph default
+y no son procesados por el 
+\emph on
+Loop Closing
+\emph default
+.
+ Por esta razón se analizan dos medidas de reconocimiento de ciclos, una
+ sobre el total de ciclos de la secuencia (%Recon.) y una sobre aquellos
+ ciclos que fueron observados dada la selección de 
+\emph on
+keyframes
+\emph default
+ realizada durante la ejecución del sistema (%Recon.
+ Obs.).
+\end_layout
+
+\begin_layout Standard
+La tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:presicion_recall"
+
+\end_inset
+
+ muestra los resultados obtenidos por el método de detección de ciclos diferenci
+ando el desempeño del análisis de apariencia y el de la validación geométrica.
+ El análisis de apariencia resulta muy permisivo generando gran cantidad
+ de candidatos a ciclos y un porcentaje de reconocimiento satisfactorio
+ tomando en cuenta otros métodos del estado del arte 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "arroyo2014fast"
+
+\end_inset
+
+.
+ La validación geométrica descarta falsos positivos de manera efectiva logrando
+ una precisión del 100% en las detecciones validadas.
+ La cantidad de ciclos finalmente validados es proporcionalmente bajo en
+ comparación a los ciclos definidos por el 
+\emph on
+ground truth
+\emph default
+.
+ Esto no resulta contraproducente dado que, al requerir un porcentaje elevado
+ de 
+\emph on
+inliers
+\emph default
+, las asociaciones validadas permiten la estimación de transformaciones
+ relativas más precisas.
+ De esta manera se prioriza la validación de una menor cantidad de ciclos,
+ pero que resulten en estimaciones de mayor precisión, antes de arriesgarse
+ a validar un ciclo erróneo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Resultados de precisión y reconocimiento en las diferentes secuencias.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:presicion_recall"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+resizebox{
+\backslash
+textwidth}{!}{%
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="10">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Secuencia
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#Ciclos
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Apariencia
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Apariencia + Validación Geométrica
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#Detec.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+%Precisión
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+%Recon.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+%Recon.
+ Obs.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#Valid.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+%Precisión
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+%Recon.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+%Recon.
+ Obs.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+732
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2747
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13,14%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+49,32%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+57,39%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+45
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6,14%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7,15%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+234
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3010
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3,12%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40,17%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40,52%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,14%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,16%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI05
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+320
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1596
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12,4%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+61,88%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+68,51%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+28
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8,75%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9,69%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+269
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+412
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24,03%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+36,8%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+38,98%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5,95%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6,30%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI07
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+434
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,07%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+69,23%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7,69%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11,11%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI09
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+836
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,60%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29,41%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+35,71%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\diagup$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Las secuencias 07 y 09 presentan un ciclo al final del trayecto, definido
+ en el 
+\emph on
+ground truth
+\emph default
+ por 13 y 17 asociaciones de imágenes respectivamente.
+ En ambos casos el detector de ciclos por apariencia genera candidatos validos,
+ sin embargo solo se logran establecer suficientes 
+\emph on
+inliers
+\emph default
+ para el cálculo de la transformación relativa en el caso la secuencia 07.
+\end_layout
+
+\begin_layout Standard
+Las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:loop_detections"
+
+\end_inset
+
+ muestran las detecciones validadas en las distintas secuencias, se expone
+ la trayectoria 
+\emph on
+ground truth
+\emph default
+ en función del tiempo de manera de visualizar las asociaciones (líneas
+ rojas) realizadas por el método.
+ Es interesante destacar que líneas rectas responden a asociaciones correctas.
+ Es posible observar que si bien la validación geométrica reduce considerablemen
+te la cantidad de ciclos reconocidos, valida al menos uno en cada segmento
+ previamente visitado de la trayectoria.
+ Este comportamiento es favorable ya que reduce la cantidad de cierres de
+ ciclos realizados por el sistema y concentra el procesamiento en ciclos
+ con mayor cantidad de 
+\emph on
+inliers
+\emph default
+ donde las transformaciones relativas estimadas son más precisas.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/detection/kitti00_detection.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a) Secuencia KITTI 00
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/detection/kitti_02_detection.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b) Secuencia KITTI 02
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/detection/kitti05_detection.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(c) Secuencia KITTI 05
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/detection/kitti06_detection.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(d) Secuencia KITTI 06
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/detection/kitti07_detection.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(e) Secuencia KITTI 07
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ciclos detectados y validados en las diferentes secuencias del KITTI 
+\emph on
+dataset
+\emph default
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:loop_detections"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+FloatBarrier
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:error_acumulado"
+
+\end_inset
+
+Trayectoria estimada y reducción del error acumulado
+\end_layout
+
+\begin_layout Standard
+Se llevaron a cabo diferentes análisis sobre la información obtenida del
+ procesamiento de las secuencias.
+ El objetivo es corroborar la estabilidad del método en su conjunto, y determina
+r el impacto en la corrección de la trayectoria en cada caso.
+ Las Figuras presentadas 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_kitti00"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_kitti02"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_kitti05"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_kitti06"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_kitti07"
+
+\end_inset
+
+ exponen los resultados obtenidos durante la ejecución del sistema.
+ Por cada secuencia se presenta una comparación de la trayectoria estimada
+ por el sistema al incluir la extensión de 
+\emph on
+Loop Closing
+\emph default
+, el resultado final del mapa luego de la corrección de los ciclos y un
+ análisis 
+\begin_inset Quotes eld
+\end_inset
+
+momento a momento
+\begin_inset Quotes erd
+\end_inset
+
+ de los errores de traslación y rotación cometidos en la localización.
+\end_layout
+
+\begin_layout Standard
+Dada la libertad de movimiento sobre la que se trabaja es difícil caracterizar
+ el comportamiento del error acumulado en la estimación de localización.
+ Es posible observar frecuentes oscilaciones en el error de traslación debido
+ a lo que se conoce como 
+\begin_inset Quotes eld
+\end_inset
+
+cancelación del error
+\begin_inset Quotes erd
+\end_inset
+
+.
+ El error acumulado en alguna de las direcciones puede verse cancelado posterior
+mente por la acumulación de error en el sentido contrario.
+ Por el contrario, la calidad del mapa construido decrece progresivamente
+ potenciando la acumulación de error en estimaciones posteriores.
+ Al momento de realizar un cierre de ciclo, el error de traslación se ve
+ ajustado a los valores existentes al momento en que se visitó la ubicación
+ por primera vez.
+ Por lo general esto se traduce en una reducción del error acumulado, pero
+ existen situaciones donde, debido al efecto de cancelación, el error de
+ traslación no se ve afectado.
+ Finalmente, en todos los casos se espera que la detección y cierre de ciclos
+ mejoren en la fidelidad del mapa hasta el momento construido.
+\end_layout
+
+\begin_layout Standard
+En la secuencia 00 se puede observar una disminución del error absoluto
+ de traslación de manera consistente desde el momento en que se produce
+ la primera detección (Fig.(c) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_kitti00"
+
+\end_inset
+
+).
+ El error angular presenta un comportamiento errático, sin embargo se puede
+ apreciar una mejora en la estimación.
+ Observar que la corrección de sucesivos ciclos temporalmente cercanos no
+ se traduce en una mayor reducción del error de estimación.
+ Dado que el sistema acumula error en intervalos de tiempo donde no ocurren
+ ciclos, el mayor impacto en la precisión lo produce el primer ciclo corregido
+ luego de un intervalo de tiempo prolongado donde no ocurriera ninguno.
+\end_layout
+
+\begin_layout Standard
+La secuencia 02 realiza un recorrido extenso sin ciclos hasta casi el final
+ de la trayectoria.
+ Luego del primer cierre de ciclo no se aprecia una reducción del error
+ en la traslación, y por el contrario el sistema S-PTAM original logra estimacio
+nes de mejor calidad (Fig.(c) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_kitti02"
+
+\end_inset
+
+).
+ Este ciclo detectado vincula la locación visitada en el segundo 170 con
+ aquella visitada en en el segundo 440 aproximadamente.
+ Debido a la cancelación del error, estos dos momentos de la trayectoria
+ presentan similar error de traslación y es por esto que el cierre del ciclo
+ no produce una notoria mejora de la estimación.
+ Por el contrario, el cierre de ciclo reduce el efecto de cancelación del
+ error posterior generando estimaciones menos precisas que el S-PTAM original.
+ Se puede apreciar que la trayectoria final estimada se encuentra correctamente
+ alineada (Fig.(b) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_kitti02"
+
+\end_inset
+
+), algo que no sucede con el S-PTAM original.
+\end_layout
+
+\begin_layout Standard
+En la secuencia 05 el error rotacional percibido es pequeño (Fig.(d) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_kitti05"
+
+\end_inset
+
+).
+ Al cerrar el primer ciclo, el cálculo de la transformación relativa introduce
+ error en la orientación y este se traduce en error de traslación al realizar
+ una amplia curva en la trayectoria.
+ El sistema logra recuperarse de esta situación luego de una serie de deteccione
+s al final de la secuencia que reducen considerablemente el error acumulado.
+ 
+\end_layout
+
+\begin_layout Standard
+Las secuencias 06 y 07 presentan un único ciclo al final del trayecto.
+ Se puede observar que al cerrar ciclos próximos al punto de partida el
+ error de traslación se reduce de manera drástica, obteniendo una estimación
+ con solo centímetros de error.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length -0.8cm
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti00_trajectories.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti00_map.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti00_predict_translation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(c)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti00_predict_orientation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(d)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Resultados del método en la secuencia KITTI 00 (a) Comparación de la trayectoria
+ estimadas por el sistema S-PTAM original y al incluir la extensión de 
+\emph on
+Loop Closing
+\emph default
+.
+ (b) Visualización del mapa construido y corregido por el método luego de
+ los cierres de ciclos.
+ (c) y (d) Error de traslación y angular cometido al estimar la localización
+ en cada momento de la secuencia.
+ Los marcadores rojos indican los momentos en que se efectuaron correcciones
+ de ciclo.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:lc_kitti00"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length -0.8cm
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti02_trajectories.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "62col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti02_map.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti02_predict_translation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(c)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti02_predict_orientation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(d)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Resultados del método en la secuencia KITTI 02 (a) Comparación de la trayectoria
+ estimadas por el sistema S-PTAM original y al incluir la extensión de 
+\emph on
+Loop Closing
+\emph default
+.
+ (b) Visualización del mapa construido y corregido por el método luego de
+ los cierres de ciclos.
+ (c) y (d) Error de traslación y angular cometido al estimar la localización
+ en cada momento de la secuencia.
+ Los marcadores rojos indican los momentos en que se efectuaron correcciones
+ de ciclo.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:lc_kitti02"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length -0.8cm
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti05_trajectories.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti05_map.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti05_predict_translation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(c)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti05_predict_orientation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(d)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Resultados del método en la secuencia KITTI 05 (a) Comparación de la trayectoria
+ estimadas por el sistema S-PTAM original y al incluir la extensión de 
+\emph on
+Loop Closing
+\emph default
+.
+ (b) Visualización del mapa construido y corregido por el método luego de
+ los cierres de ciclos.
+ (c) y (d) Error de traslación y angular cometido al estimar la localización
+ en cada momento de la secuencia.
+ Los marcadores rojos indican los momentos en que se efectuaron correcciones
+ de ciclo.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:lc_kitti05"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length -0.8cm
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti06_trajectories.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti06_map.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti06_predict_translation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(c)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti06_predict_orientation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(d)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Resultados del método en la secuencia KITTI 06 (a) Comparación de la trayectoria
+ estimadas por el sistema S-PTAM original y al incluir la extensión de 
+\emph on
+Loop Closing
+\emph default
+.
+ (b) Visualización del mapa construido y corregido por el método luego de
+ los cierres de ciclos.
+ (c) y (d) Error de traslación y angular cometido al estimar la localización
+ en cada momento de la secuencia.
+ Los marcadores rojos indican los momentos en que se efectuaron correcciones
+ de ciclo.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:lc_kitti06"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length -0.8cm
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti07_trajectories.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti07_map.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti07_predict_translation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(c)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/kitti07_predict_orientation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(d)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Resultados del método en la secuencia KITTI 07 (a) Comparación de la trayectoria
+ estimadas por el sistema S-PTAM original y al incluir la extensión de 
+\emph on
+Loop Closing
+\emph default
+.
+ (b) Visualización del mapa construido y corregido por el método luego de
+ los cierres de ciclos.
+ (c) y (d) Error de traslación y angular cometido al estimar la localización
+ en cada momento de la secuencia.
+ Los marcadores rojos indican los momentos en que se efectuaron correcciones
+ de ciclo.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:lc_kitti07"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+FloatBarrier
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Level 7 S-Block dataset
+\end_layout
+
+\begin_layout Standard
+El 
+\emph on
+Level 7 S-Block
+\emph default
+ 
+\emph on
+dataset
+\emph default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "murphy2013experimental"
+
+\end_inset
+
+ provee información recolectada durante el recorrido realizado por un robot
+ terrestre en el nivel 7 del 
+\emph on
+S-Block QUT Gardens Point campus
+\emph default
+ en Brisbane, Australia.
+ El robot, denominado 
+\emph on
+The Adept Guiabot
+\emph default
+, tiene montados diversos sensores que proveen gran cantidad de información
+ como imágenes estéreo, mediciones de láser y estimaciones odométricas de
+ posición basadas en la rotación de las ruedas.
+ La secuencia dura aproximadamente 33 minutos proporcionando 12 imágenes
+ por segundo (12Hz) y el recorrido realizado corresponde a una serie de
+ vueltas en un ambiente interior (
+\emph on
+indoor
+\emph default
+) de oficinas.
+ Los autores proveen información de 
+\emph on
+ground truth
+\emph default
+ de la trayectoria a través del análisis de las mediciones provistas por
+ un escáner láser.
+ Esto resulta en información de localización precisa pero ruidosa en comparación
+ al 
+\emph on
+ground truth
+\emph default
+ del KITTI.
+ No se tiene información de 
+\emph on
+ground truth
+\emph default
+ sobre los ciclos de la trayectoria, pero estos ocurren frecuentemente permitien
+do realizar pruebas de estrés sobre el modulo de 
+\emph on
+Loop Closing
+\emph default
+.
+ La gran cantidad de ciclos presentes en la trayectoria proporcionan suficiente
+ información para comprobar la estabilidad del cierre y medir los tiempos
+ de procesamiento requeridos.
+\end_layout
+
+\begin_layout Standard
+En todos los experimentos realizados con este 
+\emph on
+dataset
+\emph default
+ se configura al sistema S-PTAM de manera de utilizar las mediciones odométricas
+ de las ruedas provistas por el 
+\emph on
+dataset
+\emph default
+ como predicciones iniciales de la posición.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "25text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/guiabot.jpg
+	lyxscale 50
+	width 100text%
+	rotateAngle -90
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "70col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/level7.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The Adept Guiabot e imágenes de ejemplo del 
+\emph on
+Level7
+\emph default
+ 
+\emph on
+dataset
+\emph default
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:level7_example"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Trayectoria estimada y reducción del error acumulado
+\end_layout
+
+\begin_layout Standard
+La secuencia presenta pasillos de escasa textura y con pocos elementos distingui
+bles donde se llevan a cabo pronunciados cambios de orientación en la trayectori
+a.
+ Este escenario produce una acentuada acumulación de error en las estimaciones
+ generadas por el S-PTAM original (Fig.(a) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_level7"
+
+\end_inset
+
+).
+ El desempeño del sistema se degrada progresivamente manifestando un patrón
+ oscilatorio que crece en amplitud en los errores de traslación y angular
+ percibidos (Figs.(c)(d) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_level7"
+
+\end_inset
+
+).
+ Esta degradación llega al punto de registrar errores de 25 metros en la
+ traslación y 90 grados en la orientación (Figs.(c)(d) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_level7"
+
+\end_inset
+
+).
+ Esto imposibilita la utilización del sistema S-PTAM original como sistema
+ de localización en este escenario.
+\end_layout
+
+\begin_layout Standard
+La inclusión del modulo de 
+\emph on
+Loop Closing
+\emph default
+ mejora notoriamente el desempeño exhibiendo errores máximos de 2,2 metros
+ en la traslación y 14 grados en la orientación (Figs.(e)(f) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lc_level7"
+
+\end_inset
+
+).
+ El sistema es capaz de realizar correctas asociaciones de apariencia a
+ pesar de tratarse de un entorno repetitivo, en total se validan y cierran
+ 317 ciclos (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:level7_detections"
+
+\end_inset
+
+).
+ Se puede apreciar que la amplitud de los errores registrados se encuentra
+ acotada y no crece con el tiempo a diferencia del comportamiento observado
+ en el S-PTAM original.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/detection/level7_detection.png
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ciclos detectados y validados en la trayectoria del 
+\emph on
+Level7 dataset
+\emph default
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:level7_detections"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset VSpace -1cm
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length -0.8cm
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/level7_trajectories.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/level7_map.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/level7_predict_translation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(c)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/level7_predict_orientation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(d)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/level7_LC_predict_translation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(e)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/trajectory/level7_LC_predict_orientation_error.pdf
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(f)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparación de desempeño en el 
+\emph on
+Level7
+\emph default
+ 
+\emph on
+dataset
+\emph default
+.
+ Dada la marcada diferencia de magnitud entre los errores percibidos, las
+ Figuras (e) y (f) repiten los resultados obtenidos por el sistema en una
+ escala más adecuada.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:lc_level7"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+FloatBarrier
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Tiempos de procesamiento
+\end_layout
+
+\begin_layout Standard
+Durante la secuencia se realizan 3706 análisis de apariencia, 2218 análisis
+ geométricos y 317 cierres de ciclos.
+ La tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:time_lc"
+
+\end_inset
+
+ presenta los tiempos de procesamiento consumidos por cada una de las etapas
+ del modulo 
+\emph on
+Loop Closing
+\emph default
+.
+ Dado el diseño del método (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:sinconizacion_mapa"
+
+\end_inset
+
+), el cierre de los ciclos y la actualización de la mayor parte del mapa
+ se realiza de manera completamente paralela.
+ La actualización del área compartida del mapa resulta muy veloz requiriendo
+ la detención del 
+\emph on
+Tracking
+\emph default
+ y el 
+\emph on
+Local Mapping
+\emph default
+ por 1,6 milisegundos en promedio.
+ Dada la implementación realizada (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:detalles_impl"
+
+\end_inset
+
+), el tamaño del área compartida del mapa es constante y no escala con el
+ tamaño del mapa.
+ De esta manera el tiempo en que permanece detenido el 
+\emph on
+Tracking,
+\emph default
+ durante un cierre de ciclo, es constante.
+ Por el contrario, los tiempos requeridos por el cierre de ciclos y la actualiza
+ción del área no compartida escalan con el tamaño del mapa.
+ Esto no presenta un problema dado que el área no compartida se corrige
+ de manera concurrente sin detener el 
+\emph on
+Tracking
+\emph default
+.
+ Las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tiempos_cierre"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tiempos_map_update"
+
+\end_inset
+
+ exhiben los tiempos de procesamiento requeridos en función a la cantidad
+ de 
+\emph on
+keyframes
+\emph default
+ del mapa.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Tiempos de procesamiento consumido por las diferentes etapas.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:time_lc"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="8">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="middle" width="6cm">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Etapas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#Mediciones
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mín.(ms)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prom.(ms)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Máx.(ms)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Detección
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3706
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,74
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Val.
+ y transf.
+ relativa
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2218
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,31
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cierre del ciclo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+317
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+42
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+384,92
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+922
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Actualización de mapa
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+317
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+80,53
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+187
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Actualización de mapa
+\begin_inset Newline linebreak
+\end_inset
+
+(área de utilización compartida)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+317
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1,6
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/tiempos/closure_times.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Tiempos de procesamiento requeridos por el cierre de ciclos.
+ Notar que los intervalos sin datos corresponden a momentos de la trayectoria
+ donde no se validaron ciclos.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tiempos_cierre"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/tiempos/unsafe_update_times.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Tiempos de procesamiento requeridos por la actualización del área no compartida
+ del mapa.
+ Notar que los intervalos sin datos corresponden a momentos de la trayectoria
+ donde no se validaron ciclos.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tiempos_map_update"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

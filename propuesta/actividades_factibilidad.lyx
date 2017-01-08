@@ -1,0 +1,431 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+
+
+%\usepackage[spanish,activeacute]{babel}
+% corta las palabras en espacios
+% acentos normales
+\usepackage{graphicx}% incluye jpg y otros
+\usepackage{epstopdf}% incluye eps, 1ro los pasa a PDF y luego lo incluye
+%\usepackage{listings} 						% para poner pseudocodigos tipo C, C++
+\usepackage{algorithmic}% para poner pseudocodigos tipo C, C++
+\usepackage{amsfonts}
+% para simbolos matemáticos
+\usepackage{fancyhdr}% header lindo
+\usepackage{color}% colores
+\usepackage{lastpage}% calcula el Nº de la ultima pagina
+% vinculos en pdf
+\usepackage{multicol}% para multicolumnas (2-columnas) y seteo de parametros
+
+%% configuro los margenes
+\hoffset=-2.2cm
+\voffset=-1.5cm
+% 	\parskip=0.25cm 			% espacio entre parrafos, 0.5cm es +/- una l\'inea entera...
+\parskip=0.20cm 			% espacio entre parrafos, 0.5cm es +/- una l\'inea entera...
+\topmargin 0cm
+%\oddsidemargin 0.5cm
+ 	\textwidth 16cm
+ 	\textheight 24cm
+
+% %% configuro los links
+ 	%\hypersetup{colorlinks=true, urlcolor=blue, linkcolor=black, citecolor=black}
+
+
+%% configuro el estilo de pagina
+%\pagestyle{fancy}
+\headheight 1cm
+\headwidth \textwidth
+
+%% encabezado en estilo de pagina
+\chead{}
+\rhead{}
+\lhead{}
+
+%% pie de pagina en estilo de pagina
+%\lfoot{}
+%\rfoot{}
+\cfoot{\footnotesize{\rule{\textwidth}{0.1mm} \\ p\'agina {\thepage} de \pageref{LastPage}}}
+
+
+%% ENVIRONMENT PARA PODER PONER GRAFICOS Y TABLAS EN 1 COLUMNAS DE LAS 2 COLUMNAS !!!
+%% se usa con ``\begin{figurehere}'' y ``\begin{tablehere}''
+
+\newenvironment{tablehere}{\def\@captype{table}}{}
+\newenvironment{figurehere}{\def\@captype{figure}}{}
+
+
+
+% #####################################################
+% #####################################################
+% #####################################################
+\end_preamble
+\options 9
+\use_default_options false
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding default
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks false
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref section
+\pdf_pdfusetitle false
+\pdf_quoted_options "urlcolor=black,linkcolor=black,citecolor=black"
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+Actividades y metodología
+\end_layout
+
+\begin_layout Standard
+La metodología para llevar adelante este plan de trabajo es de orden teórico
+\begin_inset Formula $-$
+\end_inset
+
+práctico.
+ En el orden teórico el tesista deberá realizar una búsqueda y lectura de
+ bibliografía general sobre 
+\emph on
+Loop Closure
+\emph default
+ y luego más específica sobre métodos de 
+\emph on
+Loop Closure
+\emph default
+ basados en visión estéreo.
+ 
+\end_layout
+
+\begin_layout Standard
+En la práctica el tesista deberá desarrollar un método de 
+\emph on
+Loop Closure
+\emph default
+ para un sistema de SLAM estéreo.
+ En particular se desarrollará el método de 
+\emph on
+Loop Closure
+\emph default
+ sobre el sistema de SLAM S-PTAM (
+\emph on
+Stereo Parallel Tracking and Mapping
+\emph default
+) desarrollado por el LRSE.
+\end_layout
+
+\begin_layout Standard
+Finalmente, deberá realizar una serie de experimentos para validar el método
+ y establecer la calidad y robustez del mismo.
+ El tesista deberá documentar los resultados obtenidos y compararlos con
+ resultados de trabajos anteriores, realizando los análisis correspondientes.
+\end_layout
+
+\begin_layout Standard
+El trabajo será dividido en las siguientes etapas:
+\end_layout
+
+\begin_layout Enumerate
+El tesista se introducirá en el tema de 
+\emph on
+Loop Closure
+\emph default
+ para robots móviles, su motivación, y el problema de SLAM (Simultaneous
+ Localization and Mapping).
+\end_layout
+
+\begin_layout Enumerate
+El tesista deberá familiarizarse con métodos y sistemas actuales de detección
+ de ciclos basados en visión.
+ Los métodos que se analizarán en esta etapa son: RTAB-Map 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "labbe2011memory"
+
+\end_inset
+
+, FAB-MAP 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cummins2008fab"
+
+\end_inset
+
+ y DLoopDetector 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "galvez2012bags"
+
+\end_inset
+
+ entre otros.
+\end_layout
+
+\begin_layout Enumerate
+El tesista evaluará técnicas para el cálculo de la transformación de cierre
+ y ajuste de ciclos detectados por alguno de los métodos selecionados estudiados
+ en la etapa previa.
+ Para la evaluación el tesista utilizará datasets que presenten ciclos y
+ que cuenten con ground-truth (pose real del robot).
+\end_layout
+
+\begin_layout Enumerate
+El tesista implementará un nuevo método de 
+\emph on
+Loop Closure
+\emph default
+ haciendo uso de las técnicas evaluadas de detección de ciclos, cálculo
+ de la transformación de cierre y ajuste del ciclo.
+ El nuevo método de 
+\emph on
+Loop Closure
+\emph default
+ se desarrollara en el framework de ROS (
+\emph on
+Robotics Operative System
+\emph default
+) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "quigley2009ros"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+El tesista realizará una primera integración del método de 
+\emph on
+Loop Closure
+\emph default
+ desarrollado sobre el sistema de SLAM S-PTAM provisto por el LRSE.
+ Esta primera integración funcionará de manera offline, es decir, el método
+ de 
+\emph on
+Loop Closure
+\emph default
+ se ejecutará una vez que se haya terminado la secuencia en cuestión.
+ Esta primera integración tendrá como objetivo la detección temprana de
+ posibles errores relacionados íntegramente con la fusión de ambos sistemas.
+\end_layout
+
+\begin_layout Enumerate
+El tesista integrará de manera concurrente, a través de un hilo de ejecución
+ separado, el método de 
+\emph on
+Loop Closure
+\emph default
+.
+ En esta etapa se realizará una implementación en busca de mantener la capacidad
+ de tiempo real de S-PTAM.
+\end_layout
+
+\begin_layout Enumerate
+El tesista realizará experimentos con datasets de largas trayectorias que
+ presenten numerosos ciclos para probar la escalabilidad y robustez del
+ sistema en su totalidad.
+ Se medirá el error absoluto de cada pose del robot y se harán comparaciones
+ con los resultados provistos por el sistema S-PTAM original.
+\end_layout
+
+\begin_layout Enumerate
+El tesista documentará el desarrollo realizado junto a todo los resultados
+ obtenidos y, llegado el caso, publicará el presente trabajo en una revista
+ o conferencia del área.
+\end_layout
+
+\begin_layout Section*
+Factibilidad
+\end_layout
+
+\begin_layout Standard
+El lugar de trabajo propuesto para la tesis es el Laboratorio de Robótica
+ y Sistemas Embebidos (LRSE) del Departamento de Computación, FCEyN-UBA.
+ El mismo cuenta con todas las instalaciones e infraestructura necesarias
+ para llevar a cabo el presente trabajo.
+ El desarrollo y los experimentos se harán utilizando tanto datasets públicos
+ como con datasets generados por el laboratorio utilizando el robot Pioneer
+ P3-AT con el que cuenta el LRSE.
+ El tesista tendrá el robot a su disposición cada vez que lo requiera, así
+ como también los sensores y unidades de procesamiento necesarias para la
+ realización del presente trabajo.
+ A continuación se lista el detalle de los dispositivos involucrados para
+ la realización de la tesis:
+\end_layout
+
+\begin_layout Itemize
+Datasets públicos: 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+KITTI vision Benchmark
+\emph default
+: se trata de un conjunto de secuencias de imágenes generadas por un auto
+ que se desplaza en distintos ambientes urbanos.
+ Asimismo, dichas secuencias presentan diversos tipos de situaciones desafiantes
+ para un método de SLAM como escenas dinámicas (peatones, otros autos, etc)
+ y cambios bruscos de velocidad lineal y angular.
+ El auto lleva montado una cámara estéreo con una resolución de 1344x391
+ píxeles, frecuencia de 10 Hz y un baseline de 60 cm.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Level 7 S-Block
+\emph default
+: es un dataset de un robot que se desplaza en un ambiente de oficinas.
+ El robot cuenta con una cámara estéreo con 30 cm de baseline y una resolución
+ de 1280x1960 píxeles a una frecuencia de 12 Hz.
+ El dataset presenta númerosos ciclos y tiene una duración de más de 30
+ minutos.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+New College
+\emph default
+: se trata de un dataset de un robot que se desplaza entro de un campus
+ universitario.
+ El robot cuenta con una cámara estéreo Bumblebee con una resolución de
+ 648 x 488 píxeles a una frecuencia de 20 Hz y un baseline de 12 cm.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Robot terreste Pioneer P3-AT: un robot móvil terrestre de cuatro ruedas
+ de alta tracción, para entornos exteriores e interiores.
+ Chasis de tamaño medio: 27 cm de altura 
+\begin_inset Formula $\times$
+\end_inset
+
+ 50 cm de largo y 
+\begin_inset Formula $\times$
+\end_inset
+
+ 50 cm de ancho.
+ De estructura sólida (construído en aluminio de 1.6mm de grosor) y con una
+ capacidad de carga de entre 5 y 12 kilos, dependiendo del terreno sobre
+ el cual opera.
+ El robot puede desplazarse en diversos terrenos con una velocidad máxima
+ lineal de 70 cm/s y una velocidad de rotación de 140 grados/segundo.
+ El radio de giro mínimo es de 0cm, lo que implica que puede rotar sobre
+ su propio eje.
+ El robot posee tres baterías las cuales le proporcionan un tiempo de autonomía
+ de 2 a 4hs.
+ Las baterías pueden ser reemplazadas sin apagar el robot (hot swapping).
+ Los cuatro motores del robot poseen 
+\emph on
+encoders
+\emph default
+ que permiten obtener el desplazamiento lineal que realizó cada rueda.
+ Esta medida es utilizada para la estimación de la posición del robot durante
+ su movimiento (odometría).
+ En cuanto a la versatilidad del robot para la incorporación de distintos
+ tipos de sensores y unidades de procesamiento, el Pioneer P3AT funciona
+ como una base móvil a la cual se le pueden montar fácilmente dichos componentes.
+ Para el control del robot a través de la plataforma de procesamiento a
+ utilizar, el Pioneer P3AT posee una interfaz de tipo serial, a través de
+ la cual se realiza la comunicación.
+\end_layout
+
+\begin_layout Itemize
+Cámara estéreo Bumblebee 2 modelo: BB2-03S2M.
+ Dicha cámara cuenta con una resolución máxima de 648 x 488 a una frecuencia
+ de 48 Hz.
+\end_layout
+
+\begin_layout Itemize
+Sistema de localización externo WhyCon
+\begin_inset CommandInset citation
+LatexCommand cite
+key "krajnik2014practical"
+
+\end_inset
+
+: un software que permite obtener la pose en 3D de un objeto móvil o estático
+ (generalmente un robot) a partir de colocar un patrón conocido sobre el
+ mismo y utilizar una cámara que observa la escena y extrae dicha pose.
+\end_layout
+
+\begin_layout Standard
+Con estos dispositivos se espera poder llevar adelante el plan de trabajo
+ propuesto.
+ El plazo estimado para llevar a cabo la tesis es de 6 meses.
+\end_layout
+
+\end_body
+\end_document

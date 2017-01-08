@@ -1,0 +1,1834 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{a4wide}
+\usepackage[graf, intHoriz, sinLU, showDirectores, showCoDirectores]{caratula}
+\usepackage{hyperref}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics pdftex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle plain
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Cámaras como sensores
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Métodos odométricos basados en encoders consideran que un movimiento en
+ el motor se relaciona, bajo un modelo de movimiento, con un determinado
+ desplazamiento en el espacio.
+ Sin embargo esto podría no ser así dado que, por ejemplo, al utilizar la
+ rotación de las ruedas para estimar el desplazamiento en robots terrestres
+ no es posible distinguir situaciones donde superficies resbaladizas podrían
+ generar un deslizamiento tal que el robot se mantuviera en el mismo sitio
+ aún cuando las ruedas giren.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En el último tiempo, el desarrollo de la robótica móvil y de la visión por
+ computadora han dado lugar a una nueva disciplina conocida como visión
+ robótica (
+\emph on
+robot vision
+\emph default
+) que propone utilizar cámaras como los sensores primarios para capturar
+ la información del ambiente.
+ Las cámaras poseen varias ventajas por sobre otros sensores.
+ Para empezar son mucho más económicas, de bajo consumo y fáciles de montar
+ en robots móviles que otros sensores típicos como los lásers.
+ Las nuevas generaciones de cámaras digitales son cada vez más asequibles
+ y más pequeñas, y pueden proporcionar datos de alta resolución en tiempo
+ real y rangos de medición virtualmente ilimitados.
+ Además, las cámaras son sensores pasivos, por tanto, no interfieren unos
+ con otros como lo hacen los sensores activos.
+ Los requerimientos de cómputo para ejecutar los algoritmos de procesamiento
+ de imágenes a bordo del robot móvil pueden satisfacerse en la actualidad
+ gracias a las unidades de procesamiento disponibles.
+ Por lo tanto, se puede afirmar que las cámaras a bordo de los robots móviles
+ se han transformado en una parte estándar en el sistema de sensado y percepción
+ de cualquier robot móvil, para reunir información detallada y en tiempo
+ real sobre el entorno.
+\end_layout
+
+\begin_layout Standard
+La utilización de cámaras en métodos de localización relativa (
+\emph on
+visual odometry
+\emph default
+) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "VODOMETRY"
+
+\end_inset
+
+ permiten percibir el movimiento del robot en los 6 grados de libertad posibles
+ (3 de traslación y 3 de rotación) utilizando como referencia el entorno
+ que lo rodea de manera independiente al accionar de sus actuadores, lo
+ cual le permite superar el escenario que se presenta en la odometría basada
+ en 
+\emph on
+encoders
+\emph default
+ donde las ruedas pueden patinar invalidando la estimación de la pose.
+ El modelo de sensado en el caso de las cámaras consiste básicamente en
+ un mapeo entre el entorno tridimencional y el plano de la imagen bidimensional.
+ Dependiendo el tipo de cámara (monocular, estéreo, omnidireccional, etc.)
+ es posible utilizar diferentes modelos matemáticos que permitan relacionar
+ puntos del mundo con su respectiva representación en la imagen.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+En conjunto con métodos de detección y descripción de características visuales
+ (
+\emph on
+keypoints
+\emph default
+ o 
+\emph on
+features
+\emph default
+) es posible realizar el seguimiento de las mismas en sucesivos cuadros
+ (
+\emph on
+frames
+\emph default
+) provistos por la cámara.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación se exponen los detalles del modelo de cámara monocular y
+ estéreo expuestos en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hartley2003multiple"
+
+\end_inset
+
+ junto con resultados geométricos de interés.
+\end_layout
+
+\begin_layout Subsection
+Modelo y geometría de una cámara monocular
+\end_layout
+
+\begin_layout Standard
+Se modela a la cámara de manera que los puntos del espacio sean proyectados
+ en el plano de la imagen o plano focal como se muestra en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pinhole_camera"
+
+\end_inset
+
+.
+ Para esto se define la calibración intrínseca de la cámara como: 
+\begin_inset Formula 
+\begin{equation}
+K=\begin{bmatrix}f & 0 & p_{x}\\
+0 & f & p_{y}\\
+0 & 0 & 1
+\end{bmatrix}
+\end{equation}
+
+\end_inset
+
+de manera de poder, utilizando coordenadas homogéneas, realizar un mapeo
+ de la forma 
+\begin_inset Formula $(X,Y,Z,1)^{\top}\underset{K}{\rightarrow}(f\frac{X}{Z}+p_{x},f\frac{Y}{Z}+p_{y},1)^{\top}$
+\end_inset
+
+ por multiplicación a izquierda: 
+\begin_inset Formula 
+\[
+[K|\overrightarrow{0}](X,Y,Z,1)^{\top}=\begin{bmatrix}f & 0 & p_{x} & 0\\
+0 & f & p_{y} & 0\\
+0 & 0 & 1 & 0
+\end{bmatrix}\begin{pmatrix}X\\
+Y\\
+Z\\
+1
+\end{pmatrix}=\begin{pmatrix}fX+Zp_{x}\\
+fY+Zp_{y}\\
+Z
+\end{pmatrix}=\begin{pmatrix}f\frac{X}{Z}+p_{x}\\
+f\frac{Y}{Z}+p_{y}\\
+1
+\end{pmatrix}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imagenes/pinhole_camera_model.png
+	lyxscale 50
+	width 100col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Modelo geométrico 
+\emph on
+Pinhole
+\emph default
+ donde 
+\begin_inset Formula $\mathbf{C}$
+\end_inset
+
+ es el centro de cámara, 
+\begin_inset Formula $\mathbf{p}=(p_{x},p_{y})$
+\end_inset
+
+ punto principal y la cámara se considera centrada en el origen del eje
+ de coordenadas.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pinhole_camera"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En general los puntos del ambiente son expresados en referencia al sistema
+ de coordenadas conocido como 
+\begin_inset Quotes eld
+\end_inset
+
+mundo
+\begin_inset Quotes erd
+\end_inset
+
+ (
+\emph on
+world coordinate system
+\emph default
+), el cual esta relacionado con el sistema de coordenadas de la cámara a
+ través de una rotación y una traslación.
+ Sea 
+\begin_inset Formula $X_{w}=(X,Y,Z,1)^{\top}$
+\end_inset
+
+ un punto del espacio en referencia al sistema de coordenadas del mundo
+ y 
+\begin_inset Formula $X_{c}$
+\end_inset
+
+ el mismo punto expresado en referencia a la cámara, es posible definir
+ una transformación 
+\begin_inset Formula $T_{cw}$
+\end_inset
+
+ tal que:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+X_{c}=\begin{bmatrix}R & t\\
+0 & 1
+\end{bmatrix}\begin{pmatrix}X\\
+Y\\
+Z\\
+1
+\end{pmatrix}=T_{cw}X_{w}
+\end{equation}
+
+\end_inset
+
+donde 
+\begin_inset Formula $R$
+\end_inset
+
+ es una matriz de rotación 
+\begin_inset Formula $3\times3$
+\end_inset
+
+, 
+\begin_inset Formula $t$
+\end_inset
+
+ un vector de traslación 
+\begin_inset Formula $3\times1$
+\end_inset
+
+ y 
+\begin_inset Formula $T_{cw}$
+\end_inset
+
+ pertenece al grupo de movimientos de cuerpo rígido 3D (
+\emph on
+Lie Group
+\emph default
+, 
+\series bold
+SE(3)
+\series default
+) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "varadarajan2013lie"
+
+\end_inset
+
+.
+ De esta manera, utilizando la matriz de calibración intrínseca 
+\begin_inset Formula $K$
+\end_inset
+
+, se define la matriz de proyección 
+\begin_inset Formula $P$
+\end_inset
+
+ que nos permitirá proyectar cualquier punto del espacio en coordenadas
+ del mundo al plano de la imagen:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+P=K[R|t]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La matriz 
+\begin_inset Formula $P$
+\end_inset
+
+ posee 9 grados de libertad (3 por 
+\begin_inset Formula $K$
+\end_inset
+
+, 3 por 
+\begin_inset Formula $R$
+\end_inset
+
+ y 3 por 
+\begin_inset Formula $t$
+\end_inset
+
+) y
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+x=PX_{w}
+\end{equation}
+
+\end_inset
+
+donde 
+\begin_inset Formula $x$
+\end_inset
+
+ es la proyección en coordenadas homogéneas (
+\begin_inset Formula $3\times1$
+\end_inset
+
+) del punto 
+\begin_inset Formula $X_{w}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ESTABLECER A QUE SE LLAMA POSE DE LA CAMARA!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:modelo_estereo"
+
+\end_inset
+
+Modelo y geometría de cámaras estéreo
+\end_layout
+
+\begin_layout Standard
+La geometría proyectiva entre dos cámaras es conocida como geometría epipolar
+ (
+\emph on
+epipolar geometry
+\emph default
+).
+ Esta es independiente de la escena observada, y depende únicamente de los
+ parámetros internos y poses relativas de las cámaras involucradas.
+ Esencialmente la geometría epipolar caracteriza la relación entre un par
+ de cámaras como la intersección de sus planos imagen con una familia de
+ planos que contengan la línea que une los centros de cámaras (línea base
+ o 
+\emph on
+baseline
+\emph default
+).
+ El estudio de esta relación es de interés dado que permite restringir el
+ espacio de búsqueda al momento de asociar puntos entre los planos imagen.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/epipolar_geometry.png
+	lyxscale 60
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+La línea base interseca con cada plano imagen en los epipolos 
+\begin_inset Formula $\boldsymbol{e}$
+\end_inset
+
+ y 
+\begin_inset Formula $\boldsymbol{e'}$
+\end_inset
+
+.
+ Todo plano 
+\begin_inset Formula $\boldsymbol{\pi}$
+\end_inset
+
+ que contenga la línea base es un plano epipolar, e interseca los planos
+ imagen formando las líneas epipolares 
+\begin_inset Formula $\boldsymbol{l}$
+\end_inset
+
+ y 
+\begin_inset Formula $\boldsymbol{l'}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:correspondencia_estereo"
+
+\end_inset
+
+Correspondencia entre puntos
+\end_layout
+
+\begin_layout Standard
+Sea 
+\begin_inset Formula $X$
+\end_inset
+
+ un punto en el espacio 3D observado simultáneamente por dos cámaras distintas
+ 
+\begin_inset Formula $C$
+\end_inset
+
+ y 
+\begin_inset Formula $C'$
+\end_inset
+
+, de manera que 
+\begin_inset Formula $x$
+\end_inset
+
+ representa la proyección de 
+\begin_inset Formula $X$
+\end_inset
+
+ en el plano imagen de 
+\begin_inset Formula $C$
+\end_inset
+
+ y 
+\begin_inset Formula $x'$
+\end_inset
+
+ la proyección de 
+\begin_inset Formula $X$
+\end_inset
+
+ en el plano imagen de 
+\begin_inset Formula $C'$
+\end_inset
+
+.
+ Es posible observar que los puntos imagen 
+\begin_inset Formula $x$
+\end_inset
+
+ y 
+\begin_inset Formula $x'$
+\end_inset
+
+, el punto en el espacio 
+\begin_inset Formula $X$
+\end_inset
+
+ y los centros de cámara son coplanares (Fig.(a) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:epipolar_lines"
+
+\end_inset
+
+).
+ Es decir, pertenecen a un mismo plano al cual denotaremos como 
+\begin_inset Formula $\pi$
+\end_inset
+
+.
+ Más aún, las rectas formadas por el centro de cada cámara y los puntos
+ en la imagen 
+\begin_inset Formula $x$
+\end_inset
+
+ y 
+\begin_inset Formula $x'$
+\end_inset
+
+ intersecan en el punto del espacio 3D 
+\begin_inset Formula $X$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Suponiendo el escenario donde se conozca solamente el punto 
+\begin_inset Formula $x$
+\end_inset
+
+ perteneciente al plano imagen de la cámara 
+\begin_inset Formula $C$
+\end_inset
+
+, se puede restringir el espacio donde buscar el correspondiente punto 
+\begin_inset Formula $x'$
+\end_inset
+
+ en el plano imagen de la cámara 
+\begin_inset Formula $C'$
+\end_inset
+
+.
+ El plano 
+\begin_inset Formula $\pi$
+\end_inset
+
+ puede ser determinado por medio de la línea base entre los centros de cámara
+ y el vector dirección que une el centro de la cámara 
+\begin_inset Formula $C$
+\end_inset
+
+ con el punto imagen 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ De esta forma, sabiendo que 
+\begin_inset Formula $x'$
+\end_inset
+
+ debe pertenecer a 
+\begin_inset Formula $\pi$
+\end_inset
+
+, se asegura que 
+\begin_inset Formula $x'$
+\end_inset
+
+ debe pertenecer a la recta 
+\begin_inset Formula $l'$
+\end_inset
+
+ definida por la intersección entre el plano 
+\begin_inset Formula $\pi$
+\end_inset
+
+ y el plano imagen de la cámara 
+\begin_inset Formula $C'$
+\end_inset
+
+ (Fig.(b) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:epipolar_lines"
+
+\end_inset
+
+).
+ La recta 
+\begin_inset Formula $l'$
+\end_inset
+
+ se la conoce como la línea epipolar (
+\emph on
+epipolar line
+\emph default
+) de 
+\begin_inset Formula $x$
+\end_inset
+
+ y es especialmente útil para acotar la búsqueda del correspondiente punto
+ imagen 
+\begin_inset Formula $x'$
+\end_inset
+
+ en algoritmos de asociación de características visuales.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/epipolar_plane.png
+	lyxscale 50
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/epipolar_line.png
+	lyxscale 30
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+(a) Los centros de cámara, el punto 3D 
+\begin_inset Formula $\boldsymbol{X}$
+\end_inset
+
+ y los puntos imagen 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ y 
+\begin_inset Formula $\boldsymbol{x'}$
+\end_inset
+
+ pertenecer a un mismo plano 
+\begin_inset Formula $\boldsymbol{\pi}$
+\end_inset
+
+.
+ (b) La recta definida por el centro de cámara 
+\begin_inset Formula $\boldsymbol{C}$
+\end_inset
+
+ y el punto imagen 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+ es observada en el plano imagen de 
+\begin_inset Formula $\boldsymbol{C'}$
+\end_inset
+
+ como la línea epipolar 
+\begin_inset Formula $\boldsymbol{l'}$
+\end_inset
+
+.
+ El punto en el espacio 
+\begin_inset Formula $X$
+\end_inset
+
+, el cual es proyectado en el plano imagen de 
+\begin_inset Formula $\boldsymbol{C}$
+\end_inset
+
+ como 
+\begin_inset Formula $\boldsymbol{x}$
+\end_inset
+
+, debe ser observado por la cámara 
+\begin_inset Formula $\boldsymbol{C'}$
+\end_inset
+
+ sobre la línea epipolar 
+\begin_inset Formula $\boldsymbol{l'}$
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:epipolar_lines"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+La matriz fundamental
+\end_layout
+
+\begin_layout Standard
+La matriz fundamental 
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ es una representación matricial de la geometría epipolar que permite realizar
+ un mapeo entre puntos de un plano imagen a sus correspondientes líneas
+ epipolares.
+ Dadas un par de cámaras, se mencionó anteriormente que para cada punto
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ perteneciente a uno de los planos imagen, existe una determinada línea
+ epipolar 
+\begin_inset Formula $l'$
+\end_inset
+
+ presente en el plano imagen opuesto donde debe encontrarse el punto imagen
+ 
+\begin_inset Formula $x'$
+\end_inset
+
+ correspondiente (Fig.(a) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:epipolar_lines"
+
+\end_inset
+
+).
+ Por lo tanto, se requiere que la matriz fundamental 
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ satisfaga:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{F}x=l'
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Representando las líneas del plano imagen en coordenadas homogéneas: 
+\begin_inset Formula $l=(l_{1},l_{2},l_{3})^{\top}$
+\end_inset
+
+tal que 
+\begin_inset Formula $l_{1}\mathit{x}+l_{2}\mathit{y}+l_{3}=0$
+\end_inset
+
+ y dado que el punto 
+\begin_inset Formula $x'$
+\end_inset
+
+ pertenece a la línea 
+\begin_inset Formula $l'$
+\end_inset
+
+, por propiedades del espacio proyectivo se cumple que:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+(x')^{\top}l'=0
+\end{equation}
+
+\end_inset
+
+de lo cual se obtiene:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+(x')^{\top}\boldsymbol{F}x=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+De esta forma se condiciona la relación entre los puntos imagen de ambas
+ cámaras utilizando la matriz fundamental.
+ Existen distintas interpretaciones geométricas para la matriz 
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ y es posible derivarla de varias maneras.
+ En la práctica calcularla permite la implementación de eficientes métodos
+ de rectificación de imágenes, asociación de características visuales y
+ triangulación de puntos del ambiente, como detallaremos a continuación.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+TRATE DE BUSCAR UNA MANERA REDUCIDA DE DEFINIRLA FORMALMENTE, PERO ME CUESTA
+ HACERLO BIEN Y COMPACTO.
+\end_layout
+
+\begin_layout Plain Layout
+Dadas un par de cámaras de centros 
+\begin_inset Formula $\boldsymbol{C}$
+\end_inset
+
+ y 
+\begin_inset Formula $\boldsymbol{C}'$
+\end_inset
+
+ se ha visto que para cada punto 
+\begin_inset Formula $x$
+\end_inset
+
+ perteneciente a uno de los planos imagen, existe una determinada línea
+ epipolar 
+\begin_inset Formula $l'$
+\end_inset
+
+ presente en el plano imagen opuesto donde debe encontrarse el punto imagen
+ 
+\begin_inset Formula $x'$
+\end_inset
+
+ correspondiente.
+ La línea 
+\begin_inset Formula $l'$
+\end_inset
+
+ puede interpretarse como la proyección de la recta formada por 
+\begin_inset Formula $\boldsymbol{C}$
+\end_inset
+
+ y 
+\begin_inset Formula $x$
+\end_inset
+
+, en el plano imagen de la segunda cámara 
+\begin_inset Formula $C'$
+\end_inset
+
+ (Fig.
+ [FIGURAQUESEVEA]).
+ Esta proyección puede representarse como un vector homogéneo de dimensión
+ 3: 
+\begin_inset Formula $l'=(l_{1},l_{2},l_{3})^{\top}$
+\end_inset
+
+tal que 
+\begin_inset Formula $l_{1}\mathit{x}+l_{2}\mathit{y}+l_{3}=0$
+\end_inset
+
+, y de esta manera es posible definirla como el producto vectorial entre
+ dos puntos.
+ Con esto en mente se busca definir a 
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ en términos del producto vectorial entre puntos pertenecientes al plano
+ imagen de la segunda cámara.
+ Siendo conocidas 
+\begin_inset Formula $P$
+\end_inset
+
+ y 
+\begin_inset Formula $P'$
+\end_inset
+
+ las matrices de proyección de las respectivas cámaras, es posible definir
+ el punto epipolar en el plano imagen de la segunda cámara como 
+\begin_inset Formula $\boldsymbol{e'}=P'\boldsymbol{C}$
+\end_inset
+
+ (proyección del centro de la primera cámara al plano imagen de la segunda).
+ Y conociendo 
+\begin_inset Formula $x$
+\end_inset
+
+ de manera que satisface 
+\begin_inset Formula $x=PX$
+\end_inset
+
+, se puede demostrar que 
+\begin_inset Formula $P^{+}x$
+\end_inset
+
+ pertenece a la recta que une 
+\begin_inset Formula $\boldsymbol{C}$
+\end_inset
+
+ con 
+\begin_inset Formula $x$
+\end_inset
+
+ (con 
+\begin_inset Formula $P^{+}$
+\end_inset
+
+ pseudoinversa de 
+\begin_inset Formula $P$
+\end_inset
+
+) [REFCONPAGINA].
+ Y de esta manera, junto con 
+\begin_inset Formula $\boldsymbol{e'}=P'\boldsymbol{C}$
+\end_inset
+
+, se obtiene un segundo punto 
+\begin_inset Formula $P'P^{+}x$
+\end_inset
+
+ perteneciente a la proyección de la recta formada por 
+\begin_inset Formula $\boldsymbol{C}$
+\end_inset
+
+ y 
+\begin_inset Formula $x$
+\end_inset
+
+ en el plano imagen de la segunda cámara.
+ Permitiendo definir a 
+\begin_inset Formula $l'$
+\end_inset
+
+ como el producto vectorial entre 
+\begin_inset Formula $\boldsymbol{e'}$
+\end_inset
+
+ y 
+\begin_inset Formula $P'P^{+}x$
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+l'=\boldsymbol{e'}\times(P'P^{+}x)=(P'\boldsymbol{C})\times(P'P^{+}x)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Y a 
+\begin_inset Formula $\boldsymbol{F}$
+\end_inset
+
+ de manera general:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{equation}
+\boldsymbol{F}=(P'\boldsymbol{C})\times(P'P^{+})=(\boldsymbol{e'})\times(P'P^{+})=[\boldsymbol{e'}]_{x}(P'P^{+})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+donde 
+\begin_inset Formula $[\cdot]_{x}$
+\end_inset
+
+ es la representación matricial del producto vectorial (
+\emph on
+skew matrix
+\emph default
+).
+ De forma que 
+\begin_inset Formula $\boldsymbol{F}x=l'$
+\end_inset
+
+ y 
+\begin_inset Formula $x'\boldsymbol{F}x=x'l'=0$
+\end_inset
+
+ (dado que 
+\begin_inset Formula $x'$
+\end_inset
+
+ pertenece a la recta 
+\begin_inset Formula $l'$
+\end_inset
+
+).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Rectificación estéreo
+\end_layout
+
+\begin_layout Standard
+La rectificación estéreo proyecta las imágenes obtenidas por las cámaras
+ a un plano imagen en común, de manera que puntos correspondientes (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:correspondencia_estereo"
+
+\end_inset
+
+) se encontrarán alineados en una misma fila (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:stereo_rectified"
+
+\end_inset
+
+).
+ Esta proyección permite considerar las cámaras involucradas como paralelas,
+ es decir, relacionadas por únicamente por una translación en el eje horizontal
+ la cual se conoce como línea base (
+\emph on
+baseline
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/stereo_rectification.svg
+	lyxscale 70
+	width 40text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Par estéreo rectificado, notar que los planos imagen de las cámaras se encuentra
+ alineadas 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:stereo_rectified"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Luego de la rectificación, la búsqueda de correspondencias entre las imágenes
+ es simplificada a una búsqueda horizontal sobre la misma fila.
+ Este resultado es interesante para el cálculo de la disparidad entre caracterís
+ticas visuales, la cual permite estimar la profundidad (posición en el espacio)
+ con respecto a la cámara en que se encuentran las marcas del ambiente observada
+s.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:triangulacion_estereo"
+
+\end_inset
+
+Triangulación de puntos del espacio
+\end_layout
+
+\begin_layout Standard
+Dada una rectificación estéreo se puede realizar una reconstrucción 3D de
+ los puntos presentes en las imágenes.
+ La Figura (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:triangulation"
+
+\end_inset
+
+) muestra la geometría involucrada durante la triangulación de un punto
+ 
+\begin_inset Formula $P$
+\end_inset
+
+ del espacio.
+ Siendo 
+\begin_inset Formula $P=(X,Y,Z)$
+\end_inset
+
+ un punto 3D del espacio, 
+\begin_inset Formula $(x^{l},y^{l})$
+\end_inset
+
+ y 
+\begin_inset Formula $(x^{r},y^{r})$
+\end_inset
+
+ su proyección en la cámara izquierda y derecha respectivamente y 
+\begin_inset Formula $T$
+\end_inset
+
+ la línea base que une las cámaras, las coordenadas de 
+\begin_inset Formula $P$
+\end_inset
+
+ pueden ser derivadas a través de propiedades propias de triángulos semejantes.
+ Específicamente, las siguientes relaciones pueden ser derivadas:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+X=\frac{x^{l}\cdot Z}{f}\qquad Y=\frac{y^{l}\cdot Z}{f}\qquad Z=\frac{T\cdot f}{x^{l}-x^{r}}\label{eq:triangulation1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/stereo_triangulation.svg
+	lyxscale 80
+	width 40text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Escenario de triangulación estéreo con cámaras rectificadas donde se desea
+ calcular las coordenadas de 
+\begin_inset Formula $P$
+\end_inset
+
+, en especial la profundidad 
+\begin_inset Formula $Z$
+\end_inset
+
+.
+ Los parámetros intrínsecos como la distancia focal 
+\begin_inset Formula $f$
+\end_inset
+
+ y puntos principales 
+\begin_inset Formula $c^{left},c^{right}$
+\end_inset
+
+ son conocidos, así como también los centros de cámara 
+\begin_inset Formula $O_{l},O_{r}$
+\end_inset
+
+ y la línea base 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:triangulation"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Si bien la triangulación requiere de formulas sencillas es interesante observar
+ que la capacidad de observar la profundidad en que se encuentra un punto
+ del espacio esta condicionada por la resolución de las cámaras.
+ Se define la disparidad como la distancia existente entre las proyecciones
+ de las diferentes cámaras como 
+\begin_inset Formula $d=x^{l}-x^{r}$
+\end_inset
+
+ y es interesante notar que la profundidad 
+\begin_inset Formula $Z$
+\end_inset
+
+ es inversamente proporcional a la disparidad 
+\begin_inset Formula $d$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:triangulation1"
+
+\end_inset
+
+).
+ Puntos del ambiente cercanos presentaran mayor disparidad en las proyecciones
+ que puntos distantes.
+ Cuando el valor de 
+\begin_inset Formula $d$
+\end_inset
+
+ es cercano a 
+\begin_inset Formula $0$
+\end_inset
+
+, pequeñas diferencias de disparidad producen un gran cambio en la profundidad
+ percibida y cuando el valor de 
+\begin_inset Formula $d$
+\end_inset
+
+ es grande, pequeñas diferencias de disparidad producen pequeños cambios
+ en la profundidad.
+ La consecuencia de esto es que la reconstrucción 3D del ambiente utilizando
+ cámaras estéreo es más precisa para puntos cercanos a la cámara.
+\end_layout
+
+\begin_layout Subsection
+Detección, descripción y asociación de características visuales
+\end_layout
+
+\begin_layout Standard
+Los procesos de detección y descripción de características visuales (
+\emph on
+features
+\emph default
+) corresponden a operaciones de bajo nivel en el procesado de imágenes.
+ Tienen como finalidad detectar marcas naturales en el entorno (
+\emph on
+landmarks
+\emph default
+) y describirlas de manera de poder identificarlas en otras imágenes capturadas
+ desde otros puntos de vista o posiciones de la cámara.
+ De esta forma, se puede abstraer las imágenes sensadas a un conjunto de
+ descriptores.
+ Esta técnica de discretización de imágenes es conocida como registro de
+ imágenes (
+\emph on
+image registration
+\emph default
+) y es ampliamente utilizada en visión por computadoras (
+\emph on
+computer vision
+\emph default
+) dado que permite sustraer características visuales de interés y reducir
+ considerablemente la magnitud de los datos con los que tratar.
+\end_layout
+
+\begin_layout Standard
+Existen diversos tipos de detectores los cuales pueden dividirse en dos
+ categorías dependiendo del tipo de características que busque en la imagen:
+ detectores de esquinas (
+\emph on
+corner detectors
+\emph default
+) y detectores de regiones de interés (
+\emph on
+region of interest detectors
+\emph default
+ o 
+\emph on
+blob detectors
+\emph default
+).
+ Uno de los primeros detectores de esquinas fue planteado por Moravec 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MORAVEC"
+
+\end_inset
+
+ el cual considera como puntos de interés aquellos que presentan una variación
+ de intensidad considerable en toda dirección.
+ Harris et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "HARRIS"
+
+\end_inset
+
+ resuelve algunas de las debilidades del detector de Moravec incluyendo
+ un análisis numérico de autovalores sobre la denominada 
+\begin_inset Quotes eld
+\end_inset
+
+matriz de Harris
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Posteriormente Shi y Tomasi 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SHITOMASI"
+
+\end_inset
+
+ extienden este análisis de autovalores introduciendo un criterio para evaluar
+ la calidad de las esquinas detectadas en relación a la textura observada
+ en un área cercana.
+ Rosten et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FAST"
+
+\end_inset
+
+ nombra a su método FAST, el cual utiliza técnicas de aprendizaje automático
+ (
+\emph on
+machine learning
+\emph default
+) para aumentar la velocidad en la detección de esquinas.
+ Lowe 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SIFT"
+
+\end_inset
+
+ introduce SIFT (
+\emph on
+Scale Invariant Feature Transform
+\emph default
+), donde propone utilizar un detector de regiones basado en el filtro de
+ diferencias gaussianas (Difference of Gaussians filter), un método computaciona
+lmente demandante pero capaz de extraer características visuales invariantes
+ a cambios tanto de escala como de rotación e iluminación.
+ El método propuesto por Bay et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SURF"
+
+\end_inset
+
+, SURF (
+\emph on
+Speeded Up Robust Features
+\emph default
+), inspirado en SIFT logra reducir el costo computacional a partir de utilizar
+ imágenes integrales, manteniendo la calidad de detección y extracción de
+ características invariantes a rotación y escala.
+\end_layout
+
+\begin_layout Standard
+Asimismo, una gran variedad de métodos capaces de describir puntos y regiones
+ fueron concebidos conforme el interés en la visión por computadoras fue
+ creciendo.
+ Una característica determinante de los métodos de descripción (o descriptores)
+ es que deben estar acompañados por técnicas efectivas que permitan comparar
+ las características visuales descriptas, de manera de poder identificar
+ y asociar aquellas que estén presentes en distintos cuadros (
+\emph on
+frames
+\emph default
+).
+ Por lo general la descripción, comparación y asociación de características
+ es uno de los procesos más demandantes en términos de costo computacional.
+ Métodos como SIFT y SURF permiten extraer características visuales de gran
+ calidad, pero su extracción y comparación es muy costosa y se requieren
+ implementaciones especificas que exploten el poder de computo de aceleradoras
+ gráficas (GPU) para satisfacer las necesidades de velocidad en sistemas
+ de Visual SLAM.
+ Esto se debe en medida a que las descripciones que generan son complejas
+ y están basadas en vectores multidimensionales de valores de punto flotante.
+\end_layout
+
+\begin_layout Standard
+Con el objetivo de acelerar la comparación y asociación de descriptores,
+ investigaciones recientes se han centrado en un tipo de descriptores llamados
+ binarios.
+ Estos tienen la particularidad de representar características visuales
+ como cadenas de 
+\emph on
+bits
+\emph default
+, las cuales son comparable a través de rápidas operaciones binarias como
+ por ejemplo la distancia Hamming.
+ Calonder et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BRIEF"
+
+\end_inset
+
+ propone un veloz descriptor binario denominado BRIEF, el cual describe
+ características en una única cadena de 
+\emph on
+bits
+\emph default
+.
+ Para esto utiliza las diferencias de intensidad entre pares de píxeles
+ dentro de un área rectangular alrededor del punto de interés, utilizando
+ un patrón previamente computado para la selección de los pares.
+ Si bien la descripción de BRIEF es considerablemente veloz comparada a
+ SIFT y SURF, este descriptor es sensible a cambios de escala y rotación,
+ dado que genera descripciones muy disimiles de un mismo punto cuando este
+ es rotado o escalado (por ejemplo, aumentando el zoom de la cámara).
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Es congruente hacer las referencias de ORB y BRISK sin el --- et al.??
+\end_layout
+
+\end_inset
+
+Inspirados por BRIEF, han surgido descriptores binarios invariantes a escala
+ y rotación, como ORB 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ORB"
+
+\end_inset
+
+ y BRISK 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BRISK"
+
+\end_inset
+
+, capaces de igualar y hasta superar en algunos casos la calidad de las
+ características visuales extraídas por métodos más demandantes como SIFT
+ o SURF.
+ En las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:shi_tomasi"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ejemplo_surf"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ejemplo_orb"
+
+\end_inset
+
+ se pueden observar algunos ejemplos de detección y asociación de característica
+s visuales en imágenes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/shitomasi_features.jpg
+	lyxscale 50
+	width 75text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Método de detección de esquinas Shi-Tomasi.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:shi_tomasi"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/surf_features.jpg
+	lyxscale 50
+	width 95text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Regiones de interés detectadas por el método SURF.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ejemplo_surf"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/orb_features.jpg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Asociación de características extraídas por el método ORB.
+ Notar la robustez del método ante la rotación de la imagen.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ejemplo_orb"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

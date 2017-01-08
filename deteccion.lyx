@@ -1,0 +1,1720 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{a4wide}
+\usepackage[graf, intHoriz, sinLU, showDirectores, showCoDirectores]{caratula}
+\usepackage{hyperref}
+
+\let\oldhat\hat
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\hat}[1]{\oldhat{\mathbf{#1}}}
+
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics pdftex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle plain
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Detección de ciclos en la trayectoria
+\end_layout
+
+\begin_layout Standard
+El reconocimiento de lugares previamente visitados es esencial en la robótica
+ móvil dado que provee de información valiosa respecto a la relación entre
+ las estimaciones llevadas a cabo por los sistemas de localización.
+ Tomar conocimiento de que se ha efectuado un ciclo en la trayectoria permite
+ calcular el error cometido en la estimación de la posición y da origen
+ a una serie de procesos que permiten corregir tanto la localización actual
+ del robot como el mapa hasta ese momento construido.
+ A lo largo del tiempo han surgido varios enfoques para dar solución al
+ problema de la detección de ciclos, y esto se debe en parte a que las técnicas
+ concebidas, por lo general, trabajan con información provista por los sistemas
+ SLAM subyacentes.
+ De esta manera, la evolución de los métodos SLAM fue acompañado por un
+ continuo desarrollo de técnicas de detección de ciclos.
+\end_layout
+
+\begin_layout Standard
+Es posible interpretar y tratar el problema de la detección de ciclos como
+ un problema de asociación de información (
+\emph on
+data association
+\emph default
+), en el que el objetivo es lograr relacionar datos provenientes de una
+ misma fuente.
+ Para el caso de SLAM el objetivo es entonces asociar diferentes mediciones
+ provenientes de una misma marca del ambiente.
+ De no tener éxito en esta asociación, se podría considerar una medición
+ como proveniente de una marca aún no observada cuando en realidad ya había
+ sido observada.
+ Esto afecta la calidad de las estimaciones y hasta podría generar inconsistenci
+as críticas en el modelo sobre el cual se esta trabajando.
+ Por dar un ejemplo, en el caso de sistemas EKF-SLAM es de suma importancia
+ mantener actualizada la correlación entre las observaciones de las marcas
+ del ambiente.
+ Para esto se deben relacionar dichas observaciones eficientemente a lo
+ largo del tiempo ya que una matriz de covarianza inconsistente, que no
+ refleje fehacientemente la correlación entre los datos, impide el cálculo
+ de la incertidumbre y degrada progresivamente el desempeño del sistema.
+\end_layout
+
+\begin_layout Section
+Métodos métricos para la detección de ciclos
+\end_layout
+
+\begin_layout Standard
+Estos métodos trabajan sobre información espacial estimada por los métodos
+ SLAM.
+ En base a estimaciones de la ubicación del robot y la distribución geométrica
+ de las marcas del ambiente, se busca identificar mediciones provenientes
+ de una misma marca.
+ Inspiradas por métodos de seguimiento de objetivos (
+\emph on
+target tracking
+\emph default
+) aplicados en radares 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bar1987tracking,bar2009probabilistic"
+
+\end_inset
+
+, las primeras soluciones propuestas consideraban la asociación entre observacio
+nes y marcas del ambiente de manera individual, comprobando si la observación
+ de una determinada marca se encontraba cerca de la ubicación predicha.
+ La estabilidad y precisión de este tipo de métodos se ve comprometida por
+ el error acumulado en las estimaciones y la incertidumbre sobre la locación
+ del robot.
+ Neira y Tardós 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neira2001data"
+
+\end_inset
+
+ introdujeron el método JCBB (
+\emph on
+Joint Compatibility Branch and Bound
+\emph default
+), en donde se define un criterio de compatibilidad donde múltiples observacione
+s son consideradas al mismo tiempo, tomando en cuenta de manera explicita
+ la correlación entre las mismas.
+ El método se extiende en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neira2003linear"
+
+\end_inset
+
+ obteniendo buenos resultados utilizando sensores láser.
+ Luego, Clemente et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "clemente2007mapping"
+
+\end_inset
+
+ implementa el método en un sistema VSLAM basado en EKF utilizando una cámara
+ monocular logrando cerrar ciclos en trayectorias de grandes dimensiones
+ aunque aún no en tiempo real.
+ Baley et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bailey2000data"
+
+\end_inset
+
+ utiliza técnicas de clusterización para la generación de grafos que modelen
+ las relaciones de distancia relativa y angular entre marcas del ambiente,
+ de manera de poder detectar sub-grafos contenidos que representen distribucione
+s de marcas antes observadas.
+ Todos estos métodos resultan efectivos a corto y mediano plazo, donde la
+ asociación de observaciones es requerida para mantener la consistencia
+ de los métodos SLAM, pero se vuelven demasiado complejos e inestables al
+ tratar con entornos de grandes dimensiones donde el error acumulado en
+ las estimaciones es considerable.
+\end_layout
+
+\begin_layout Section
+Métodos basados en apariencia para la detección de ciclos
+\end_layout
+
+\begin_layout Standard
+Al utilizar cámaras como sensores es posible obtener, a través de la detección
+ y descripción de características visuales, información valiosa sobre la
+ apariencia de lo que se esté observando.
+ Esta información de apariencia es independiente de las estimaciones geométricas
+ llevadas a cabo por los sistemas SLAM, y por lo tanto no se ve afectada
+ por el error acumulado.
+ El problema a resolver reside, en cambio, en encontrar un método efectivo
+ que permita interpretar el entorno observado de manera de reconocer la
+ apariencia de lugares que hubieran sido observados anteriormente.
+\end_layout
+
+\begin_layout Standard
+Williams et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "williams2007real,williams2011automatic"
+
+\end_inset
+
+ se basa en un método de reconocimiento de objetos introducido por Lepetit
+ y Fua 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lepetit2006keypoint"
+
+\end_inset
+
+, el cual es capaz de detectar características visuales recurrentes en sucesivos
+ cuadros de vídeo.
+ Se interpreta el problema de la detección de ciclos como un problema de
+ clasificación, donde un clasificador es entrenado de manera que cada clase
+ se construye con todas las posibles apariencias de una característica en
+ particular.
+ El clasificador se implementa sobre un árbol de decisión que permite consultar
+ a que clase pertenece una determinada característica visual.
+ En cada nivel del árbol se realizan diferentes comprobaciones logrando
+ una clasificación veloz y eficientemente (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:clasificador"
+
+\end_inset
+
+).
+ Williams utiliza una GPU para realizar un entrenamiento 
+\begin_inset Quotes eld
+\end_inset
+
+online
+\begin_inset Quotes erd
+\end_inset
+
+ del clasificador con 400 versiones distorsionadas de cada nueva característica
+ visual detectada en cada cuadro obtenido de la cámara.
+ Se comprueba la re-ocurrencia de características visuales en sucesivos
+ cuadros y a través de un sistema de votación, se analizan las posibles
+ hipótesis de manera de determinar si las características visuales detectadas
+ determinan en su conjunto la apariencia de un lugar previamente observado.
+ El método se implementa en un hilo de ejecución paralelo usando una versión
+ mejorada del clasificador de Lepetit y Fua implementada sobre listas de
+ decisión, logrando operar en tiempo real sobre un sistema basado en EKF-SLAM.
+ Si bien el sistema logra detectar ciclos de manera efectiva, este requiere
+ de unidades de procesamiento gráfico (GPU) y su escalabilidad es limitada
+ dado que el consumo de memoria es muy elevado al construir las clases de
+ apariencia de cada característica visual.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/lepetit_classifier.png
+	lyxscale 50
+	width 55text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Árbol clasificador entrenado donde cada 
+\begin_inset Formula $Q_{i}$
+\end_inset
+
+ representa una comprobación binaria sobre una característica visual.
+ Cada hoja tiene asociada una distribución correspondiente a la probabilidad
+ de que dicha característica pertenezca a alguna de las clases.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:clasificador"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por otro lado, surgieron varios métodos basados en una técnica denominada
+ 
+\emph on
+Bag of Words
+\emph default
+, la cual fue aplicada originalmente para el análisis de texto.
+ Sivic y Zisserman 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sivic2003video"
+
+\end_inset
+
+ fueron quienes introdujeron dicha técnica en el análisis de video para
+ el reconocimiento de objetos.
+ En su trabajo, proponen discretizar el espacio de descriptores visuales
+ entrenando un vocabulario visual de palabras (
+\emph on
+words
+\emph default
+), el cual representa una división en 
+\emph on
+clusters
+\emph default
+ de todos los posibles descriptores.
+ Por cada 
+\emph on
+cluster
+\emph default
+, un único descriptor visual es considerado como su representante, y a su
+ vez, todo descriptor representante es considerado una palabra (
+\emph on
+word
+\emph default
+).
+ Para lograr esta discretización se utilizan métodos de clusterización de
+ datos que permitan agrupar, por similitud, descriptores extraídos de una
+ secuencia de imágenes de entrenamiento.
+ El vocabulario visual resultante del entrenamiento es utilizado para interpreta
+r una imagen como el conjunto de palabras que representen a los descriptores
+ visuales presentes en la misma.
+ Este conjunto de palabras es implementado como un vector de palabras conocido
+ en la literatura como vector 
+\emph on
+bag-of-words
+\emph default
+.
+ A cada palabra del vocabulario visual se le asigna un 
+\begin_inset Quotes eld
+\end_inset
+
+peso
+\begin_inset Quotes erd
+\end_inset
+
+ en relación a la frecuencia con que son observadas características visuales
+ que corresponden a dicha palabra.
+ De manera que palabras más frecuentes son consideradas menos discriminativas,
+ y por consiguiente los descriptores visuales a los que representan son
+ considerados, a su vez, menos discriminativos.
+ Utilizando esta idea, es posible caracterizar la similitud entre dos imágenes
+ como una relación entre los pesos asignados a las palabras que las componen.
+\end_layout
+
+\begin_layout Standard
+Ho y Newman 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ho2007detecting"
+
+\end_inset
+
+ hacen un profundo análisis de este método aplicado para la detección de
+ ciclos.
+ En su trabajo se define la matriz de similaridad visual (
+\emph on
+visual similarity matrix
+\emph default
+) 
+\begin_inset Formula $M$
+\end_inset
+
+ donde cada elemento 
+\begin_inset Formula $M_{ij}$
+\end_inset
+
+ es el valor de similitud 
+\begin_inset Formula $s(I_{i},I_{j})$
+\end_inset
+
+ entre las imágenes 
+\begin_inset Formula $I_{i}$
+\end_inset
+
+ e 
+\begin_inset Formula $I_{j}$
+\end_inset
+
+ pertenecientes a la secuencia de imágenes 
+\begin_inset Formula $I=[I_{1},I_{2},\ldots]$
+\end_inset
+
+ obtenidas por la cámara.
+ Sobre esta matriz de similaridad se analiza la relación entre los ciclos
+ de la trayectoria y la aparición de subdiagonales de altos valores de similitud
+ en la matriz 
+\begin_inset Formula $M$
+\end_inset
+
+ (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:matriz_similaridad"
+
+\end_inset
+
+).
+ En el trabajo se obtienen además interesantes resultados e interpretaciones
+ del impacto de características visuales muy recurrentes provenientes de,
+ por ejemplo, arbustos o formas geométricas presentes en casas o edificios.
+ Basados en este trabajo, Cummins y Newman 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cummins2008fab,cummins2010accelerating"
+
+\end_inset
+
+ desarrollan FAB-MAP, que hasta la fecha permanece como uno de los métodos
+ más confiables para la detección de ciclos y análisis de apariencia.
+ El mismo plantea un modelo probabilístico de complejidad lineal donde se
+ toma en cuenta la dependencia entre las palabras encontradas en las imágenes.
+ Se pondera el grado de distinción que aporta la aparición de una palabra
+ en la imagen, en relación a cuales otras palabras aparecen junto a ésta.
+ Así, palabras que comúnmente no se las encuentre juntas se las considera
+ más discriminativas.
+ El método procesa una secuencia de imágenes de entrenamiento para la creación
+ de un vocabulario visual junto con un árbol de Chow Liu 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "chow1968approximating"
+
+\end_inset
+
+, este último se utiliza para aproximar la relación de dependencia entre
+ las palabras.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "33.3text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/similarity_matrix.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "33.3text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/low_similarity_matrix.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "33.3col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/proc_similarity_matrix.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(c)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+(a) Matriz 
+\begin_inset Formula $M$
+\end_inset
+
+ de similitud entre imágenes, elementos 
+\begin_inset Formula $M_{ij}$
+\end_inset
+
+ representan la similitud entre las imágenes 
+\begin_inset Formula $I_{i}$
+\end_inset
+
+ e 
+\begin_inset Formula $I_{j}$
+\end_inset
+
+.
+ Elementos de alta similitud se representan en un tono oscuro mientras que
+ los de baja similitud en tono claro.
+ Notar que 
+\begin_inset Formula $M$
+\end_inset
+
+ es simétrica.
+ (b) Triangular inferior de 
+\begin_inset Formula $M$
+\end_inset
+
+ excluyendo, además, elementos cercanos a la diagonal.
+ (c) Resultado de aplicar un algoritmo propuesto en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ho2007detecting"
+
+\end_inset
+
+ sobre la matriz 
+\begin_inset Formula $M$
+\end_inset
+
+, en este, se acentúan subdiagonales de altos valores de similitud.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:matriz_similaridad"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+FAB-MAP fue implementado utilizando SURF para la detección y descripción
+ de características visuales, el cual es computacionalmente demandante,
+ por lo que para trabajar en tiempo real se requiere el uso de procesadores
+ gráficos (GPU).
+ Esto inspiró la introducción de detectores de ciclos capaces de operar
+ con descriptores binarios de rápida procesamiento.
+ Galvez-Lopez y Tardós 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "galvez2011real,Galvez:Tardos:TRO12"
+
+\end_inset
+
+ introducen por primera vez un detector de ciclos basado en descriptores
+ binarios desarrollado utilizando la biblioteca DBoW, de su propia autoría,
+ para el manejo de vectores 
+\emph on
+bag-of-words
+\emph default
+.
+ Este método, a diferencia de FAB-MAP, no utiliza un modelo probabilístico
+ para tomar en cuenta la similitud de lugares previamente visitados.
+ En vez de esto, introducen el concepto de consistencia temporal (
+\emph on
+temporal consistency
+\emph default
+) de manera que grupos de imágenes tomadas en momentos cercanos se consideran
+ de manera conjunta aumentando la confiabilidad de la detección.
+ Al utilizar descriptores binarios el computo de vectores 
+\emph on
+bag-of-words
+\emph default
+ es muy veloz, así como también la comparación entre estos.
+ El resultado es un sistema capaz de detectar ciclos en la trayectoria realizada
+, en tiempo real considerando toda imagen tomada por la cámara.
+ Mur-Artal y Tardós 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mur2014fast"
+
+\end_inset
+
+ utilizan posteriormente la librería DBoW para la implementación de un sistema
+ capaz de detectar ciclos a nivel de solo algunos cuadros clave (
+\emph on
+keyframes
+\emph default
+) provistos por la cámara.
+ En el trabajo se utiliza el descriptor binario ORB el cual provee una buena
+ calidad de asociación ante cambios de escala y definen un método de verificació
+n de ciclos utilizando el mapa provisto por un sistema VSLAM basado en PTAM
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Klein:Murray:ISMAR07"
+
+\end_inset
+
+.
+ Este sistema logra tanto el cierre de ciclos de manera consistente como
+ la relocalización de la cámara luego de fallas o pérdida en la localización
+ y es la base del sistema ORB-SLAM 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mur-Artal:etal:CoRR15"
+
+\end_inset
+
+ desarrollado por los mismos autores posteriormente.
+\end_layout
+
+\begin_layout Standard
+La biblioteca DBoW resulta de gran interés para la solución final presentada
+ en este trabajo, por lo que es revisada en detalle en la sección siguiente.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Hablar algo del modelo de memoria de RTAB-MAP?? y que es incremental??
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:DBoW"
+
+\end_inset
+
+Análisis de apariencia y detección de ciclos utilizando 
+\emph on
+bag-of-words
+\end_layout
+
+\begin_layout Standard
+Galvez-Lopez y Tardós introducen DBoW 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "galvez2011real,Galvez:Tardos:TRO12"
+
+\end_inset
+
+, una biblioteca completa para el análisis de apariencia a través de vocabulario
+s visuales y comparaciones entre vectores 
+\emph on
+bag-of-words
+\emph default
+ extraídos de las imágenes.
+ La misma esta inspirada por los trabajos de Sivic y Zisserman 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sivic2003video"
+
+\end_inset
+
+ y Nister y Stewenius 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nister2006scalable"
+
+\end_inset
+
+.
+ Utilizando estas técnicas los autores proponen un eficiente método de detección
+ de ciclos basado en la evaluación de distintos criterios de consistencia.
+\end_layout
+
+\begin_layout Subsection
+Independencia del descriptor
+\end_layout
+
+\begin_layout Standard
+Los modelos de evaluación de apariencia son independientes del tipo de descripto
+r con el que se trabaje.
+ Las técnicas involucradas requieren que los descriptores de características
+ visuales puedan ser comparados bajo algún criterio de distancia.
+ Por lo general, para descriptores binarios se utiliza la norma Hamming
+ mientras que para descriptores vectoriales se utiliza la norma 2 correspondient
+e a la distancia Euclídea.
+ En el caso de los descriptores binarios, se requiere además una metodología
+ que permita establecer el elemento medio o centroide de un conjunto de
+ descriptores.
+ Para esto se utiliza una técnica denominada 
+\emph on
+k-majority
+\emph default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "grana2013fast"
+
+\end_inset
+
+ que define un esquema de votación entre descriptores binarios para la determina
+ción de centroides.
+\end_layout
+
+\begin_layout Standard
+Cabe destacar que si bien las técnicas introducidas son independientes de
+ los descriptores, el desempeño del detector de ciclos no lo será.
+ Descriptores invariantes a escala y rotación serán capaces de comparar
+ la apariencia entre locaciones previamente visitadas aún cuando estas fueran
+ recorridas desde diferentes puntos de vista.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:visual_vocabulary"
+
+\end_inset
+
+Vocabulario visual
+\end_layout
+
+\begin_layout Standard
+El vocabulario visual consta de una estructura jerárquica arbolada donde
+ sus nodos están compuestos por descriptores, los cuales representan a un
+ conjunto de descriptores cercanos.
+ Para construirlo, se discretiza el espacio de descriptores en un vocabulario
+ compacto de 
+\begin_inset Formula $W$
+\end_inset
+
+ palabras.
+ Se extraen características visuales de un conjunto de imágenes de entrenamiento
+ diferente e independiente del entorno donde se utilizará luego el sistema.
+ A través de una clusterización de k-medias (
+\emph on
+k-means clustering
+\emph default
+) utilizando el método k-means++ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "arthur2007k"
+
+\end_inset
+
+, los descriptores asociados a las características visuales son repartidos
+ en 
+\begin_inset Formula $k_{w}$
+\end_inset
+
+ clusters donde un único descriptor es elegido como representante y centro
+ de cada cluster.
+ Estos clusters forman el primer nivel de nodos del vocabulario visual y
+ cada uno será dividido, a su vez, en 
+\begin_inset Formula $k_{w}$
+\end_inset
+
+ nuevos clusters de manera recursiva, hasta 
+\begin_inset Formula $L_{w}$
+\end_inset
+
+ veces.
+ 
+\begin_inset Formula $k_{w}$
+\end_inset
+
+ representa, entonces, un factor de ramificación que define el número de
+ nuevas ramas a generar en cada subsecuente nivel del vocabulario visual.
+ Al final del proceso se obtiene un vocabulario visual donde los nodos de
+ cada nivel contienen un descriptor el cual es el centro de un cluster a
+ un determinado nivel de subdivisión del espacio de descriptores.
+ Se consideran como palabras las hojas del vocabulario visual, por lo que
+ el método es capaz de representar hasta 
+\begin_inset Formula $k_{w}^{L_{w}}$
+\end_inset
+
+ palabras solo determinadas por la distribución de los descriptores de entrenami
+ento (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:clustering_vocabulary"
+
+\end_inset
+
+)\SpecialChar \@.
+
+\end_layout
+
+\begin_layout Standard
+Al momento de crear el vocabulario visual se le asigna a cada palabra un
+ peso (
+\emph on
+weight
+\emph default
+) de acuerdo a su relevancia en la secuencia de entrenamiento.
+ Mientras más frecuente sea una palabra (menos discriminativa), más bajo
+ el peso que se le asigna.
+ Sea 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ una palabra del vocabulario, se asigna durante el entrenamiento un peso
+ correspondiente a su frecuencia de documento inversa (
+\emph on
+inverse document frequency 
+\emph default
+o
+\emph on
+ idf
+\emph default
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+idf(i)=log(\frac{N}{n_{i}})
+\end{equation}
+
+\end_inset
+
+donde 
+\begin_inset Formula $N$
+\end_inset
+
+ es el número total de imágenes de entrenamiento y 
+\begin_inset Formula $n_{i}$
+\end_inset
+
+ el número total de ocurrencias de la palabra 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ en dichas imágenes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/clustering_vocabulary.png
+	lyxscale 50
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Construcción del vocabulario visual, los nodos representan centros de cluster
+ a cada nivel de subdivisión.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:clustering_vocabulary"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Conversión de imágenes a bag-of-words
+\end_layout
+
+\begin_layout Standard
+Para convertir una imagen 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+, tomada en el tiempo 
+\begin_inset Formula $t$
+\end_inset
+
+, en un vector 
+\emph on
+bag-of-words
+\emph default
+, sus descriptores deben recorrer el vocabulario visual desde la raíz hasta
+ las hojas.
+ En cada nivel se elige el nodo siguiente de forma que la distancia entre
+ el descriptor asociado al nodo y el descriptor obtenido de la imagen, sea
+ mínima.
+ De esta manera al llegar a una hoja del vocabulario visual, se obtiene
+ por cada descriptor, una palabra que lo representa junto a un peso asignado
+ en la etapa de entrenamiento.
+ Habiendo identificado las palabras presentes en 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+, es posible medir además la relevancia descriptiva que estas tengan en
+ la apariencia de 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+.
+ Para eso se calcula la frecuencia de termino (
+\emph on
+term frecuency 
+\emph default
+o
+\emph on
+ tf
+\emph default
+) para cada palabra 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ presente en 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+tf(i,I_{t})=\frac{n_{iI_{t}}}{n_{I_{t}}}
+\end{equation}
+
+\end_inset
+
+donde 
+\begin_inset Formula $n_{iI_{t}}$
+\end_inset
+
+representa el número de ocurrencias de la palabra 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ en la imagen 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ y 
+\begin_inset Formula $n_{I_{t}}$
+\end_inset
+
+ el número total de palabras encontradas en 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+.
+ Teniendo esta información resulta beneficioso definir vectores 
+\emph on
+bag-of-words
+\emph default
+ para evaluar la similitud entre dos imágenes, en relación al factor 
+\emph on
+tf-idf
+\emph default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sivic2003video"
+
+\end_inset
+
+.
+ Es decir, para una imagen 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ se construye el vector 
+\emph on
+bag-of-words
+\emph default
+ 
+\begin_inset Formula $v_{t}\in\mathbb{R}^{W}$
+\end_inset
+
+ tal que 
+\begin_inset Formula 
+\begin{equation}
+(v_{t})_{i}=tf(i,I_{t})\times idf(i)
+\end{equation}
+
+\end_inset
+
+para todo 
+\begin_inset Formula $i\in[1,\ldots,W]$
+\end_inset
+
+ donde el factor 
+\begin_inset Formula $idf(i)$
+\end_inset
+
+ es calculado anteriormente en la etapa de entrenamiento del vocabulario
+ visual.
+\end_layout
+
+\begin_layout Subsection
+Base de datos de imágenes
+\end_layout
+
+\begin_layout Standard
+Para lograr la detección de lugares visitados previamente es necesario que
+ al momento de analizar una nueva imagen, sea posible obtener todas aquellas
+ imágenes anteriores que compartan algún grado de similitud con esta.
+ Para esto se construye una base de datos que permita ser consultada eficienteme
+nte.
+ Esta base de datos esta compuesta por el vocabulario visual y los índices
+ directos e indirectos que vinculan imágenes con palabras (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:base_de_imagenes"
+
+\end_inset
+
+), permitiendo la búsqueda eficiente de imágenes que posean una determinada
+ palabra y, de manera inversa, recuperar todas las palabras presentes en
+ una imagen.
+\end_layout
+
+\begin_layout Standard
+Las imágenes recibidas se agregan a la base de datos de forma progresiva
+ utilizando su representación en vectores 
+\emph on
+bag-of-words
+\emph default
+ conformados por los pesos 
+\emph on
+tf-idf
+\emph default
+.
+ Los índices se actualizan de manera acorde permitiendo la comparación entre
+ imágenes de manera eficiente.
+ La similitud entre imágenes se mide comparando sus vectores 
+\emph on
+bag-of-words.
+
+\emph default
+ 
+\end_layout
+
+\begin_layout Standard
+Sean 
+\begin_inset Formula $v_{1}$
+\end_inset
+
+ y 
+\begin_inset Formula $v_{2}$
+\end_inset
+
+ vectores 
+\emph on
+bag-of-words, 
+\emph default
+se evalúa la similitud entre éstos calculando la evaluación 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ (
+\begin_inset Formula $L_{1}$
+\end_inset
+
+-
+\emph on
+score
+\emph default
+) propuesta por 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nister2006scalable"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+s(v_{1},v_{2})=1-\frac{1}{2}\left|\frac{v_{1}}{|v_{1}|}-\frac{v_{2}}{|v_{2}|}\right|
+\end{equation}
+
+\end_inset
+
+donde 
+\begin_inset Formula $s(v_{1},v_{2})\in[0\ldots1]$
+\end_inset
+
+.
+ De esta manera se utiliza el vocabulario visual para obtener el vector
+ 
+\emph on
+bag-of-words 
+\emph default
+asociado a cada nueva imagen recibida.
+ Este vector es luego comparado contra el vector asociado a toda otra imagen
+ anterior, presente en la base de datos, que comparta alguna palabra en
+ común.
+ Habiendo obtenido un conjunto de posibles candidatos a ciclos junto con
+ sus respectivas valoraciones de similitud, se agrega la nueva imagen a
+ la base de datos y se procede a un análisis de consistencia que permita
+ determinar si el sitio en el que se encuentra el robot había sido previamente
+ visitado.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/dbow_struct.png
+	lyxscale 50
+	width 70text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Estructuras que componen la base de datos de imágenes.
+ En el ejemplo el vocabulario visual posee 
+\begin_inset Formula $L_{w}=2$
+\end_inset
+
+ niveles y un factor de ramificación 
+\begin_inset Formula $k_{w}=3$
+\end_inset
+
+, formando 9 diferentes palabras en las hojas.
+ El índice inverso vincula cada palabra con toda imagen en la que estuvo
+ presente junto con el peso 
+\emph on
+tf-idf
+\emph default
+ asociado.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:base_de_imagenes"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Dejo el indice directo aun cuando en realidad no hablo demasiado?? yo no
+ lo uso tampoco en la solucion final..
+ Lo menciono apenas en la parte de validación de la detección del DLoopDetector
+ pero después no lo voy a usar..
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:analisis_similaridad"
+
+\end_inset
+
+Detección de ciclos y análisis de consistencia
+\end_layout
+
+\begin_layout Standard
+Las estructuras y métodos anteriormente expuestos tienen como fin proveer
+ de herramientas suficientes para poder comparar imágenes de manera eficiente.
+ Sin embargo, discriminar en qué casos pudiera haberse cometido un ciclo
+ en la trayectoria requiere un análisis más profundo.
+ Por dar un ejemplo, un robot que transite un pasillo visualmente recurrente
+ genera sucesivas imágenes muy similares entre sí pero no debería considerarse
+ esto como un ciclo en la trayectoria.
+ Analizar la relación temporal entre candidatos de alta similitud permite
+ discernir entre este tipo de situaciones y verdaderos ciclos en la trayectoria.
+ 
+\end_layout
+
+\begin_layout Standard
+Cuando una nueva imagen 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ es adquirida, se obtiene su vector 
+\emph on
+bag-of-words
+\emph default
+ 
+\begin_inset Formula $v_{t}$
+\end_inset
+
+ asociado y se lo utiliza para consultar la base de datos.
+ De este proceso se obtiene una lista de candidatos a ciclos 
+\begin_inset Formula $<v_{t},v_{t_{1}}>,<v_{t},v_{t_{2}}>,\ldots,<v_{t},v_{t_{c}}>$
+\end_inset
+
+ junto con sus respectivos valores de similitud 
+\begin_inset Formula $s(v_{t},v_{t_{j}})$
+\end_inset
+
+, con 
+\size small
+
+\begin_inset Formula $1\leq j\leq C$
+\end_inset
+
+
+\size default
+.
+ El valor de similitud entre los posibles candidatos y 
+\begin_inset Formula $v_{t}$
+\end_inset
+
+ varía dependiendo de la distribución de las palabras en 
+\begin_inset Formula $v_{t}$
+\end_inset
+
+, por lo que la similitud entre imágenes se normaliza con el valor de similitud
+ entre las imágenes 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ y 
+\begin_inset Formula $I_{t-\Delta t}$
+\end_inset
+
+ correspondiente a la anterior:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\eta(v_{t},v_{t_{j}})=\frac{s(v_{t},v_{t_{j}})}{s(v_{t},v_{t-\Delta t})}
+\end{equation}
+
+\end_inset
+
+donde 
+\begin_inset Formula $v_{t-\Delta t}$
+\end_inset
+
+ corresponde al vector 
+\emph on
+bag-of-words
+\emph default
+ de la imagen anterior a 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ y 
+\begin_inset Formula $s(v_{t},v_{t-\Delta t})$
+\end_inset
+
+ representa el grado de similitud entre 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ y 
+\begin_inset Formula $I_{t-\Delta t}$
+\end_inset
+
+.
+ Aquellos candidatos tal que 
+\begin_inset Formula $\eta(v_{t},v_{t_{j}})$
+\end_inset
+
+ no supere un 
+\emph on
+threshold
+\emph default
+ 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ definido son rechazados.
+ Además, podría ocurrir que el valor de 
+\begin_inset Formula $s(v_{t},v_{t-\Delta t})$
+\end_inset
+
+ sea pequeño (por ejemplo, cuando el robot gira rápidamente) generando,
+ erróneamente, que 
+\begin_inset Formula $\eta(v_{t},v_{t_{j}})$
+\end_inset
+
+ sea muy alto.
+ Para solucionar esto se rechaza la existencia de ciclos si el valor de
+ 
+\begin_inset Formula $s(v_{t},v_{t-\Delta t})$
+\end_inset
+
+ no llegará un mínimo establecido.
+ 
+\end_layout
+
+\begin_layout Standard
+Por otro lado, de manera de prevenir que imágenes cercanas en tiempo compitan
+ entre ellas, se las agrupa en 
+\begin_inset Quotes eld
+\end_inset
+
+islas
+\emph on
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\emph default
+ y son tratadas como un único candidato.
+ Es decir, se utiliza 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ para representar un intervalo de tiempo comprendido por 
+\begin_inset Formula $t_{n_{i}},\ldots,t_{m_{i}}$
+\end_inset
+
+y 
+\begin_inset Formula $V_{T_{i}}$
+\end_inset
+
+ para islas que agrupen vectores 
+\emph on
+bag-of-words
+\emph default
+ asociados 
+\begin_inset Formula $v_{t_{n_{i}}},\ldots,v_{t_{m_{i}}}$
+\end_inset
+
+.
+ De esta manera, varios candidatos 
+\begin_inset Formula $<v_{t},v_{t_{n_{i}}}>,\ldots,<v_{t},v_{t_{m_{i}}}>$
+\end_inset
+
+ son interpretados como un único candidato 
+\begin_inset Formula $<v_{t},V_{T_{i}}>$
+\end_inset
+
+, si el intervalo de tiempo entre ellos es suficientemente chico.
+ Estas islas son entonces valoradas de manera conjunta:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+H(v_{t},V_{T_{i}})=\sum_{j=n_{i}}^{m_{i}}\eta(v_{t},v_{t_{j}})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La isla de mayor similitud acumulada 
+\begin_inset Formula $H$
+\end_inset
+
+ es seleccionada como el mejor grupo candidato al cual se lo nota como 
+\begin_inset Formula $V_{T'}$
+\end_inset
+
+.
+ Sobre este grupo se aplica una restricción temporal: 
+\begin_inset Formula $<v_{t},V_{T'}>$
+\end_inset
+
+ debe ser consistente con 
+\begin_inset Formula $k$
+\end_inset
+
+ detecciones positivas anteriores 
+\begin_inset Formula $<v_{t-\Delta t},V_{T_{1}}>,\ldots,<v_{t-k\Delta t},V_{T_{k}}>$
+\end_inset
+
+ donde los intervalos 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ y 
+\begin_inset Formula $T_{i+1}$
+\end_inset
+
+ son cercanos.
+ Si 
+\begin_inset Formula $V_{T'}$
+\end_inset
+
+ cumple esta restricción temporal, se considera como mejor y único candidato
+ a ciclo al par 
+\begin_inset Formula $<v_{t},v_{t'}>$
+\end_inset
+
+ con 
+\begin_inset Formula $t'\in T'$
+\end_inset
+
+ y 
+\begin_inset Formula $v_{t'}\in V_{T'}$
+\end_inset
+
+ es el vector 
+\emph on
+bag-of-words
+\emph default
+ de máximo valor 
+\begin_inset Formula $\eta$
+\end_inset
+
+ dentro de 
+\begin_inset Formula $V_{T'}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Validación geométrica de la detección
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Debería explicar antes métodos de Matching y de como se buscan las correspondenc
+ias y el modelo RANSAC??
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Con los métodos anteriormente descriptos existe la posibilidad de falsos
+ positivos en la detección de ciclos en ambientes visualmente recurrentes.
+ Para lidiar con esto, es posible llevar a cabo un análisis de consistencia
+ geométrica luego de haber detectado un ciclo entre un par de imágenes 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ e 
+\begin_inset Formula $I_{t'}$
+\end_inset
+
+.
+ Esta validación geométrica no esta relacionada con el mapa construido hasta
+ el momento, sino que depende únicamente de la distribución de las característic
+as visuales presentes en las imágenes.
+ El concepto general se basa en que si las imágenes 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ e 
+\begin_inset Formula $I_{t'}$
+\end_inset
+
+ provienen del mismo lugar y muestran un alto grado de similitud, entonces
+ debería ser posible obtener una matriz fundamental (vista en la Sección
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:modelo_estereo"
+
+\end_inset
+
+) consistente que las relacione.
+ 
+\end_layout
+
+\begin_layout Standard
+Los métodos numéricos para el cálculo de la matriz fundamental requieren
+ el establecimiento de correspondencias entre las características visuales
+ de las imágenes, en este caso, de las presentes en la imagen 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ con aquellas presentes en la imagen 
+\begin_inset Formula $I_{t'}$
+\end_inset
+
+.
+ Es posible realizar una búsqueda lineal para obtener las correspondencias,
+ donde toda característica visual en la imagen 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ se compara contra toda característica visual en la imagen 
+\begin_inset Formula $I_{t'}$
+\end_inset
+
+ asociando aquellas que tengan distancia mínima.
+ Este tipo de búsqueda lineal para la asociación de características visuales
+ es costosa, por lo que se aprovecha el índice directo presente en la base
+ de datos de imágenes (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:base_de_imagenes"
+
+\end_inset
+
+) para acceder a las palabras contenidas de cada imagen y comparar característic
+as visuales solo entre aquellas representadas por una misma palabra, es
+ decir, pertenecientes al mismo cluster del vocabulario visual.
+ De esta forma, se acelera la búsqueda de correspondencias comparando las
+ características visuales entre 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ e 
+\begin_inset Formula $I_{t'}$
+\end_inset
+
+ que pertenezcan a la misma palabra.
+ Es posible relajar el método extendiendo la comparación entre características
+ visuales pertenecientes a palabras (clusters) cercanas.
+\end_layout
+
+\begin_layout Standard
+Obtenidas las correspondencias entre las imágenes, se procede con el cálculo
+ de la matriz fundamental entre ellas utilizando RANSAC 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fischler1981random"
+
+\end_inset
+
+.
+ El esquema RANSAC consiste en comprobar la consistencia de sucesivas matrices
+ fundamentales calculadas en base a una selección aleatoria de correspondencias.
+ Si el proceso es capaz de hallar una matriz fundamental consistente con
+ al menos 12 correspondencias entre 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ e 
+\begin_inset Formula $I_{t'}$
+\end_inset
+
+, entonces el ciclo detectado es validado y considerado positivo.
+\end_layout
+
+\begin_layout Standard
+La utilización de este tipo de validación geométrica se aplica para el caso
+ monocular.
+ En el caso estéreo es posible realizar una validación geométrica aprovechando
+ que se puede obtener para cada par de imágenes capturadas la profundidad
+ a las características vistuales detectadas, como veremos en el Capítulo
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:transformacion_relativa"
+
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

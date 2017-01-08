@@ -1,0 +1,497 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{a4wide}
+\usepackage[graf, intHoriz, sinLU, showDirectores, showCoDirectores]{caratula}
+\usepackage{hyperref}
+\usepackage[figurename=Fig.]{caption}
+\usepackage{graphics}
+\usepackage{placeins}
+
+% drawing
+\usepackage{pgfplots} %tikz
+\usepackage{tikz} %tikz
+\usetikzlibrary{shapes,arrows,positioning,fit,backgrounds,calc,intersections} %tikz
+\pgfdeclarelayer{background} %tikz
+\pgfdeclarelayer{foreground} %tikz
+\pgfsetlayers{background,main,foreground} %tikz
+\usepackage{tikzscale} % scale tikz
+
+\let\oldhat\hat
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\hat}[1]{\oldhat{\mathbf{#1}}}
+
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+
+% scaled operators and letters
+\newcommand{\sminus}{\scalebox{0.5}[1.0]{$-$}}
+\newcommand{\splus}{\scalebox{0.7}[0.7]{$+$}}
+\newcommand{\curr}{\scalebox{0.5}[0.5]{$\mathcal{C}$}}
+\newcommand{\sind}[1]{\scalebox{0.6}[0.6]{$#1$}}
+\newcommand{\ind}[1]{\scalebox{0.7}[0.7]{$#1$}}
+
+\captionsetup{font=small,format=hang}
+
+\usepackage[spanish]{babel}
+ 
+\addto\captionsspanish{
+\def\tablename{Tabla}
+\def\listtablename{\'Indice de tablas}
+}
+\end_preamble
+\options ruled,vlined
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics pdftex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle plain
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+integrante{Gastón Ignacio Castro}{}{gcastro@dc.uba.ar}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+titulo{Detección y cierre de ciclos en sistemas SLAM basados en visión estéreo}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fecha{
+\backslash
+today}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+materia{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+director{Pire, Taihú}{tpire@dc.uba.ar}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+codirector{Pablo, De Cristóforis}{pdecris@dc.uba.ar}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+maketitle
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Detección y cierre de ciclos en sistemas SLAM basados en visión estéreo
+\end_layout
+
+\begin_layout Standard
+Las aplicaciones relativas a robots autónomos móviles requieren la construcción
+ de una representación o mapa del entorno y la localización fiable del robot
+ en el mismo.
+ En SLAM (
+\emph on
+Simultaneous Localization And Mapping
+\emph default
+) se plantea abordar ambos problemas de manera simultánea.
+ Los métodos que resuelven SLAM deben tratar con la acumulación del error
+ en la estimación de la posición y orientación del robot, que va creciendo
+ de forma no acotada a medida que aumenta la longitud de la trayectoria
+ recorrida y la dimensión del mapa construido.
+ Para abordar este problema los métodos de SLAM deben contar con la capacidad
+ de detectar una región previamente visitada por el robot y ajustar tanto,
+ la localización del robot como el mapa construido minimizando el error
+ acumulado hasta el momento.
+ Este problema se conoce como 
+\emph on
+Loop Closure
+\emph default
+, que incluye la detección y cierre de ciclos en la trayectoria realizada
+ por el robot.
+\end_layout
+
+\begin_layout Standard
+El presente trabajo propone una solución al problema de la detección y cierre
+ de ciclos en sistemas de SLAM que utilizan cámaras estéreo como sensor
+ principal.
+ Para lograr este objetivo, se divide el problema en tres etapas: la detección
+ de ciclos en la trayectoria, el cálculo del desvío cometido en la localización
+ y la corrección tanto de la localización actual del robot como del mapa
+ construido hasta el momento.
+ Por cada etapa se lleva a cabo una profunda revisión del estado del arte,
+ exponiendo aquellos métodos y técnicas que motivaron la solución propuesta
+ en este trabajo.
+\end_layout
+
+\begin_layout Standard
+Para realizar la detección de ciclos se entrena un vocabulario visual en
+ una etapa previa, de manera de obtener una discretización del espacio de
+ descriptores de las imágenes capturadas por la cámara.
+ Este vocabulario visual se utiliza luego para obtener una representación
+ eficiente de las imágenes (
+\emph on
+bag-of-words
+\emph default
+) que permite evaluar la similitud entre las imágenes obtenidas en un determinad
+o momento y las que componen el mapa construido.
+ A través de la comparación de vectores 
+\emph on
+bag-of-words
+\emph default
+ asociados a cada imagen se hallan candidatos a ciclos que se validan utilizando
+ técnicas geométricas para establecer la consistencia espacial entre los
+ distintos momentos de la trayectoria.
+ Por último, se efectúan los cierres de ciclo y corrección del mapa por
+ medio de técnicas de optimización de grafos y algoritmos de minimización
+ no lineal.
+\end_layout
+
+\begin_layout Standard
+La solución propuesta se implementó como un módulo para ser incorporado
+ al sistema S-PTAM (
+\emph on
+Stereo Parallel Tracking And Mapping
+\emph default
+) de código abierto.
+ Los experimentos realizados con 
+\emph on
+datasets
+\emph default
+ de dominio público bajo el framework ROS (
+\emph on
+Robot Operating System
+\emph default
+) muestran que la detección y cierre de ciclos mejoran drásticamente la
+ estimación de la localización del robot en el entorno y la calidad del
+ mapa construido, permitiendo al mismo tiempo la ejecución del sistema en
+ tiempo real.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Loop detection and closure on stereo-vision based SLAM systems
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+Applications concerning mobile autonomous robots requires building a representat
+ion or map of the environment, and the accurate localization of the robot
+ in it.
+ SLAM (
+\emph on
+Simultaneous Localization and Mapping
+\emph default
+) proposes to address both problems simultaneously.
+ The methods that solve SLAM must deal with error accumulation on the estimation
+ of position and orientation, which grows unbounded as it increases the
+ length of the path traveled and the size of the map constructed.
+ To address this issue, SLAM methods must be able to detect a region previously
+ visited by the robot and adjust both, the robot's localization and the
+ map built minimizing the accumulated error up to that moment.
+ This problem is known as 
+\emph on
+Loop Closure
+\emph default
+, including the detection and closure of loops in the trajectory carried
+ out by the robot.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+This work proposes a solution to the problem of detecting and closing loops
+ in SLAM systems that use stereo cameras as the main sensor.
+ To achieve this objective, the problem is divided into three stages: detection
+ of loops in the trajectory, calculation of the deviation occurred in the
+ localization and correction of both, current robot’s localization and the
+ map built up to that moment.
+ For each stage a thorough review of the state of the art is carried out,
+ exposing those methods and techniques that led to the solution proposed
+ in this work.
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+To perform the loop detection a visual vocabulary is trained in a previous
+ stage in order to obtain a discretization of the descriptor space of images
+ captured by the camera.
+ This visual vocabulary is then used to obtain an efficient representation
+ of images (
+\emph on
+bag-of-words
+\emph default
+) that allows the similarity evaluation of images obtained at a given time
+ and those composing the map built.
+ Loop candidates are formulated through the comparison of the 
+\emph on
+bag-of-words
+\emph default
+ vectors associated to each image, these candidates are then validated using
+ geometric vision techniques for the establishment of the spatial consistency
+ between the different moments of the trajectory.
+ Finally, loop closing and map correction is performed using graph optimization
+ techniques and nonlinear minimization algorithms.
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+The proposed solution is implemented as a module to be incorporated into
+ the S-PTAM (
+\emph on
+Stereo Parallel Tracking And Mapping
+\emph default
+) open source system.
+ Experiments performed with public domain 
+\emph on
+datasets
+\emph default
+ under the ROS (
+\emph on
+Robot Operating System
+\emph default
+) framework, show that detection and closure of loops dramatically improve
+ the estimation of the robot localization on the environment and quality
+ of the map built, while allowing system execution in real time.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "introduccion.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "camara.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "vslam.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "deteccion.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "pnp.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "cierre.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "solucion.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "experimentacion.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "conclusion.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "all"
+options "unsrt"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

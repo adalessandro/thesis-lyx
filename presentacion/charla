@@ -1,0 +1,244 @@
+Muchas gracias, el trabajo se titula: bla.. 
+
+el foco del trabajo fue mejorar el desempeño de un sistema SLAM al estimar la localización de un robot móvil. Cuando este realiza ciclos en su trayectoria, es decir, retorna a lugares que habia visitado previamente.
+
+Introducción al problema de SLAM en la robotica movil y motivaciones al problema planteado
+
+Luego se veremos el método de Loop Closure propuesto
+
+Luego los resultados que validan el método integrado como parte del sistema SLAM
+
+Por ultimo se darán las conclusiones
+
+Para que un robot pueda resolver sus tareas de forma autónoma este debe ser capaz de localizarse efectivamente en el entorno en que se encuentra. Ya sea para realizar tareas domesticas o tareas de exploración y rescate el robot debe poder ser capaz de estimar su propia localización en todo momento.
+
+Simultaneous Localization and Mapping (SLAM por sus siglas en ingles) plantea el problema de localizar al robot mientras se construye, de manera simultanea, una representación o mapa del entorno. Este mapa es importante, dado que una representación fiel del entorno que lo rodea permite al robot posicionarse mejor y de forma mas precisa.
+
+Dentro de slam existe un caso especial conocido como Visual SLAM
+
+En particular nos enfocamos en trabajar con cámaras estéreo.
+Estas cámaras nos permiten percibir la profundidad de la escena
+
+Los sistemas SLAM deben lidiar con un gran número de desafios. Por un lado deben ser capaces de mantener un mapa consistente que mantenga fidelidad con el entorno que se transita.
+
+Conforme el tamaño de la trayectoria recorrida aumenta, el mapa debe ser capaz de escalar de forma acorde. Manteniendo a su vez la fidelidad con el entorno. Esto es importante dado que la precision de las sucesivas estimaciones de localización van a dependen de la calidad del mapa.
+
+Es importante trabajar en tiempo real, no se puede tardar una hora en construir el mapa del entorno.
+
+Por ultimo es importante notar que los métodos SLAM y la utilización de las cámaras presentan error en las estimaciones.
+Este error se ve reflejado en la localización del error y en el mapa.
+
+Este error es acumulado acumulado constantemente, y degrada tanto la fidelidad del mapa como la precisión de la localización del robot.
+
+Lidiar con este error acumulado es el objetivo de este trabajo. Para esto se busca acotar el error en la localización y para esto se toma ventaja de cuando el robot visita un lugar visitado previamente.
+
+Las lineas punteadas negras son la trayectoria real, los negros serían elementos o marcas visuales reales del entorno y en azul se ve la trayectoria estimada por el sistema SLAM y los puntos azules son el mapa reconstruido por el sistema SLAM.
+
+Observen el error acumulado en la localización, este error se lo conoce como deriva y esto hace que en trayectorias largas. Este error cometido resulte significativo.
+
+El robot piensa que esta en cualquier lado
+
+Para lidiar con esta situación, se puede tomar ventaja al renocer el hecho de que se esta visitando un mismo lugar.
+
+Al utilizar cámaras como sensores, consideramos que ocurre un ciclo en la trayectoria cuando las imagenes observadas resultan similares a las imagenes observadas en un momento previo.
+
+Suponiendo que fue detectado correctamente el ciclo, vamos a poder realizar un ajuste de la trayectoria estimada. Y de esta manera el robot va a estar mejor localizado. No solo la trayectoria, sino que el mapa representa mejor el entorno transitado.
+
+No es posible eliminar por completo este error pero es posible reducirlo y hasta mantenerlo acotado.
+
+Nosotros nos enfocamos en trabajar con un sistema visual SLAM S-PTAM.
+
+Stereo Parallel Tracking and Mapping
+
+Utiliza cámaras estereo y divide el problema en dos tareas principales que se llevan a cabo de manera concurrente. Tracking: Realiza el seguimiento de la cámara para la localización del robot y Mapping: ajusta y mejora el mapa de manera de mantener su consistencia.
+
+S-PTAM representa la trayectoria como un conjunto de poses de cámara correspondientes a determinados momentos del recorrido. A estas poses de cámara se las denomina keyframes.
+
+Se las puede ver representadas en el esquema como triangulos rojos.
+
+Las marcas del ambiente son representadas como punto 3D, estos puntos 3D provienen de la triangulación de características visuales detectadas en cada uno de estos keyframes.
+
+El sistema, relaciona a cada keyframes con aquellos puntos que observa. Es interesante notar que entre los keyframes se comparten puntos observados.
+
+Explicar video
+
+La detección de ciclos quiere determinar cuando el robot se encuentra en un lugar que visito previamente, y para eso se utilizan técnicas de bag of words que permitirán realizar un analisis de apariencia entre los keyframes y establecer candidatos a ciclos entre estos.
+
+Una vez se establezcan candidatos a ciclos en la trayectoria se realiza una validación geometrica por medio de métodos de PnP
+
+Y por ultimo se realiza un cerrar el ciclo y ajustar la trayectoria y corregir además el mapa de puntos. Mejorando su fidelidad con respecto al entorno.
+
+La técnica de bagofwords busca describir las imagenes de una manera más general y eficiente que al utilizar los descriptores locales unicamente. Esta descripción evaluar la similitud entre imágenes en terminos de apariencia.
+
+Para esto se entrena un vocabulario visual utilizando un conjunto de imagenes de entrenamiento.
+
+Se extraen imagenes de diferentes escenas de manera de obtener un conjunto representativos del espacio de descriptores. Se utilizaron aproximadamente 10mil imagenes que representen escenas habituales.
+
+A este conjunto de descriptores extraidos se le realiza un proceso de clusterización donde se subdivide el espacio de descriptores. Definiendo un conjunto reducido de elementos que representen una familia de descriptores cercanos. Esto se lleva a cabo de manera iterativa a disintos niveles de subdivición.
+
+Obteniendo así una representación jerarquica de este agrupamiento donde a las  hojas del arbol se las denomina palabras.
+
+
+A partir de este vocabulario previamente entrenado, es posible interpretar cada imagen de la cámara como un vector denominado bagofwords.
+
+Para lograr esto cada descriptor extraido de la imagen de consulta, recorre el vocabulario visual. Determinando que palabras aparecen en la imagen.
+
+Obtenidas las palabras de la imagen se mide la frecuencia con que estas aparecen. Tanto en la propia imagen de consulta, como en todo el conjunto de entrenamiento.
+
+Cada elemento del vector bagofwords esta dado entonces por este valor. Donde el termino tf representa que tan importante es la palabra en la imagen de consulta y el termino idf representa que tan recurrente fue la palabra en las imagenes de entrenamiento.
+
+Para evaluar entonces la similitud entre dos imágenes se comparan los vectores bagofwords asociados. Utilizando la norma L1 dada por MOSTRAR para caracterizar la similitud.
+
+En caso de encontrar imagenes en la trayectoria que presenten un alto grado de similitud, es decir, este valor sea considerable. Se considera a estas imagenes como posibles candidatos a ciclos.
+
+Dado un candidato a ciclo, se calcula luego la transformación existente entre las poses de cámara de ambas imágenes.
+
+Este método de detección se realiza unicamente sobre las imagenes de los keyframes. De manera que los candidatos a ciclos corresponden a un par de keyframes que presenten alto grado de similitud.
+
+Slide de analisis geometrico
+
+Una vez detectado un ciclo entre dos keyframes, se calcula la transformación entre los mismos a partir de las imágenes.
+
+Fijense, que dada la detección entre Kactual y Kanterior lo que se busca es la  transformación existente entre estos. 
+
+La idea de esto es luego mantener el Kanterior fijo y mover al Kactual de manera de respetar la transformación calculada a partir de las imagenes.
+
+Para calcular dicha transformacion primero, se establecen correspondencias entre los descriptores asociados a las cámaras estéreo.
+
+Luego lo que se hace es considerar los puntos 3D observados por el keyframe actual y se utilizan las correspondencias establecidas para definir un conjunto de correspondencias 3D-2D con el keyframe anterior.
+
+Sobre estas correspondencias 3D-2D se utilizan métodos de Perspectiva por n Puntos para establecer efectivamente la transformación entre los keyframes.
+
+En caso de que el numero de inliers que soporten la transformacion calculada es mayor a un cierto threshold se considera que la detección es válida y el ciclo es aceptado.
+
+Teniendo esta transformación calculada es posible realizar el cierre del ciclo efectuando la propagación de una corrección inicial a los keyframes del mapa.
+
+Luego sobre esta correción inicial, se ajustan las poses de los keyframes utilizando un método de optimización que minimiza el error cuadrático entre los mismos.
+
+Se definen dos tipos de error, por un lado se busca que la minimización preserve la relación existente entre keyframes consecutivos. Esta relacion fue dada por el método de SLAM subyacente.
+
+Y por otro lado se quiere que preserve las transformaciónes cálculadas entre los keyframes que cierran ciclos.
+
+
+Luego de esto se cada punto del mapa se corrige aplicando la misma transformación que sufrio el keyframe que lo originó. Este proceso resulta rápido, en comparación a los anteriores.
+
+
+
+
+
+
+
+
+- Caratula:
+
+Antes que nada quiero agradecerles a todos por haber venido, hoy les voy a estar contando el trabajo que llevé a cabo a lo largo del 2015, el cual se titula "Detección y cierre de ciclos en sistemas SLAM basados en visión estéreo".
+
+Quiero agradecer especialmente a los chicos del laboratorio de robótica, que me permitieron trabajar con ellos, me acompañaron para llevar adelante esta tesis y me introdujeron a este mundo tan interesante que es la investigación.
+
+- Estructura de la presentación
+
+Esta presentación esta dividida en 4 secciones, primeramente voy a introducir algunos conceptos de la robótica móvil, definir lo que es SLAM, las ventajas al trabajar con cámaras estéreo y establecer las motivaciones para la solución del problema planteado.
+
+Luego veremos el método que se propone en esta tesis para la solución del problema de detección y cierre de ciclos, el cual es mejor conocido por su nombre en ingles, "Loop Closure"
+
+El método esta divido en 3 etapas principales que ire explicando a lo largo de la presentación: 
+
+Primero se realiza una detección de ciclos en la trayectoria
+
+Luego existe una etapa de validación de los ciclos detectados donde se evalua la consistencia geométrica del ciclo
+
+Y por ultimo una etapa de cierre y corrección del ciclo donde se busca mejorar la percepción que se tiene del entorno gracias a esta nueva información sobre el posicionamiento del robot.
+
+Luego veremos los resultados que se obtuvieron en diferentes ambientes, utilizando secuencias de imágenes provistas por datasets publicos, por un lado el KITTI y el Level7 dataset
+
+Y finalmente una sección donde voy a dar unas conclusiones sobre el trabajo que se llevó acabo.
+
+- VSLAM
+
+Para que un robot pueda resolver sus tareas de forma autónoma este debe ser capaz de localizarse efectivamente en el entorno en que se encuentra. Ya sea para realizar tareas domesticas o tareas de exploración y rescate el robot debe poder ser capaz de estimar su propia localización en todo momento. Existen diversas formas de lograr esto.
+
+Existen métodos de localización absoluta o global que utilizan marcas artificiales en el ambiente para la localización del robot, un ejemplo de esto es el sistema GPS que utiliza señales satelitales. Este tipo de métodos se encuentran limitados en su área de funcionamiento, la señal de satelite se pierde en ambientes interiores como casas o al ingresar a una cueva.
+
+Simultaneous Localization and Mapping (SLAM por sus siglas en ingles) plantea el problem localizar al robot mientras se construye, de manera simultanea, una representación o mapa del entorno. 
+
+El mapa es construido de manera progresiva conforme el robot se desplaza y, en todo momento, el robot estima su propia localización respecto de este mapa.
+
+Fijense que de alguna manera los métodos SLAM plantean la posibilidad de contruir el mapa mientras que los métodos globales o absolutos dan una representación del entorno inflexible. Esto permite mejorar continuamente la percepción que se tiene del propio entorno que rodea el robot.
+
+- Cámaras
+
+Existen diversos sensores que pueden utilizarse para realizar SLAM. Este trabajo se centra en la utilización de cámaras para localización. De esta manera el problema se lo denomina SLAM visual o Visual SLAM.
+
+A traves de la detección y asociacion de ciertas características visuales presentes en las imágenes obtenidas de la cámara es posible estimar la posición y orientación de la cámara en 6 grados de libertad. Otro tipo de sensores no permiten esto, como por ejemplo sonares o lasers.
+
+...
+
+Las cámaras estéreo refieren a la utilización de dos cámaras alineadas. Al igual que el ojo humano, al hacer esto, es posible percibir la profundidad de lo que se este observando. De esta forma es posible recuperar la profundidad de las características visuales detectadas en las imágenes y realizar una reconstrucción 3D del entorno.
+
+- Desafíos en SLAM
+
+Los sistemas SLAM deben lidiar con un gran número de desafios. Por un lado deben ser capaces de mantener un mapa consistente que mantenga fidelidad con el entorno que se transita.
+
+Conforme el tamaño de la trayectoria recorrida aumenta, el mapa debe ser capaz de escalar de forma acorde. Manteniendo a su vez la fidelidad con el entorno. Esto es importante dado que la precision de las sucesivas estimaciones de localización van a dependen de la calidad del mapa.
+
+Operar en tiempo real es un desafío
+
+Aún cuando contamos con un mapa y el robot se encuentre correctamente localizado en el mismo. Al visitar áreas que aún no hubieras sido mapeadas, se cometen pequeños errores al estimar la localización y este error se ve reflejado en el mapa al momento de expandirlo. Este error se debe a varias razón, por un lado los sensores introducen error al observar el ambiente, elementos dinámicos del entorno pueden dificultar el seguimiento de las marcas visuales o la oclusión parcial del campo visual de la cámara.
+
+El error se acumula constantemente, degrada el mapa construido y compromete la consistencia del mismo. Conforme aumenta y se acumula es posible observar la deriva (drift) en las estimaciones de localización.
+
+- Motivación
+
+El objetivo de este trabajo es entonces lidiar con la acumulación de este error.
+
+Lo que se busca es detectar por medio del analisis de las imágenes cuando el robot se encuentra en un lugar que visitó previamente. Reconocer esta situación nos permite introducir nueva información que permitirá disminuir la deriva y mantener el error acumulado.
+
+Pero esto nos plantea un nuevo problema.
+
+- Motivacion Loop Closure
+
+Loop Closure!, por un lado es necesario que el robot sea capaz de detectar cuando se encuentra en un lugar previamente visitado y por otro lado es necesario establecer un método que permita corregir la localización actual del robot y la percepción que se tenia del propio entorno. Es decir, corregir el mapa.
+
+- Motivacion Correccion Mapa
+
+Fijense, acá se puede ver la imagen anterior donde se comete cierto error en la trayectoria estimada, y lo que se busca es lograr reducir ese error. 
+
+Aumentando la fidelidad del mapa, fijense los puntos se encuentran mejor alieados y también mejorar la estimación que se tenia de la trayectoria.
+
+Ahora, esto va a depender de la representación del mapa y la trayectoria con la que uno trabaje.
+
+La tesis se llevo a cabo utilizando el sistema Visual SLAM S-PTAM, el cual fue desarrollado enteramente en el laboratorio de robótica de la facultad.
+
+Veremos entonces, las características de este sistema.
+
+- S-PTAM
+
+El sistema se encuentra inspirado en PTAM, el cual es un sistema monocular desarrollado para aplicaciones de realidad aumentada.
+
+Al igual que PTAM, el problema se divide en dos tareas principales. Tracking que refiere al seguimiento de la cámara y Mapping que refiere a la construcción del mapa.
+
+El mapa construido es esparzo, es decir, no se realiza una reconstrucción 3D completa del entorno. Sino que se mantienen solo determinadas marcas visuales del ambiente.
+
+La geometría propia de las cámaras estéreo, llamada geometría epipolar le permiten al sistema realizar estimaciones más precisas y obtener la profundidad en que se encuentran las marcas visuales del ambiente detectadas a través del proceso de triangulación.
+
+- S-PTAM Mapa
+
+S-PTAM representa la trayectoria como un conjunto de poses de cámara correspondientes a determinados momentos del recorrido. A estas poses de cámara se las denomina keyframes.
+
+Se las puede ver representadas en el esquema como triangulos rojos.
+
+Las marcas del ambiente son representadas como punto 3D, estos puntos 3D provienen de la triangulación de características visuales detectadas cada uno de estos keyframes.
+
+El sistema, relaciona a cada keyframes con aquellos puntos que observa. Es interesante notar que entre los keyframes se comparten puntos observados.
+
+... Hilos de ejecución paralelos
+
+- Bag of Words
+
+La técnica de bag-of-words proviene, en realidad, del analisis de texto. Para clasificar de que trata un texto.
+
+En el contexto del procesamiento de imágenes se la utiliza para clasificar la apariencia de las imagenes. Lo que se hace es abstraer la representación de las imagenes en terminos mas generales que los descriptores locales.
+
+Lo que se busca básicamente, es establecer elementos visuales que representen a un conjunto determinado de descriptores. A estos elementos visuales se los denomina palabras y describir a las imagenes en base a estas palabras permite evaluar la similitud entre imagenes de manera mas efectiva que al utilizar descritores locales.
+
+

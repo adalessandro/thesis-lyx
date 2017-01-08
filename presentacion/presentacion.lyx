@@ -1,0 +1,5633 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+\definecolor{gray87}{gray}{.87}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray45}{gray}{.45}
+\definecolor{highlight}{RGB}{255,254,163}
+\definecolor{turquesa}{RGB}{0,144,144}
+
+\usepackage{babel}
+\decimalpoint
+
+%\usetheme{progressbar}
+\usetheme{Copenhagen}
+\useoutertheme{v01d}
+\useinnertheme{rectangles}
+\setbeamertemplate{itemize item}[rectangle]
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamertemplate{itemize subsubitem}[triangle]
+\setbeamertemplate{blocks}[default]
+\setbeamertemplate{navigation symbols}{} 
+
+%\useoutertheme{v01d}
+%\usecolortheme{beetle}
+%\useinnertheme{rounded}
+% or ...
+\mode<presentation>
+\usepackage{listings}
+
+\lstset{ frame=Ltb,
+     framerule=0pt,
+     aboveskip=0.1cm,
+     framextopmargin=3pt,
+     framexbottommargin=3pt,
+     framexleftmargin=0.4cm,
+     framesep=0pt,
+     rulesep=.4pt,
+     rulesepcolor=\color{black},
+     %
+     basicstyle=\ttfamily\scriptsize,
+     commentstyle=\color{turquesa},
+     keywordstyle=\ttfamily\bfseries,
+     identifierstyle=\itshape,
+     %
+     numbers=left,
+     numbersep=15pt,
+     numberstyle=\tiny,
+     numberfirstline = false,
+     breaklines=true,
+     backgroundcolor=\color{gray87},
+     language=C,
+     tabsize=2,
+     showspaces=false,
+     showtabs=false,
+     showstringspaces=false,
+     mathescape=true,
+     escapechar=|
+   }
+
+%\newcommand{\Hilight}{\makebox[0pt][l]{\color{highlight}\rule[-3pt]{1.0\linewidth}{9pt}}}
+
+%\newcommand<>{\Hilight}[0]{\onslide#1{\makebox[0pt][l]{\color{highlight}\rule[-3pt]{1.0\linewidth}{8pt}}}}
+\newcommand<>{\Hilight}[0]{\onslide#1{\makebox[0pt][l]{\color{highlight}\rule[-3pt]{1.0\linewidth}{9pt}}}}
+
+\usepackage{bm}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\usepackage{subfig}
+
+% drawing
+\usepackage{pgfplots} %tikz
+\usepackage{tikz} %tikz
+\usetikzlibrary{shapes,arrows,positioning,fit,backgrounds,calc,intersections} %tikz
+\pgfdeclarelayer{background} %tikz
+\pgfdeclarelayer{foreground} %tikz
+\pgfsetlayers{background,main,foreground} %tikz
+\usepackage{tikzscale} % scale tikz
+
+% scaled operators and letters
+\newcommand{\sminus}{\scalebox{0.5}[1.0]{$-$}}
+\newcommand{\splus}{\scalebox{0.7}[0.7]{$+$}}
+\newcommand{\curr}{\scalebox{0.5}[0.5]{$\mathcal{C}$}}
+\newcommand{\sind}[1]{\scalebox{0.6}[0.6]{$#1$}}
+\newcommand{\ind}[1]{\scalebox{0.7}[0.7]{$#1$}}
+
+\usepackage{hyperref}
+\end_preamble
+\options c,compress,mathserif
+\use_default_options false
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman cmr
+\font_sans default
+\font_typewriter beramono
+\font_math auto
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\bullet 0 0 17 -1
+\bullet 2 0 0 -1
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Detección y cierre de ciclos en sistemas SLAM basados en visión estéreo
+\end_layout
+
+\begin_layout Author
+Tesista: Gastón Ignacio Castro
+\begin_inset Newline newline
+\end_inset
+
+Director: Lic.
+ Taihú Pire
+\begin_inset Newline newline
+\end_inset
+
+Co-director: Dr.
+ Pablo De Cristóforis
+\end_layout
+
+\begin_layout Institute
+Departamento de Computación
+\begin_inset Newline newline
+\end_inset
+
+Facultad de Ciencias Exactas y Naturales
+\begin_inset Newline newline
+\end_inset
+
+Universidad de Buenos Aires
+\end_layout
+
+\begin_layout Date
+Defensa de Tesis, 18 de abril 2016
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+pgfdeclareimage[height=0.5cm]{institution-logo}{institución-logo-nombrearchivo}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+logo{
+\backslash
+pgfuseimage{institution-logo}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+beamerdefaultoverlayspecification{<+->}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Resumen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Introducción: Visual SLAM y motivación
+\end_layout
+
+\begin_layout Itemize
+Método de 
+\emph on
+Loop Closure
+\emph default
+ propuesto
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Detección y validación de ciclos
+\end_layout
+
+\begin_layout Itemize
+Cierre de ciclos y corrección del mapa
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Resultados
+\end_layout
+
+\begin_layout Itemize
+Conclusiones
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Estructura de la presentación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+VSLAM: Visual Simultaneous Localization and Mapping
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+¿Qué es SLAM?
+\end_layout
+
+\begin_layout Itemize
+¿Por qué es importante en la robótica móvil? 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Para que un robot pueda resolver sus tareas de forma autónoma debe poder
+ localizarse en el entorno.
+ SLAM plantea localizarse mientras se construye en simultáneo una representación
+ o mapa del ambiente.
+ Contar que esto es así dado que no se utilizan sistemas de localización
+ global.
+ Mantener la referencia de marcas del ambiente localizarme en referencia
+ a este mapa.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Itemize
+Visual SLAM: Cámaras como sensores
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Permiten estimar el movimiento con 6 grados de libertad
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Una forma de lograr esto es por medio de la detección y asociación de caracterís
+ticas visuales es posible realizar odometría visual.
+ Otro tipo de sensores no permiten hacer esto, como los telemetros, sonares,
+ lasers.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Pueden operar tanto en ambientes interiores como exteriores
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Sensores de luz estructurada, como la kinect no permites trabajar en ambientes
+ externos.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Son sensores pasivos 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+No emiten señales que pueden interferir con otros sensores
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Obtienen gran cantidad de información del ambiente
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Es posible utilizarlas para un gran número de propósitos como puede ser
+ la detección de objetos
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+De bajo costo y portátiles
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Son fácilmente montables en por ejemplo un quadracoptero.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Itemize
+Ventajas al trabajar con cámaras estéreo
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Explicar que significa una cámara estéreo, hace referencia a dos cámaras
+ que trabajan de manera conjunta para 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Permiten recuperar la profundidad de la escena
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Analogía con el ojo humano? Reconstrucción 3D del ambiente!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Desafíos en SLAM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Mantener un mapa consistente 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Que se mantenga fiel al entorno que se transite.
+ Esto va a permitirme luego generar estimaciones de localización más precisas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Escalar adecuadamente en trayectorias largas y entornos de grandes dimensiones
+\end_layout
+
+\begin_layout Itemize
+Funcionar en 
+\emph on
+Real-Time
+\end_layout
+
+\begin_layout Itemize
+Mantener acotado el error en las estimaciones de localización
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Aún cuando se construye un mapa y nos encontremos correctamente localizados,
+ al explorar nuevas áreas del entorno, existe error en las estimaciones
+ de localización y este se acumula.
+ Cada vez que se agregan puntos al mapa, estos se agregan con algún grado
+ de error.
+ Esto se debe a varias razones, una de ellas el hecho de que los sensores
+ introducen error en las mediciones.
+ (Otra fuente de error son los entornos dinámicos que generan puntos espurios)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Desafíos en SLAM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Mantener un mapa consistente 
+\end_layout
+
+\begin_layout Itemize
+Escalar adecuadamente en trayectorias largas y entornos de grandes dimensiones
+\end_layout
+
+\begin_layout Itemize
+Funcionar en 
+\emph on
+Real-Time
+\end_layout
+
+\begin_layout Itemize
+
+\color red
+Mantener acotado el error en las estimaciones de localización
+\color inherit
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+El error se acumula constantemente, degrada el mapa construido y compromete
+ la consistencia del mismo!.
+ Conforme aumenta y se acumula es posible observar la deriva (
+\emph on
+drift
+\emph default
+) de las estimaciones de localización.
+ El objetivo de este trabajo es entonces lidiar con la acumulación de este
+ error.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Motivación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Nuestra motivación es entonces, sacar provecho cuando el robot visita una
+ lugar que visitó previamente para disminuir la deriva y mantener acotado
+ el erro acumulado
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/drift.svg
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Motivación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align center
+Una respuesta a esto, es Loop Closure! Detectar lugares previamente visitados
+ (analizando el entorno que se observa en un momento determinado)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/detection.svg
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size larger
+\emph on
+\color red
+Loop Closure
+\emph default
+: Detección y cierre de ciclos
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Motivación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/detection.svg
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pause
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/correction.svg
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pause
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setbeamercolor{postit}{fg=black,bg=example text.fg!75!black!10!bg}
+\backslash
+begin{beamercolorbox}[center,wd=
+\backslash
+textwidth,rounded=true,shadow=true]{postit}
+\end_layout
+
+\begin_layout Plain Layout
+
+Sistema Visual SLAM S-PTAM
+\backslash
+end{beamercolorbox}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+Utiliza la representación del 
+\series bold
+sistema SLAM subyacente
+\series default
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+La respuesta a estas preguntas va a depender del contexto en el que se este
+ trabajando: manera en que se este representando la trayectoria y el tipo
+ del mapa que se este utilizando.
+ Un ciclo en la trayectoria puede ser definido de varias maneras dependiendo
+ la manera en que trabajé el sistema SLAM subyacente.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+Sistema Visual SLAM: S-PTAM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Sistema S-PTAM (Stereo Parallel Tracking and Mapping)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Inspirado en PTAM
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Klein, G., & Murray, D.
+ (2007, November).
+ Parallel tracking and mapping for small AR workspaces.
+ In Mixed and Augmented Reality, 2007.
+ ISMAR 2007.
+ 6th IEEE and ACM International Symposium on (pp.
+ 225-234).
+ IEEE.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Utiliza cámaras estéreo 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+La geometría propia de las cámaras estéreo, llamada geometría epipolar le
+ permiten al sistema realizar estimaciones más precisas y obtener la profundidad
+ en que se encuentran las marcas visuales del ambiente detectadas a través
+ del proceso de triangulación.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Dos tareas principales: Tracking y Mapping
+\end_layout
+
+\begin_layout Itemize
+Mapa ralo basado en 
+\emph on
+features
+\emph default
+ (nube de puntos 3D y 
+\emph on
+keyframes
+\emph default
+)
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/sptam_map.svg
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Separator
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Sistema S-PTAM (Stereo Parallel Tracking and Mapping)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Itemize
+Mapa
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Trayectoria como conjunto de poses de cámara (
+\emph on
+keyframes
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+Puntos 3D correspondientes a marcas del ambiente 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Como marcos de puertas, bordes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+S-PTAM divide las tareas de localización y mapeo en dos hilos de ejecución.
+ Esto permite explotar sistemas de cómputo concurrente.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Tracking 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Se encarga de estimar la pose de la cámara haciendo uso del mapa
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Extracción de características visuales 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Se detectan y extraen características visuales presentes en las imágenes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Establecimiento de correspondencias 3D-2D 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Se relacionan las características visuales extraídas con los puntos del
+ mapa
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Selección de 
+\emph on
+keyframes 
+\emph default
+y expansión del mapa 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Se utilizan las propiedades de las cámaras estéreo para recuperar la profundidad
+ de las características visuales extraídas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Local Mapping
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Define un área local
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Local Bundle Adjustment
+\end_layout
+
+\begin_layout Itemize
+Elimina puntos espurios
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset space \hspace{}
+\length -30bp
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "60text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Itemize
+
+\size small
+Mapa
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\size small
+Trayectoria como un conjunto de poses de la cámara (
+\emph on
+keyframes
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\size small
+Marcas del ambiente como puntos 3D 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Como marcos de puertas, bordes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+S-PTAM divide las tareas de localización y mapeo en dos hilos de ejecución.
+ Esto permite explotar sistemas de cómputo concurrente.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\size small
+Tracking 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Se encarga de estimar la pose de la cámara haciendo uso del mapa
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\size small
+Correspondencias 3D-2D
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Se relacionan las características visuales extraídas con los puntos del
+ mapa
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\size small
+Localización de la cámara
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Se detectan y extraen características visuales presentes en las imágenes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\size small
+Creación de nuevos 
+\emph on
+keyframes
+\emph default
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Se utilizan las propiedades de las cámaras estéreo para recuperar la profundidad
+ de las características visuales extraídas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\size small
+Local Mapping
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\size small
+Ajuste de 
+\emph on
+keyframes
+\emph default
+ y puntos del mapa 
+\emph on
+(Local Bundle Adjustment)
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 10bp
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "40text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imagenes/sptam_map.svg
+	width 120text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Sistema S-PTAM (Stereo Parallel Tracking and Mapping)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../imagenes/sptam_kitti.png
+	lyxscale 30
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{full-kitti-00.mkv}{Video}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Método de Loop Closure propuesto
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Overview del método de Loop Closure propuesto
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Detección de ciclos (Técnica de 
+\emph on
+bag-of-words
+\emph default
+)
+\end_layout
+
+\begin_layout Enumerate
+Validación geométrica (Métodos de Perspectiva por 
+\emph on
+n
+\emph default
+ Puntos)
+\end_layout
+
+\begin_layout Enumerate
+Cierre ciclos y corrección del mapa (Métodos de minimización no lineal)
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Se llevará a cabo la propagación de una solución inicial sobre los keyframes
+ de la trayectoria para luego utilizar métodos de optimización para el ajuste
+ de las poses de cámara.
+ Finalmente se corregirán los puntos del mapa
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Detección: Análisis de apariencia
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Bag of Words: Análisis de apariencia
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/bagofwords/windows1.svg
+	lyxscale 50
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Bag of Words: Análisis de apariencia
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/bagofwords/windows2.svg
+	lyxscale 50
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Extracción de descriptores
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+La técnica de bag of words, requiere en una primera instancia realizar un
+ entrenamiento sobre un conjunto de imágenes que permitan obtener una discretiza
+ción del espacio de descriptores.
+ Esta discretización del espacio de descriptores se denomina vocabulario
+ visual y define un conjunto de palabras que permiten describir las imágenes
+ en términos de apariencia más generales que al utilizar descriptores locales.
+\end_layout
+
+\begin_layout Plain Layout
+Para esto es importante utilizar un conjunto de imágenes de entrenamiento
+ que contemplen diversos escenarios posibles que podríamos encontrarnos.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset VSpace 6bp
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 122bp
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_initial.svg
+	lyxscale 50
+	width 51.06text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Extracción de descriptores
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_outdoor1.svg
+	lyxscale 50
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Extracción de descriptores
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_outdoor2_initial.svg
+	lyxscale 50
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Extracción de descriptores
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset space \hspace{}
+\length -28.8bp
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_outdoor2.svg
+	lyxscale 50
+	width 99.5text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -11bp
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Extracción de descriptores
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset space \hspace{}
+\length -17.5bp
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_indoor1_initial.svg
+	lyxscale 50
+	width 103text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -11bp
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Extracción de descriptores
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset space \hspace{}
+\length -17.5bp
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_indoor1.svg
+	lyxscale 50
+	width 103text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -11bp
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Clusterización de los descriptores de entrenamiento
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset space \hspace{}
+\length -183bp
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_base.svg
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -11bp
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Clusterización de los descriptores de entrenamiento
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset space \hspace{}
+\length -183bp
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_level0.svg
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -11bp
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Clusterización de los descriptores de entrenamiento
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset space \hspace{}
+\length -183bp
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_level1.svg
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -11bp
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Clusterización de los descriptores de entrenamiento
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset space \hspace{}
+\length -183bp
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_level2.svg
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -11bp
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Representación jerárquica
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset space \hspace{}
+\length -48bp
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_arbol1.svg
+	lyxscale 50
+	width 94text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace -11bp
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Entrenamiento del Vocabulario visual
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Representación jerárquica
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset space \hspace{}
+\length -42bp
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/bagofwords/clusters_arbol2.svg
+	lyxscale 50
+	width 96text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -11bp
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Clasificación de imágenes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Conversión de imagenes a vectores 
+\emph on
+bag-of-word 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Utilizando el vocabulario visual previamente entrenado, es posible describir
+ cada imagen de los keyframes de la trayectoria como el conjunto de palabras
+ que aparecen.
+ Para permitir una correcta comparación entre imágenes se evalúa además
+ la importancia descriptiva que tienen las palabran, tanto en la misma imagen
+ como en el conjunto de imágenes de entrenamiento.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/bagofwords/consulta.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Formula $v_{t}^{i}=\underbrace{\frac{n_{iI_{t}}}{n_{I_{t}}}}_{tf}\underbrace{log(\frac{N}{n_{i}})}_{idf}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+
+\size small
+donde:
+\end_layout
+
+\begin_layout Itemize
+
+\size small
+\begin_inset Formula $N$
+\end_inset
+
+: número de imágenes de entrenamiento
+\end_layout
+
+\begin_layout Itemize
+
+\size small
+\begin_inset Formula $n_{i}$
+\end_inset
+
+: número de apariciones de 
+\begin_inset Formula $W_{i}$
+\end_inset
+
+ en las imágenes de entrenamiento
+\end_layout
+
+\begin_layout Itemize
+
+\size small
+\begin_inset Formula $n_{iI_{t}}$
+\end_inset
+
+: número de apariciones de 
+\begin_inset Formula $W_{i}$
+\end_inset
+
+ en la imagen 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\size small
+\begin_inset Formula $n_{I_{t}}$
+\end_inset
+
+: número de palabras totales en la imagen 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Similitud entre imágenes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "46text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/bagofwords/ejemplo1.png
+	lyxscale 30
+	width 100text%
+	BoundingBox 200bp 0bp 1041bp 376bp
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+imagen 
+\begin_inset Formula $I_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "46text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/bagofwords/ejemplo2.png
+	lyxscale 30
+	width 100text%
+	BoundingBox 200bp 0bp 1041bp 376bp
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+imagen 
+\begin_inset Formula $I_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+s(v_{1},v_{2})=1-\frac{1}{2}\left|\frac{v_{1}}{|v_{1}|}-\frac{v_{2}}{|v_{2}|}\right|
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Similitud entre keyframes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+\align center
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "46text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/bagofwords/ejemplo1.png
+	lyxscale 30
+	width 100text%
+	BoundingBox 200bp 0bp 1041bp 376bp
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+
+\emph on
+keyframe t
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "46text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/bagofwords/ejemplo2.png
+	lyxscale 30
+	width 100text%
+	BoundingBox 200bp 0bp 1041bp 376bp
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+
+\emph on
+keyframe j
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\eta(v_{t},v_{j})=\frac{s(v_{t},v_{j})}{s(v_{t},v_{t-1})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Validación geométrica
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Análisis geométrico: Cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/transformation_keyframes.svg
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Establecer correspondencias entre 
+\emph on
+keyframes
+\emph default
+ del ciclo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Graphics
+	filename imagenes/stereo_matches.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Transformación a cálcular
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/camaras.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\begin_inset VSpace -95bp
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Transformación a cálcular
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/camaras_transformacion.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\begin_inset VSpace -100bp
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Cálculo de la transformación (
+\emph on
+PnP
+\emph default
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Triangulación de puntos
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/camaras_triangulation.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Perspectiva por 3 puntos
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/p3p_points1.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Perspectiva por 3 puntos
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/p3p_corresp1.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Perspectiva por 3 puntos
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/p3p_inliers1.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Perspectiva por 3 puntos
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/p3p_points2.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Perspectiva por 3 puntos
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/p3p_corresp2.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Perspectiva por 3 puntos
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/p3p_inliers2.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Perspectiva por 3 puntos
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/p3p_points3.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Perspectiva por 3 puntos
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/p3p_corresp3.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Métodos PnP para el cálculo de la transformación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Perspectiva por 3 puntos
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/p3p_inliers3.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Cálculo de la transformación (
+\emph on
+PnP
+\emph default
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Perspectiva por 
+\emph on
+n
+\emph default
+ Puntos
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/pnp/pnp_inliers.svg
+	lyxscale 30
+	width 60text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Subsection
+Cierre de ciclos y corrección del mapa
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Cierre del ciclo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+\align center
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ahora volvemos a la situación anterior, pero trabajando ahora con keyframes.
+ Re introducir el tema, mostrar el error.
+ Se quiere utilizar la transformación cálculada durante la validación para
+ cerrar el ciclo de la trayectoria
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/correction_keyframes.svg
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Propagación inicial
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/propagation.svg
+	width 70text%
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Se va de atrás para adelante, aplicando la transformación obtenida.
+ Realizando un suavizado en cada paso.
+ Aplicando una interpolación.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Optimización: distribución del error
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+De manera iterativa, se van ajustando las poses de las cámaras, de forma
+ de distribuir el error.
+ Intentando conservar las relaciones establecidas anteriormente entre keyframe
+ y keyframe.
+ Se utiliza como semilla o solución inicial al resultado de la propagación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/optimization.svg
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underset{K_{w\sind{0}},\ldots,K_{w\curr}}{argmin}\sum_{i}r_{i}^{\top}r_{i}+\sum_{j,k}r_{j,k}^{\top}r_{j,k}
+\]
+
+\end_inset
+
+donde:
+\begin_inset Formula 
+\begin{align*}
+r_{\ind{i}}= & T_{\ind{i}\sind{(i\splus1)}}(K_{w\sind{(i\splus1)}})^{\sind{-1}}K_{w\ind{i}}=T_{\ind{i}\sind{(i\splus1)}}K_{\sind{(i\splus1)}w}K_{w\ind{i}}\\
+r_{\ind{j},\ind{k}}= & T_{\ind{j}\ind{k}}(K_{w\ind{k}})^{\sind{-1}}K_{w\ind{j}}=T_{\ind{j}\ind{k}}K_{\ind{k}w}K_{w\ind{j}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Separator
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Optimización: distribución del error
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\underset{E_{w\sind{0}},\ldots,E_{w\curr}}{argmin}\sum_{i}r_{i}^{\top}r_{i}+\sum_{j,k}r_{j,k}^{\top}r_{j,k}
+\]
+
+\end_inset
+
+donde:
+\begin_inset Formula 
+\begin{align*}
+r_{\ind{i}}= & T_{\ind{i}\sind{(i\splus1)}}(E_{w\sind{(i\splus1)}}^{\sind{prop}})^{\sind{-1}}E_{w\ind{i}}^{\sind{prop}}=T_{\ind{i}\sind{(i\splus1)}}E_{\sind{(i\splus1)}w}^{\sind{prop}}E_{w\ind{i}}^{\sind{prop}}\\
+r_{\ind{j},\ind{k}}= & T_{\ind{j}\ind{k}}(E_{w\ind{k}}^{\sind{prop}})^{\sind{-1}}E_{w\ind{j}}^{\sind{prop}}=T_{\ind{j}\ind{k}}E_{\ind{k}w}^{\sind{prop}}E_{w\ind{j}}^{\sind{prop}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Separator
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Corrección de los puntos del mapa
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/correction_bad_map.svg
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Corrección de los puntos del mapa
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Los puntos del mapa son corregidos aplicando el desplazamiento que sufre
+ el keyframe que lo trianguló incialmente.
+ Notar que esto es muy rápido, y lineal con el mapa en contraposición a
+ incluir los puntos al momento de la optimización.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename imagenes/map_correction.svg
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Resultados
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Características de la implementación del método
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Descriptores binarios (BRIEF)
+\end_layout
+
+\begin_layout Itemize
+Real-Time 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+La implementación se llevo a cabo de manera de funcionar en paralelo en
+ un 3er hilo de ejecución, en tiempo real, sin entorpecer el funcionamiento
+ del Tracking ni del Local Mapping.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Análisis de apariencia permisivo 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Se evalúan gran cantidad de candidatos a ciclos.
+ Muchos de estos podrían ser falsos positivos, dado el threshold permisivo
+ sobre la función que evalúa la similitud entre imágenes.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Validación geométrica estricta 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Para evitar falsos positivos, se requiere una alta cantidad de inliers al
+ estimar la transformación relativa.
+ Esto es posible dado que, al trabajar con descriptores binarios, el establecimi
+ento de correspondencias y el cálculo de la transformación entre las cámaras
+ es rápida.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Software libre (ROS) 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Se utilizaron diversas librerías para el tratamiento de 
+\emph on
+bag-of-words
+\emph default
+, cálculo de la transformación relativa y métodos de minimización y optimización
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Subsection
+The KITTI dataset
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Características del KITTI
+\emph on
+ dataset
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ambientes exteriores, trayectorias largas con pocos ciclos.
+ La cámara provee 10 imágenes por segundo.
+ GT DE LOS LOOPS!
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/kitti_sensors.png
+	lyxscale 30
+	width 80text%
+	BoundingBox 0bp 0bp 920bp 793bp
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "46text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/bagofwords/ejemplo2.png
+	lyxscale 30
+	width 100text%
+	BoundingBox 200bp 0bp 1041bp 376bp
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Ambientes exteriores
+\end_layout
+
+\begin_layout Itemize
+10 Imágenes estéreo por segundo (1344×391 píxeles)
+\end_layout
+
+\begin_layout Itemize
+Trayectorias largas con pocos ciclos
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Ground truth
+\emph default
+ de la trayectoria y ciclos
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Desempeño en la detección y validación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+resizebox{
+\backslash
+textwidth}{!}{%
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="8">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Secuencia
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#Ciclos
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Apariencia
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Apariencia + Validación Geométrica
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#Detec.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+%Precisión
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+%Recon.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#Valid.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+%Precisión
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+%Recon.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+732
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2747
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+13,14%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+49,32%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+45
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+6,14%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+234
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3010
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+3,12%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+40,17%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+2,14%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI05
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+320
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1596
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+12,4%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+61,88%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+28
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+8,75%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+269
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+412
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+24,03%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+36,8%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+5,95%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI07
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+434
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+2,07%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+69,23%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+7,69%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI09
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+836
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+0,60%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+29,41%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\diagup$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Trayectoria
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Comentar que la trayectoria esta correctamente alineada al utilizar LC
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space \hspace{}
+\length -50bp
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/experimentacion/trajectory/kitti00_trajectories.pdf
+	lyxscale 50
+	width 140text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 1cm
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/experimentacion/trajectory/kitti00_map.png
+	lyxscale 40
+	width 140text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Reducción del error acumulado
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset VSpace -16bp
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length -30bp
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/experimentacion/trajectory/kitti00_predict_translation_error.pdf
+	lyxscale 50
+	width 110text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/experimentacion/trajectory/kitti00_predict_orientation_error.pdf
+	lyxscale 40
+	width 110text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -16bp
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/kitti00_detection.svg
+	lyxscale 30
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Subsection
+QUT Level7 dataset
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Características del QUT Level7 
+\emph on
+dataset
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ambiente interior de oficinas, visualmente repetitivo, con pocos elementos
+ visuales distinguibles en los pasillos.
+ De aprox 33 minutos con mucha cantidad de ciclos.
+ Esto me permite evaluar la estabilidad y demanda temporal del método
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "25text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/guiabot.jpg
+	lyxscale 50
+	width 100text%
+	rotateAngle -90
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "70col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/level7.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Ambiente interior de oficinas
+\end_layout
+
+\begin_layout Itemize
+Pasillos visualmente recurrentes
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\AC$
+\end_inset
+
+33 minutos de duración
+\end_layout
+
+\begin_layout Itemize
+Gran cantidad de ciclos en la trayectoria
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Trayectoria
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset VSpace -25bp
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length -40bp
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/experimentacion/trajectory/level7_trajectories.pdf
+	lyxscale 50
+	width 130text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length 1cm
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/experimentacion/trajectory/level7_map.png
+	lyxscale 40
+	width 130text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Reducción del error acumulado
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset VSpace -16bp
+\end_inset
+
+
+\begin_inset space \hspace{}
+\length -30bp
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/experimentacion/trajectory/level7_predict_translation_error.pdf
+	lyxscale 50
+	width 110text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/experimentacion/trajectory/level7_predict_orientation_error.pdf
+	lyxscale 40
+	width 110text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace -16bp
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/level7_detection.png
+	lyxscale 30
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Tiempos de procesamiento
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset VSpace -25bp
+\end_inset
+
+
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+resizebox{
+\backslash
+textwidth}{!}{%
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="8">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="middle" width="6cm">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Etapas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#Mediciones
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mín.(ms)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prom.(ms)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Máx.(ms)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Detección
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3706
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,74
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Val.
+ y transf.
+ relativa
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2218
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,31
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cierre del ciclo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+317
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+42
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+384,92
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+922
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Actualización de mapa
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+317
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+80,53
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+187
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Actualización de mapa
+\begin_inset Newline linebreak
+\end_inset
+
+(área de utilización compartida)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+317
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1,6
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/experimentacion/tiempos/closure_times.png
+	lyxscale 30
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../imagenes/experimentacion/tiempos/unsafe_update_times.png
+	lyxscale 30
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+¡En acción!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename imagenes/level7_lc.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+href{level7_loopclosure.mkv}{Video}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Conclusiones
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Conclusiones
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Reducción efectiva del error acumulado
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+BUSCAR UNA MANERA QUE SE ENTIENDA QUE HABLO DEL METODO!!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+No impacta de manera negativa el desempeño
+\end_layout
+
+\begin_layout Itemize
+Real-Time
+\end_layout
+
+\begin_layout Itemize
+Metodología: Detección permisiva y Validación restrictiva
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Trabajo futuro
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Relocalización
+\end_layout
+
+\begin_layout Itemize
+Estudio comparativo de cada etapa del problema de 
+\emph on
+Loop Closure
+\emph default
+ (detección, validación y cierre) 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Existen gran variedad de métodos para el análisis de apariencia entre imágenes,
+ con diversos enfoques y aplicaciones.
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Analizando cuidadosamente cada etapa del problema, considerando distintos
+ métodos para la detección, validación y cierre de ciclos.
+ Esto es difícil dado que dependen de las características propias sobre
+ el sistema SLAM que se esté utilizando.
+ Y no existen implementaciones completas que resuelvan el problema en su
+ totalidad.
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Los threshold fueron elegidos en base al estudio del estado del arte.
+ Sin embargo, se podría profundizar en esto.
+ Y además existen otros métodos para la validación de ciclos.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Fusión de puntos duplicados
+\end_layout
+
+\begin_layout Itemize
+Uso de 
+\emph on
+bag-of-words
+\emph default
+ durante la etapa de Tracking 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Es posible utilizar la metodología para acelerar el establecimiento de correspon
+dencias con el mapa al momento del seguimiento de la cámara.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+
+\size largest
+¡Muchísimas gracias!
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size largest
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pause
+\end_layout
+
+\end_inset
+
+¿Preguntas?
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

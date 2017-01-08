@@ -1,0 +1,354 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{a4wide}
+\usepackage[graf, intHoriz, sinLU, showDirectores, showCoDirectores]{caratula}
+\usepackage{hyperref}
+
+\let\oldhat\hat
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\hat}[1]{\oldhat{\mathbf{#1}}}
+
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics pdftex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle plain
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Introducción"
+
+\end_inset
+
+Introducción
+\end_layout
+
+\begin_layout Standard
+La robótica móvil tiene un fuerte impacto en ámbitos tales como la industria,
+ la agricultura, y en un espectro de aplicaciones que va desde misiones
+ de exploración planetaria, tareas de búsqueda y rescate de personas en
+ territorios peligrosos para el ser humano, hasta la realización de actividades
+ domésticas o de servicio.
+ Uno de los desafíos actuales de la robótica móvil es lograr completa autonomía,
+ es decir, dotar a un robot de la capacidad de llevar a cabo sus tareas
+ sin la necesidad de un operador humano.
+ Para lograr esto el problema de la navegación autónoma se puede dividir
+ en tres: el de la localización, la construcción de mapas del ambiente y
+ la planificación de las trayectorias.
+ El problema de la localización consiste en dotar a un robot móvil de la
+ habilidad de inferir su propia locación dentro de un entorno conocido.
+ La construcción de una representación detallada o mapa del entorno puede
+ ser abordada a partir de una correcta localización del robot en el ambiente.
+ Y finalmente, conociendo su localización y contando con una representación
+ del ambiente que lo rodea, el robot debe ser capaz de planificar una trayectori
+a que le permita moverse de manera segura mientras realiza la tarea de forma
+ autónoma.
+ Desde el punto de vista de la autonomía, un robot capaz de construir mapas
+ del entorno mientras realiza su tarea, y localizarse por sus propios medios,
+ tiene una gran ventaja comparativa sobre aquellos que dependen de mapas
+ estáticos predefinidos y/o un sistema de posicionamiento externo.
+\end_layout
+
+\begin_layout Standard
+Dependiendo del sistema de sensado a bordo del robot, el entorno por el
+ cual se desplaza es observado periódicamente de manera de proveer suficiente
+ información a los métodos de localización.
+ Los métodos de localización basados en el reconocimiento de referencias
+ externas, conocidos como de localización absoluta o global, utilizan marcas
+ artificiales en el ambiente (por ejemplo patrones visuales, señales de
+ radio, etc.), localización satelital (GPS), o referencias naturales como
+ el campo gravitatorio o magnético de la tierra.
+ Si bien este tipo de sistemas son estables a largo plazo, presentan ruido
+ y/o imprecisiones en las estimaciones a corto plazo y se encuentran limitados
+ en un área de funcionamiento determinada (por ejemplo, la localización
+ satelital es viable solo en ambientes exteriores donde sean visibles al
+ menos tres señales de satélites).
+ 
+\end_layout
+
+\begin_layout Standard
+Se conoce como navegación por estima (
+\emph on
+dead reckoning
+\emph default
+) al proceso por el cual se estiman los cambios en la pose (posición y orientaci
+ón) a partir de la última pose conocida y la integración de la información
+ proveniente de diferentes sensores montados en el robot.
+ Este tipo de localización relativa tiene la desventaja de que errores pequeños,
+ cometidos al estimar el desplazamiento, se acumulan ilimitadamente produciendo
+ estimaciones de decreciente calidad.
+ Algunos de estos métodos utilizan, por ejemplo, mediciones en la rotación
+ de las ruedas por medio de 
+\emph on
+encoders
+\emph default
+ (robots terrestres) lo que se conoce como odometría y/o información proveniente
+ de unidades de medición inercial (IMU, 
+\emph on
+inertial measurement unit
+\emph default
+) para estimar el desplazamiento bajo un modelo de movimiento establecido.
+ Existen métodos de localización relativa que utilizan una o más cámaras
+ como sensor (lo que se conoce como odometría visual) los cuales son capaces
+ de estimar el movimiento relativo con 6 grados de libertad (posición y
+ orientación en un espacio tridimensional).
+ Esto los hacen especialmente atractivos para robots que se desplazan en
+ un espacio tridimencional, como por ejemplo, robots aéreos no tripulados,
+ robots artrópodos o submarinos automatizados.
+\end_layout
+
+\begin_layout Standard
+Resolver la localización a partir de un mapa del ambiente dado 
+\emph on
+a priori
+\emph default
+ puede ser resuelto de diversas maneras y utilizando distintos sensores.
+ El problema resulta más atractivo cuando es preciso localizar el robot
+ mientras se construye un mapa del ambiente.
+ En este caso, la localización y la construcción del mapa deben ser consideradas
+ simultáneamente, lo que se conoce como SLAM (
+\emph on
+Simultaneous Localization And Mapping
+\emph default
+) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SLAM1,SLAM2"
+
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Falta contar un poco mas sobre SLAM e introducir VSLAM!!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Motivación y definición del problema
+\end_layout
+
+\begin_layout Standard
+Los sistemas que resuelven SLAM deben tratar con la acumulación del error
+ en la estimación de la posición y orientación del robot que va creciendo
+ de forma no acotada a medida que aumenta la longitud de la trayectoria
+ recorrida y la dimensión del mapa construido.
+ Para abordar este problema los métodos de SLAM deben contar con la capacidad
+ de detectar una región previamente visitada por el robot.
+ Esto introduce nueva información valiosa que permite ajustar tanto la localizac
+ión del robot como el mapa construido, minimizando el error acumulado hasta
+ el momento.
+ Este problema se conoce como 
+\emph on
+Loop Closure
+\emph default
+, que incluye la detección y cierre de ciclos en la trayectoria realizada
+ por el robot.
+\end_layout
+
+\begin_layout Standard
+El presente trabajo propone una solución al problema de la detección y cierre
+ de ciclos en sistemas SLAM que utilizan cámaras estéreo como sensor principal.
+ Para lograr este objetivo se divide el problema en tres etapas: la detección
+ de ciclos en la trayectoria, el cálculo del desvío cometido en la localización
+ y la corrección tanto de la posición y orientación actual del robot como
+ del mapa construido hasta el momento.
+ Por cada etapa se lleva a cabo una profunda revisión del estado del arte,
+ exponiendo aquellos métodos y técnicas que motivaron la solución propuesta
+ en este trabajo.
+\end_layout
+
+\begin_layout Standard
+Es menester destacar que el problema de la detección y cierre de ciclos
+ esta fuertemente relacionado con el problema de la relocalización que consiste
+ en re-localizar al robot en el mapa luego de un fallo irrecuperable en
+ la localización debido a la oclusión inesperada de los sensores, cambios
+ repentinos en el entorno o la acción de un agente externo que manipulan
+ el robot de manera brusca (
+\emph on
+kidnapping problem
+\emph default
+).
+ La diferencia principal radica en que la detección y cierre de ciclos no
+ debe interferir con el funcionamiento del sistema SLAM si este se encuentra
+ correctamente localizado.
+\end_layout
+
+\begin_layout Section
+Objetivos
+\end_layout
+
+\begin_layout Standard
+El objetivo de este trabajo es hacer un análisis exhaustivo del estado del
+ arte sobre los diferentes métodos disponibles para resolver el problema
+ de 
+\emph on
+Loop Closure
+\emph default
+, de manera de obtener una solución eficiente que permita su aplicación
+ como parte de un sistema SLAM.
+ Además, se propone implementar la solución alcanzada como un módulo capaz
+ de detectar y cerrar ciclos de manera eficiente en la trayectoria percibida
+ por el sistema Visual SLAM desarrollado en el Laboratorio de Robótica y
+ Sistemas Embebidos (LRSE) denominado 
+\emph on
+Stereo Parallel Tracking And Mapping
+\emph default
+ (S-PTAM) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pire2015"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Organización del trabajo
+\end_layout
+
+\begin_layout Standard
+El en Capítulo 2 se define el modelo geométrico de la cámara como un sensor
+ exteroceptivo y la geometría epipolar que involucra a las cámaras estéreo.
+ En el Capítulo 3 se define el marco teórico del problema a resolver junto
+ con una reseña de distintos métodos de localización y sistemas Visual SLAM
+ utilizados en la actualidad.
+ En el Capítulo 4 se aborda el problema de la detección de ciclos.
+ El Capítulo 5 está dedicado al cálculo de la transformación relativa entre
+ cámaras estéreo.
+ En el Capítulo 6 se analizan diferentes métodos para el cierre de ciclos
+ y la corrección de la trayectoria sobre los distintos tipos de mapas.
+ El Capítulo 7 detalla la solución propuesta en función del estudio realizado
+ en los capítulos anteriores.
+ En el Capítulo 8 se muetran los experimentos realizados con 
+\emph on
+datasets
+\emph default
+ de dominio público bajo el 
+\emph on
+framework
+\emph default
+ ROS (
+\emph on
+Robot Operating System
+\emph default
+).
+ Finalmente el Capítulo 9 concluye el trabajo realizado y propone alguos
+ lineamientos como trabajo futuro.
+ 
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+VALE LA PENA HACER SUBSECTIONS DE CADA CAPITULO!
+\end_layout
+
+\begin_layout Subsection*
+Visual Simultaneous Localization And Mapping
+\end_layout
+
+\begin_layout Plain Layout
+Se define el marco teórico del problema junto con una reseña de distintos
+ métodos de localización y sistemas VSLAM utilizados en la actualidad.
+ En cada caso se expondrán sus ventajas, problemáticas y limitaciones.
+ En este capítulo se hará además un análisis completo del enfoque, diseño
+ e implementación propuesto por el sistema VSLAM llamado SPTAM desarrollado
+ en el Laboratorio de Robótica y Sistemas Embebidos (LRSE).
+\end_layout
+
+\begin_layout Subsection*
+Detección de ciclos en la trayectoria
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

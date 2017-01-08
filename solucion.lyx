@@ -1,0 +1,1456 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{a4wide}
+\usepackage[graf, intHoriz, sinLU, showDirectores, showCoDirectores]{caratula}
+\usepackage{hyperref}
+
+\let\oldhat\hat
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\hat}[1]{\oldhat{\mathbf{#1}}}
+
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics pdftex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle plain
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Método propuesto de detección y cierre de ciclos
+\end_layout
+
+\begin_layout Standard
+A continuación se expone en detalle la solución propuesta para el problema
+ de detección y cierre de ciclos.
+ El método fue concebido para integrarse con el sistema S-PTAM (
+\emph on
+Stereo Parallel Tracking and Mapping
+\emph default
+), de forma que las diferentes técnicas involucradas en el desarrollo están
+ motivadas por las características propias del sistema de SLAM estéreo considera
+do.
+ El uso eficiente de la información disponible es un requerimiento del método,
+ minimizando el impacto en el desempeño del sistema SLAM en su conjunto.
+\end_layout
+
+\begin_layout Section
+Esquema general
+\end_layout
+
+\begin_layout Standard
+Se extiende el funcionamiento de S-PTAM añadiendo un módulo de detección
+ y cierre de ciclos denominado 
+\emph on
+Loop Closing
+\emph default
+.
+ Este módulo trabaja de manera paralela en un hilo de ejecución distinto
+ a los del 
+\emph on
+Tracking
+\emph default
+ y 
+\emph on
+Local Mapping
+\emph default
+.
+ Los 
+\emph on
+keyframes
+\emph default
+ procesados por el 
+\emph on
+Local Mapping
+\emph default
+ son encolados, luego, para ser tratados por el hilo de 
+\emph on
+Loop Closing
+\emph default
+ (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sptam_lc_overview"
+
+\end_inset
+
+).
+ 
+\emph on
+Loop Closing
+\emph default
+ procesa los 
+\emph on
+keyframes
+\noun on
+ 
+\emph default
+\noun default
+de forma secuencial, realizando la detección, validación y cierre de ciclos.
+ En caso de validar la ocurrencia de un ciclo, el módulo considera la sincroniza
+ción entre los hilos de ejecución del sistema respetando la consistencia
+ de las estructuras de datos concurrentes utilizadas.
+ La actualización del mapa se realiza sin entorpecer el funcionamiento general
+ del sistema S-PTAM.
+ En caso de que se requiera corregir la trayectoria actual en curso, el
+ módulo se comunica con el 
+\emph on
+Pose Predictor
+\emph default
+ de manera de notificar los cambios en la localización actual del sistema.
+\end_layout
+
+\begin_layout Standard
+El módulo 
+\emph on
+Loop Closing
+\emph default
+ (al igual que S-PTAM) está diseñado para operar con cualquier tipo de descripto
+r de características visuales que se desee utilizar.
+ Se requiere únicamente la construcción previa de un vocabulario visual
+ para la etapa de detección de ciclos (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:visual_vocabulary"
+
+\end_inset
+
+).
+ No se realizan procesamientos adicionales sobre las imágenes de los 
+\emph on
+keyframes
+\emph default
+, de manera que los métodos involucrados utilizan la información procesada
+ previamente por el sistema S-PTAM (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:keyframes_procces"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=0.6*
+\backslash
+textwidth]{imagenes/sptam_lc_diagram.tikz}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Esquema general del sistema S-PTAM incluyendo detección y cierre de ciclos.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sptam_lc_overview"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Detección de ciclos y construcción de la base de datos
+\end_layout
+
+\begin_layout Standard
+Siguiendo las técnicas introducidas en la Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:DBoW"
+
+\end_inset
+
+, se entrena un vocabulario visual utilizando una colección de imágenes
+ seleccionadas.
+ Este entrenamiento se lleva acabo en una etapa previa al funcionamiento
+ del sistema, cuidando que las imágenes utilizadas representen, en términos
+ de apariencia, entornos diversos.
+ Es importante utilizar tanto imágenes de ambientes interiores (
+\emph on
+indoor
+\emph default
+) como exteriores (
+\emph on
+outdoor
+\emph default
+) y evitar largas secuencias de imágenes pertenecientes a un mismo entorno.
+ De esta forma, se logra un análisis de frecuencias de características visuales
+ representativo de trayectorias posibles en entornos reales.
+\end_layout
+
+\begin_layout Standard
+La base de datos se construye utilizando la información de apariencia provenient
+e de los sucesivos 
+\emph on
+keyframes
+\emph default
+ que se agreguen al mapa.
+ A medida que los 
+\emph on
+keyframes
+\emph default
+ son procesados, estos se interpretan como vectores 
+\emph on
+bag-of-words
+\emph default
+ utilizando el vocabulario visual.
+ Para esto se utilizan las características visuales detectadas en la etapa
+ del 
+\emph on
+Tracking
+\emph default
+, de manera que no es necesaria la utilización de métodos de descripción
+ al momento de la detección de ciclos.
+ La base de datos es consultada utilizando los vectores 
+\emph on
+bag-of-words
+\emph default
+ siguiendo los métodos de análisis de similitud expuestos en la Sección
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:analisis_similaridad"
+
+\end_inset
+
+.
+ Se establece un 
+\emph on
+threshold
+\emph default
+ mínimo permisivo de 
+\begin_inset Formula $\alpha=0,3$
+\end_inset
+
+ sobre el valor de similitud normalizado 
+\begin_inset Formula $\eta$
+\end_inset
+
+, considerando como candidatos a ciclos 
+\emph on
+keyframes
+\emph default
+ pertenecientes a la base de datos que superen dicho 
+\emph on
+threshold
+\emph default
+.
+ Los candidatos a ciclos serán agrupados y evaluados a través de la valoración
+ de similitud conjunta 
+\begin_inset Formula $H$
+\end_inset
+
+, obteniendo finalmente un único candidato a ciclo.
+ Dado que la generación de nuevos 
+\emph on
+keyframes
+\emph default
+ se realiza de manera espaciada debido a la selección que se lleva a cabo
+ en el hilo del 
+\emph on
+Tracking
+\emph default
+ (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:seleccion_keyframes"
+
+\end_inset
+
+), no se impone una restricción temporal de sucesivas detecciones positivas.
+ Esto es así dado que podría no existir una relación de continuidad temporal
+ entre 
+\emph on
+keyframes
+\emph default
+ generados.
+ 
+\end_layout
+
+\begin_layout Standard
+En caso de que la detección de ciclos en la trayectoria sea positiva, se
+ la caracteriza como un par de 
+\emph on
+keyframes 
+\emph default
+
+\begin_inset Formula $K_{\curr},K_{\ell}$
+\end_inset
+
+ pertenecientes al mapa.
+ 
+\begin_inset Formula $K_{\curr}$
+\end_inset
+
+ referencia al 
+\emph on
+keyframe
+\emph default
+ recientemente procesado que originó la consulta y 
+\begin_inset Formula $K_{\ell}$
+\end_inset
+
+ al mejor candidato a ciclo obtenido por el método de detección anteriormente
+ descripto.
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:validacion_ciclo"
+
+\end_inset
+
+Validación del ciclo y cálculo de la transformación relativa
+\end_layout
+
+\begin_layout Standard
+Habiendo establecido un par de 
+\emph on
+keyframes
+\emph default
+ 
+\begin_inset Formula $K_{\curr},K_{\ell}$
+\end_inset
+
+ como candidato a ciclo en la trayectoria, se desea realizar un análisis
+ geométrico que permita validar la ocurrencia del ciclo.
+ Concretamente, se analiza si es posible establecer una transformación relativa
+ entre las poses de cámara de 
+\begin_inset Formula $K_{\curr},K_{\ell}$
+\end_inset
+
+ utilizando técnicas de Perspectiva por n Puntos (Capítulo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:transformacion_relativa"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+Para llevar a cabo esta validación, primero es necesario comparar y asociar
+ los descriptores extraídos de 
+\begin_inset Formula $K_{\curr}$
+\end_inset
+
+ y 
+\begin_inset Formula $K_{\ell}$
+\end_inset
+
+ de manera de establecer correspondencias entre las características visuales
+ detectadas en las imágenes.
+ Sobre esta correspondencia entre descriptores se utiliza un método P3P
+ (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:P3P"
+
+\end_inset
+
+) bajo un esquema RANSAC de manera de determinar una transformación entre
+ los 
+\emph on
+keyframes
+\emph default
+ 
+\begin_inset Formula $K_{\curr},K_{\ell}$
+\end_inset
+
+ consistente con una cantidad considerable de 
+\emph on
+inliers
+\emph default
+ (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:p3p_ransac"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+En caso de que al menos un 80% del total de correspondencias sean encontradas
+ 
+\emph on
+inliers
+\emph default
+, el ciclo entre los 
+\emph on
+keyframes
+\emph default
+ 
+\begin_inset Formula $K_{\curr},K_{\ell}$
+\end_inset
+
+ se considera válido.
+ Finalmente se estima la transformación relativa 
+\begin_inset Formula $T_{\curr\ell}$
+\end_inset
+
+ entre las poses de cámara de los 
+\emph on
+keyframes
+\emph default
+ 
+\begin_inset Formula $K_{\curr},K_{\ell}$
+\end_inset
+
+ utilizando un método PnP sobre el conjunto de correspondencias 
+\emph on
+inliers
+\emph default
+.
+\end_layout
+
+\begin_layout Subsection
+Correspondencias robustas entre cámaras estéreo
+\end_layout
+
+\begin_layout Standard
+Dado el procesamiento sobre los 
+\emph on
+keyframes,
+\emph default
+ llevado a cabo durante 
+\emph on
+Tracking
+\emph default
+ (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:keyframes_procces"
+
+\end_inset
+
+), las características visuales entre cámaras de un mismo par estéreo se
+ encuentran asociadas satisfaciendo las restricciones intrínsecas de la
+ geometría epipolar.
+ Sin embargo, al momento de la detección del ciclo entre 
+\begin_inset Formula $K_{\curr},K_{\ell}$
+\end_inset
+
+ no existe información que relacione las características visuales presentes
+ entre los dos pares estéreo.
+\end_layout
+
+\begin_layout Standard
+Para lograr una robusta correspondencia entre las 4 cámaras involucradas
+ (2 por cada cámara estéreo), se realizan dos procesos de comparación y
+ asociación, uno entre las cámaras 
+\begin_inset Quotes eld
+\end_inset
+
+izquierdas
+\begin_inset Quotes erd
+\end_inset
+
+ y otro entre las cámaras 
+\begin_inset Quotes eld
+\end_inset
+
+derechas
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Se lleva a cabo una comparación de 
+\begin_inset Quotes eld
+\end_inset
+
+fuerza bruta
+\begin_inset Quotes erd
+\end_inset
+
+ donde para cada descriptor extraído de una imagen, se evalúa la distancia
+ a todo descriptor de la segunda imagen.
+ Relacionar descriptores de mínima distancia entre imágenes da buenos resultados
+ en términos de asociación, pero podrían cometerse errores al considerar
+ descriptores de alguna manera 
+\begin_inset Quotes eld
+\end_inset
+
+ambiguos
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Es decir, si para un descriptor existiesen múltiples candidatos que presenten
+ una distancia pequeña y similar, elegir el de mínima distancia podría no
+ ser la asociación correcta.
+ Para solventar esto, se consideran los dos descriptores de menor distancia,
+ y se evalúa la relación del segundo vecino cercano (
+\emph on
+second-closest neighbour ratio
+\emph default
+) propuesta en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "SIFT"
+
+\end_inset
+
+.
+ Esto permite evaluar la ambigüedad de un descriptor al momento de realizar
+ la comparación y asociación entre imágenes, de forma de descartar asociaciones
+ que podrían no ser correctas.
+\end_layout
+
+\begin_layout Standard
+Por ultimo, dadas las correspondencias entre cámaras 
+\begin_inset Quotes eld
+\end_inset
+
+izquierdas
+\begin_inset Quotes erd
+\end_inset
+
+ y 
+\begin_inset Quotes eld
+\end_inset
+
+derechas
+\begin_inset Quotes erd
+\end_inset
+
+ de diferentes pares estéreo, se analiza si estas asociaciones cumplen con
+ las restricciones epipolares y las correspondencias establecidas entre
+ cámaras de un mismo par estéreo (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:stereo_matching"
+
+\end_inset
+
+).
+ Este proceso determina correspondencias robustas entre cámaras estéreo,
+ y en la práctica, si no se logra establecer un mínimo de correspondencias
+ entre los 
+\emph on
+keyframes
+\emph default
+ 
+\begin_inset Formula $K_{\curr},K_{\ell}$
+\end_inset
+
+, el ciclo es descartado y declarado como inválido.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/raw_matches.png
+	lyxscale 30
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/stereo_matches.png
+	lyxscale 30
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Correspondencias encontradas entre cámaras estéreo pertenecientes a un ciclo
+ detectado en la trayectoria.
+ El par de imágenes superior corresponde al momento en la trayectoria cuando
+ se detecto el ciclo, el par inferior corresponde al mejor candidato a ciclo
+ evaluado.
+ (a) Asociación entre imágenes 
+\begin_inset Quotes eld
+\end_inset
+
+izquierdas
+\begin_inset Quotes erd
+\end_inset
+
+ y 
+\begin_inset Quotes eld
+\end_inset
+
+derechas
+\begin_inset Quotes erd
+\end_inset
+
+ de ambos pares.
+ (b) Asociación luego de aplicar las restricciones epipolares.
+ Notar que se descartan asociaciones erróneas realizadas entre las imágenes
+ 
+\begin_inset Quotes eld
+\end_inset
+
+derechas
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:stereo_matching"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Cierre del ciclo y corrección de la trayectoria
+\end_layout
+
+\begin_layout Standard
+El mapa construido por el sistema S-PTAM es globalmente consistente, es
+ decir, los puntos del mapa y las poses de cámara de los 
+\emph on
+keyframes
+\emph default
+ se encuentran en relación a un único eje de coordenadas global.
+ Por esta razón se requiere que el proceso de cierre del ciclo y ajuste
+ de la trayectoria, mantenga la consistencia del mapa.
+\end_layout
+
+\begin_layout Standard
+Al validar un ciclo entre los 
+\emph on
+keyframes
+\emph default
+ 
+\begin_inset Formula $K_{\curr}$
+\end_inset
+
+ y 
+\begin_inset Formula $K_{\ell}$
+\end_inset
+
+, se considera a la transformación 
+\begin_inset Formula $T_{\curr\ell}$
+\end_inset
+
+ como una estimación del error acumulado hasta el momento.
+ El error en la trayectoria tiende a incrementarse con el tiempo, por lo
+ que 
+\begin_inset Formula $K_{\ell}$
+\end_inset
+
+ porta menor error de estimación que cualquier otro 
+\emph on
+keyframe
+\emph default
+ generado posteriormente.
+ Con esto en mente, se lleva a cabo una corrección inicial propagando la
+ transformación 
+\begin_inset Formula $T_{\curr\ell}$
+\end_inset
+
+ por los 
+\emph on
+keyframes
+\emph default
+ comprendidos entre 
+\begin_inset Formula $K_{\ell}$
+\end_inset
+
+ y 
+\begin_inset Formula $K_{\curr}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Sean 
+\begin_inset Formula $\{E_{w\curr},\ldots,E_{w\sind{(j\splus1)}},E_{w\ind{j}},\ldots,E_{w\ell}\}$
+\end_inset
+
+ las poses de cámara asociadas a los 
+\emph on
+keyframes
+\emph default
+ pertenecientes al ciclo detectado, la propagación se define como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+E_{wc}^{prop} & =E_{w\ell}(T_{\curr\ell})^{\sminus1}=E_{w\ell}T_{\ell\curr}\\
+E_{w\ind{j}}^{prop} & =Interpolar_{j}(E_{w\ind{j}},E_{w\sind{(j\splus1)}}^{prop}E_{\sind{(j\splus1)}\ind{j}})\\
+E_{w\ell}^{prop} & =E_{w\ell},
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Se entiende que Tlc viene del pnp pero E(j+1)j viene del mapa??
+\end_layout
+
+\end_inset
+
+donde el índice superior 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $prop$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ refiere a las poses de cámara luego de la propagación, 
+\begin_inset Formula $T_{\ell\curr}$
+\end_inset
+
+ corresponde a la transformación inversa de 
+\begin_inset Formula $T_{\curr\ell}$
+\end_inset
+
+ previamente estimada y 
+\begin_inset Formula $E_{\sind{(j\splus1)}\ind{j}}$
+\end_inset
+
+ es la transformación entre las poses 
+\begin_inset Formula $E_{w\sind{(j\splus1)}}$
+\end_inset
+
+ y 
+\begin_inset Formula $E_{w\ind{j}}$
+\end_inset
+
+ (
+\begin_inset Formula $E_{\sind{(j\splus1)}\ind{j}}=(E_{w\sind{(j\splus1)}})^{\sminus1}E_{w\ind{j}}=E_{\sind{(j\splus1)}w}E_{w\ind{j}}$
+\end_inset
+
+).
+ 
+\begin_inset Formula $Interpolar_{j}(\ast,\ast)$
+\end_inset
+
+ realiza una interpolación entre poses de manera de 
+\begin_inset Quotes eld
+\end_inset
+
+suavizar
+\begin_inset Quotes erd
+\end_inset
+
+ la propagación efectuada sobre el 
+\emph on
+keyframe
+\emph default
+ 
+\begin_inset Formula $K_{j}$
+\end_inset
+
+, de acuerdo a su distancia al ciclo detectado.
+ De esta manera, 
+\emph on
+keyframes
+\emph default
+ cercanos a 
+\begin_inset Formula $K_{\curr}$
+\end_inset
+
+ (y por tanto cercanos al punto donde fue detectado el ciclo) serán fuertemente
+ corregidos, mientras que la corrección aplicada a 
+\emph on
+keyframes
+\emph default
+ alejados del punto de cierre de ciclo es suavizada.
+ Este suavizado se logra utilizando una representación en 
+\emph on
+quaternions
+\emph default
+ de las rotaciones y el método de interpolación linear esférica (SLERP
+\emph on
+, Spherical Linear Interpolation
+\emph default
+) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "shoemake1985animating"
+
+\end_inset
+
+.
+ Esta corrección inicial logra cerrar el ciclo 
+\begin_inset Quotes eld
+\end_inset
+
+uniendo
+\begin_inset Quotes erd
+\end_inset
+
+ a 
+\begin_inset Formula $K_{\curr}$
+\end_inset
+
+ y 
+\begin_inset Formula $K_{\ell}$
+\end_inset
+
+ a través de 
+\begin_inset Formula $T_{\curr\ell}$
+\end_inset
+
+, propagando una corrección suavizada a lo largo de todos los 
+\emph on
+keyframes
+\emph default
+ involucrados en el ciclo.
+ 
+\end_layout
+
+\begin_layout Standard
+Utilizando esta propagación como solución inicial, se lleva a cabo la optimizaci
+ón del grafo de poses formado por todos los 
+\emph on
+keyframes
+\emph default
+ del mapa.
+ Este grafo se construye relacionando cada 
+\emph on
+keyframe
+\emph default
+ con aquel que haya sido generado posteriormente a este.
+ Entre 
+\emph on
+keyframes
+\emph default
+ relacionados se establece como 
+\begin_inset Quotes eld
+\end_inset
+
+restricción
+\begin_inset Quotes erd
+\end_inset
+
+ la transformación relativa entre estos.
+ Se obtiene entonces, una cadena de 
+\emph on
+keyframes
+\emph default
+ donde dos 
+\emph on
+keyframes
+\emph default
+ subsiguientes se conectan por una única transformación.
+ A esta cadena se le añaden, además, las transformaciones relativas estimadas
+ correspondientes a todos los ciclos detectados.
+ Así, se busca estimar las poses de cámara que mejor satisfagan las restriccione
+s de transformación establecidas entre los 
+\emph on
+keyframes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Lo mismo aca, Tjk viene del pnp..
+ se entiende?
+\end_layout
+
+\end_inset
+
+En términos de minimización, se define el error residual entre poses de
+ cámara con respecto a las restricciones de transformación.
+ De esta manera, a través de algoritmos de minimización, se obtienen las
+ poses de cámara que minimicen el error acumulado de todos los errores residuale
+s.
+ Sea 
+\begin_inset Formula $E_{\ind{i}\sind{(i\splus1)}}$
+\end_inset
+
+, 
+\begin_inset Formula $\forall i\in\left[0,\ensuremath{\mathcal{C}}\sminus1\right]$
+\end_inset
+
+, la transformación entre la pose de cámara 
+\begin_inset Formula $E_{w\ind{i}}$
+\end_inset
+
+ y la subsecuente pose 
+\begin_inset Formula $E_{w\sind{(i\splus1)}}$
+\end_inset
+
+.
+ Se define como el error residual entre 
+\emph on
+keyframes
+\emph default
+ subsiguientes como 
+\begin_inset Formula $r_{i}=E_{\ind{i}\sind{(i\splus1)}}(E_{w\sind{(i\splus1)}})^{\sminus1}E_{w\ind{i}}=E_{\ind{i}\sind{(i\splus1)}}E_{\sind{(i\splus1)}w}E_{w\ind{i}}$
+\end_inset
+
+.
+ Para todo par de 
+\emph on
+keyframes
+\emph default
+ 
+\begin_inset Formula $K_{j},K_{k}$
+\end_inset
+
+ tal que se haya validado un ciclo entre estos, se define el error residual
+ entre 
+\emph on
+keyframes
+\emph default
+ que cierran ciclos como 
+\begin_inset Formula $r_{j,k}=T_{\ind{j}\ind{k}}(E_{w\ind{k}})^{\sminus1}E_{w\ind{j}}=T_{\ind{j}\ind{k}}E_{\ind{k}w}E_{w\ind{j}}$
+\end_inset
+
+.
+ Las transformaciones 
+\begin_inset Formula $T_{\ind{j}\ind{k}}$
+\end_inset
+
+ corresponden a las transformaciones estimadas en la etapa de validación
+ de cada ciclo (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:validacion_ciclo"
+
+\end_inset
+
+).
+ De esta manera interesa ajustar las poses de cámara, de manera de minimizar
+ los errores residuales definidos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\underset{E_{w\sind{0}},\ldots,E_{w\curr}}{argmin}\sum_{i}r_{i}^{\top}r_{i}+\sum_{j,k}r_{j,k}^{\top}r_{j,k}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La solución al cierre del ciclo propagada inicialmente servirá como estimación
+ inicial para los métodos de minimización utilizados, reduciendo considerablemen
+te el tiempo requerido para optimizar las poses del mapa.
+ Finalmente, una vez ajustadas las poses de cámara de todos los 
+\emph on
+keyframes
+\emph default
+, cada punto del mapa es corregido aplicando la misma transformación que
+ haya sufrido el 
+\emph on
+keyframe
+\emph default
+ que lo trianguló originalmente.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:sinconizacion_mapa"
+
+\end_inset
+
+Actualización del mapa y sincronización de componentes
+\end_layout
+
+\begin_layout Standard
+Para permitir al sistema operar en tiempo real junto con la extensión de
+ detección y cierre de ciclos, dos propiedades deben tomar lugar en todo
+ momento:
+\end_layout
+
+\begin_layout Itemize
+El hilo del 
+\emph on
+Tracking
+\emph default
+ debe permanecer operacional en tiempo real, siendo capaz de trabajar con
+ cualquier punto del mapa requerido y de crear nuevos 
+\emph on
+keyframes,
+\emph default
+ de ser necesario.
+\end_layout
+
+\begin_layout Itemize
+El hilo de 
+\emph on
+Local Mapping
+\emph default
+ debe ser capaz de efectuar ajustes sobre 
+\emph on
+keyframes
+\emph default
+ y puntos dentro de un área del mapa definida.
+\end_layout
+
+\begin_layout Standard
+Para asegurar estas dos propiedades, luego de que un ciclo es validado,
+ se establece un área del mapa de 
+\begin_inset Quotes eld
+\end_inset
+
+uso seguro
+\begin_inset Quotes erd
+\end_inset
+
+ para el 
+\emph on
+Local Mapping
+\emph default
+.
+ Luego, la corrección del ciclo inicial y la optimización del grafo de poses
+ se realizan en una copia interna de todos los 
+\emph on
+keyframes
+\emph default
+ presentes.
+ Por último, la actualización del mapa se lleva a cabo en tres etapas:
+\end_layout
+
+\begin_layout Itemize
+Actualización de 
+\emph on
+keyframes
+\emph default
+ y puntos del mapa corregidos que se encuentren por fuera del área de uso
+ seguro definida
+\emph on
+.
+\end_layout
+
+\begin_layout Itemize
+Actualización de 
+\emph on
+keyframes
+\emph default
+ y puntos del mapa corregidos que se encuentren dentro del área de uso seguro
+ definida, aplicando toda optimización introducida por el 
+\emph on
+Local Mapping
+\emph default
+ desde el comienzo del proceso de detección y cierre del ciclo.
+\end_layout
+
+\begin_layout Itemize
+Corregir cualquier 
+\emph on
+keyframe
+\emph default
+ creado y añadido al mapa luego de haber realizado la copia interna de 
+\emph on
+keyframes
+\emph default
+.
+ Esta corrección se realiza aplicando la misma transformación que fue utilizada
+ para la corrección del 
+\emph on
+keyframe
+\emph default
+ más reciente 
+\begin_inset Formula $K_{\curr}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+De esta manera, los hilos del 
+\emph on
+Tracking
+\emph default
+ y 
+\emph on
+Local Mapping
+\emph default
+ sólo necesitan ser detenidos durante las dos últimas etapas, donde solo
+ una pequeña fracción del mapa necesita actualizarse.
+ Luego de la actualización del mapa, resta notificar al 
+\emph on
+Pose Predictor
+\emph default
+ la transformación que debe aplicarse a la trayectoria en curso para corregir
+ la estimación de localización próxima.
+\end_layout
+
+\begin_layout Standard
+Durante este proceso el 
+\emph on
+Tracking
+\emph default
+ podría encontrarse con puntos del mapa que están siendo corregidos activamente
+ por el 
+\emph on
+Loop Closing
+\emph default
+, sin embargo se espera que estos sean descartados durante el proceso de
+ proyección (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:track_points"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:detalles_impl"
+
+\end_inset
+
+Detalles de implementación
+\end_layout
+
+\begin_layout Standard
+A lo largo de todo el desarrollo de la solución propuesta se utilizó la
+ biblioteca OpenCV para el procesamiento de imágenes, extracción de descriptores
+ y asociación de correspondencias.
+ A continuación se detallan diferentes decisiones de implementación y biblioteca
+s utilizadas para la confección del módulo 
+\emph on
+Loop Closing
+\emph default
+.
+\end_layout
+
+\begin_layout Subsection*
+Inclusión del módulo y manejo de la concurrencia
+\end_layout
+
+\begin_layout Standard
+Originalmente, S-PTAM contaba con un único 
+\emph on
+lock
+\emph default
+ compartido para la sincronización requerida entre los hilos de 
+\emph on
+Tracking
+\emph default
+ y 
+\emph on
+Local Mapping
+\emph default
+ para mediar el acceso al mapa.
+ Al incluir el método de detección y cierre de ciclos como un nuevo módulo
+ concurrente, fue necesario modificar el diseño original de S-PTAM diferenciando
+ distintos tipos de acceso.
+ Se implementaron 
+\emph on
+locks
+\emph default
+ de lectura-escritura individuales para cada punto y 
+\emph on
+keyframe
+\emph default
+, de manera que el 
+\emph on
+Tracking 
+\emph default
+y 
+\emph on
+Loop Closing
+\emph default
+ puedan trabajar en diferentes áreas del mapa simultáneamente.
+\end_layout
+
+\begin_layout Standard
+Durante la corrección y actualización del mapa se requiere el establecimiento
+ de un área de 
+\begin_inset Quotes eld
+\end_inset
+
+uso seguro
+\begin_inset Quotes erd
+\end_inset
+
+ para el 
+\emph on
+Local Mapping
+\emph default
+ de forma tal de evitar problemas de concurrencia con el accionar del 
+\emph on
+Loop Closing
+\emph default
+.
+ Esta área se define como una vecindad de 30 
+\emph on
+keyframes
+\emph default
+ cercanos a la última pose estimada.
+ Para el establecimiento de dicha vecindad, se incluyeron mensajes de sincroniza
+ción entre los hilos de ejecución del 
+\emph on
+Tracking
+\emph default
+, 
+\emph on
+Local Mapping
+\emph default
+ y 
+\emph on
+Loop Closing
+\emph default
+.
+ Durante la actualización del mapa, este tamaño de vecindad asegura que
+ el 
+\emph on
+Tracking
+\emph default
+ y 
+\emph on
+Local Mapping
+\emph default
+ sean detenidos durante un breve periodo de tiempo, que se mantiene constante
+ y no escala con el tamaño del mapa.
+\end_layout
+
+\begin_layout Subsection*
+Detección y validación de ciclos
+\end_layout
+
+\begin_layout Standard
+La detección de ciclos fue desarrollada en base al sistema DLoopDetector
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "galvez2011real,Galvez:Tardos:TRO12"
+
+\end_inset
+
+ que implementa las técnicas descriptas en la Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:DBoW"
+
+\end_inset
+
+.
+ A su vez, dicho sistema utiliza la librería DBoW2, introducida por los
+ mismos autores, la cual provee soporte para el manejo de vectores 
+\emph on
+bag-of-words
+\emph default
+ y la construcción de bases de datos de similitud.
+\end_layout
+
+\begin_layout Standard
+Asimismo, se modificó el comportamiento del detector DLoopDetector de manera
+ de utilizar métodos PnP para la validación geométrica de los candidatos
+ a ciclos, teniendo en cuenta que en este trabajo se consideran cámaras
+ estéreo como sensor.
+ Se utilizó la biblioteca OpenGV 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kneip2014opengv"
+
+\end_inset
+
+ para el cálculo de las transformaciones relativas entre las cámaras estéreo.
+\end_layout
+
+\begin_layout Subsection*
+Propagación inicial y optimización del ciclo
+\end_layout
+
+\begin_layout Standard
+Para el cálculo de la propagación, que se utiliza como solución inicial
+ en el cierre de ciclos, se aplica una interpolación entre poses de cámara
+ mediante el uso de una función exponencial.
+ De esta forma, 
+\emph on
+keyframes
+\emph default
+ cercanos al punto donde se originó el ciclo se corrigen fuertemente, mientras
+ que la transformación aplicada se ve rápidamente suavizada al propagar
+ 
+\emph on
+keyframes
+\emph default
+ más distantes.
+\end_layout
+
+\begin_layout Standard
+La optimización del grafo de restricciones y la minimización del error se
+ lleva a cabo utilizando la biblioteca g2o 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "grisetti2011g2o"
+
+\end_inset
+
+ que implementa técnicas de 
+\emph on
+Bundle Adjustment
+\emph default
+ y eficientes variantes del algoritmo de minimización no lineal Levenberg–Marqua
+rdt 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "levenberg1944method,marquardt1963algorithm"
+
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

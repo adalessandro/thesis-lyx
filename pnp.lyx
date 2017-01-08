@@ -1,0 +1,842 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{a4wide}
+\usepackage[graf, intHoriz, sinLU, showDirectores, showCoDirectores]{caratula}
+\usepackage{hyperref}
+
+\let\oldhat\hat
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\renewcommand{\hat}[1]{\oldhat{\mathbf{#1}}}
+
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics pdftex
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle plain
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:transformacion_relativa"
+
+\end_inset
+
+Cálculo de la transformación entre cámaras estéreo
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Se entiende cuando hablo de comparar y calcular la transformacion entre
+ cámaras?? por que en realidad en ningún lado explico que cada momento de
+ la pose lo interpreto como una cámara diferente.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En el contexto de un robot móvil localizándose por medio de un sistema VSLAM
+ estéreo, calcular la transformación (rotación y traslación) entre dos estimacio
+nes de localización es trivial dado que conlleva simples operaciones numéricas.
+ Al hacerlo de esta manera, la transformación calculada acarrea el error
+ de estimación acumulado.
+ Es por esto que al detectar y validar un ciclo entre dos momentos de la
+ trayectoria se requieren métodos capaces de estimar la transformación entre
+ las cámaras utilizando información independiente a los errores de estimación
+ cometidos.
+ Esto es, utilizando la calibración de las cámaras involucradas en el ciclo,
+ las imágenes capturadas en los distintos momentos de la trayectoria y las
+ características visuales detectadas.
+ El cálculo de esta transformación es de interés dado que permite estimar
+ el error cometido hasta el momento y servirá como punto de partida para
+ los métodos que permitan corregir tanto la localización actual como el
+ mapa construído hasta el momento.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Hablo de estimadores geométricos pero en los papers hablan de que son algebraico
+s por que usan métodos numéricos de descomposición de matrices y esas cosas
+ para resolver la estimacion.
+ Le llaman geométrico cuando usan angulos y relaciones trigonometricas para
+ resolverlo.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es posible distinguir dos tipos distintos de métodos geométricos para la
+ estimación de la pose de una cámara: los relativos (
+\emph on
+relative pose estimation
+\emph default
+) y los absolutos (
+\emph on
+absolute pose estimation
+\emph default
+).
+ Estos se diferencian por el tipo de información que utilizan para llevar
+ a cabo la estimación.
+ Los métodos relativos calculan la pose de una cámara con respecto a otra
+ utilizando 
+\begin_inset Quotes eld
+\end_inset
+
+correspondencias 2D-2D
+\begin_inset Quotes erd
+\end_inset
+
+ las cuales refieren a pares asociados entre características visuales extraídas
+ de las imágenes (Fig.(a) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:relative_absolute"
+
+\end_inset
+
+).
+ Los métodos absolutos calculan la pose de una cámara con respecto a un
+ eje de coordenadas determinado (usualmente el eje de coordenadas del mundo)
+ utilizando 
+\begin_inset Quotes eld
+\end_inset
+
+correspondencias 2D-3D
+\begin_inset Quotes erd
+\end_inset
+
+ las cuales refieren a pares asociados entre características visuales presentes
+ en las imágenes y puntos 3D en referencia al eje de coordenadas antes mencionad
+o (Fig.(b) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:relative_absolute"
+
+\end_inset
+
+).
+ Estos métodos de estimación absoluta de la pose se los conoce además como
+ métodos de Perspectiva por n Puntos (PnP, 
+\emph on
+perspective-n-points
+\emph default
+) y resultan más precisos que los métodos relativos
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+cita? No tengo..
+ pasa que es algo conocido, el multiple view dice por ejemplo que 5-point
+ ransan no recupera escala
+\end_layout
+
+\end_inset
+
+.
+ Esto se debe a que los métodos relativos no poseen información de profundidad
+ y deben trabajar solo con vectores de origen en el centro de la cámara
+ y en dirección a las características visuales extraídas, a lo cual se le
+ llama vectores dirección (
+\emph on
+bearing vectors
+\emph default
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/relative_central.png
+	lyxscale 55
+	width 65text%
+
+\end_inset
+
+
+\begin_inset Formula $\mathbf{}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/absolute_central.png
+	lyxscale 60
+	width 85text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+(a) Escenario de estimación de pose de la cámara 
+\begin_inset Formula $c'$
+\end_inset
+
+ relativa a la cámara 
+\begin_inset Formula $c$
+\end_inset
+
+ utilizando correspondencias 2D-2D representadas como vectores dirección
+ 
+\begin_inset Formula $\mathbf{f}_{i}$
+\end_inset
+
+.
+ (b) Escenario de estimación de pose absoluta de la cámara 
+\begin_inset Formula $c$
+\end_inset
+
+ con respecto al eje de coordenadas 
+\begin_inset Formula $w$
+\end_inset
+
+ utilizando correspondencias 2D-3D representadas como vectores dirección
+ 
+\begin_inset Formula $\mathbf{f_{i}}$
+\end_inset
+
+ y coordenadas 3D 
+\begin_inset Formula $\mathbf{p_{i}}$
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:relative_absolute"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es posible interpretar, entonces, el escenario planteado anteriormente como
+ un problema de estimación relativa de la pose, dado que al detectar un
+ ciclo interesa estimar la pose de la cámara actual en relación a la cámara
+ anterior con la cual ocurrió el ciclo en la trayectoria.
+ Sin embargo, al trabajar con cámaras estéreo siempre es posible recuperar
+ la distancia a la que se encuentran las características visuales por medio
+ de triangulación (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:triangulacion_estereo"
+
+\end_inset
+
+) y gracias a esto es posible utilizar métodos de Perspectiva por n Puntos
+ para calcular la transformación entre las cámaras estéreo de manera precisa
+ (Figs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:estereo_pnp"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/stereo_triangulation.png
+	lyxscale 30
+	width 42text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(a)
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/stereo_pnp.png
+	lyxscale 30
+	width 72text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+(b)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+(a) Par estéreo del cual se triangulan puntos de control en referencia a
+ la cámara izquierda.
+ (b) Utilizando correspondencias 2D-3D (flechas rojas) entre características
+ visuales en la imagen y puntos de control en referencia al par estéreo
+ anterior, es posible calcular la transformación relativa (flecha verde)
+ existente entre las cámaras izquierdas de los dos pares estéreo.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:estereo_pnp"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Métodos para la resolución del problema PnP
+\end_layout
+
+\begin_layout Standard
+El problema de Perspectiva por n Puntos (PnP) consiste en determinar la
+ posición y orientación de la cámara en relación a un determinado eje de
+ coordenadas a través de un número arbitrario 
+\begin_inset Formula $n$
+\end_inset
+
+ de correspondencias 2D-3D, llamados 
+\begin_inset Quotes eld
+\end_inset
+
+puntos de control
+\begin_inset Quotes erd
+\end_inset
+
+ (Fig.(b) 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:relative_absolute"
+
+\end_inset
+
+).
+ El problema tuvo origen como parte del problema de calibración de una cámara
+ (
+\emph on
+camera calibration
+\emph default
+), en el cual el objetivo es calcular los parámetros intrínsecos de una
+ cámara a partir de imágenes de escenas controladas con objetos de dimensiones
+ conocidas.
+
+\emph on
+ 
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The direct linear transformation
+\emph default
+ fue el primer método desarrollado por fotogrametristas utilizado como solución
+ al problema PnP 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "abdel1971direct,hartley2003multiple"
+
+\end_inset
+
+.
+ Actualmente se lo sigue usando por su simpleza y como base de comparación
+ para métodos más complejos.
+ La estabilidad del método se ve comprometida en el caso de que los puntos
+ de control sean coplanares (pertenezcan todos al mismo plano) y su precisión
+ decrece drásticamente en presencia de ruido en las observaciones.
+ Los métodos iterativos presentan soluciones al problema PnP de gran precisión
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lu2000fast"
+
+\end_inset
+
+, pero su efectividad y velocidad de convergencia esta condicionada por
+ una estimación inicial de la solución (
+\emph on
+initial guess
+\emph default
+).
+ Lepetit et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lepetit2009epnp"
+
+\end_inset
+
+ es el primer método no iterativo de complejidad lineal para la resolución
+ del problema.
+ El método denominado EPnP toma los puntos de control en referencia a un
+ eje de coordenadas determinado y busca calcular las coordenadas de dichos
+ puntos en referencia a la cámara, obteniendo dos conjuntos de coordenadas
+ en referencia a distintos ejes que representen a los puntos de control.
+ Se utilizan luego métodos numéricos conocidos para obtener la orientación
+ y traslación que permitan alinear ambos conjuntos de coordenadas 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "horn1988closed"
+
+\end_inset
+
+, y de esta manera obtener la posición de la cámara en referencia al eje
+ de coordenadas externo.
+ El método resulta eficiente y estable ante ruido pero requiere de una variante
+ especial para el caso donde los puntos de control son coplanares y puede
+ fallar en casos donde existan múltiples soluciones por la cantidad y distribuci
+ón espacial de los puntos de control (por ejemplo, en el caso minimal de
+ 3 puntos de control).
+ Kneip et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kneip2014upnp"
+
+\end_inset
+
+ introduce el método UPnP (
+\emph on
+Unified PnP
+\emph default
+) de complejidad lineal, capaz de manejar aquellos casos conflictivos de
+ múltiples soluciones y garantizar de manera teórica un criterio de optimalidad
+ geométrica en las soluciones encontradas.
+ En la investigación presentada UPnP es comparado de manera exhaustiva contra
+ varios otros métodos del estado del arte, obteniendo buenos resultados
+ en términos de velocidad de cómputo, estabilidad y precisión de las soluciones.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:P3P"
+
+\end_inset
+
+P3P: El caso minimal
+\end_layout
+
+\begin_layout Standard
+Este es un caso particular del problema PnP donde 
+\begin_inset Formula $n=3$
+\end_inset
+
+ y es además el subconjunto más pequeño de puntos de control requeridos
+ para obtener una cantidad finita de soluciones al problema (Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:p3p"
+
+\end_inset
+
+).
+ Para una cámara calibrada (se conocen sus parámetros intrínsecos) pueden
+ existir hasta cuatro soluciones al problema, requiriendo de una cuarta
+ correspondencia para restringir y desambiguar el problema a una única solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/p3p.png
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Escenario de estimación de pose de una cámara a partir de 3 correspondencias
+ 2D-3D
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:p3p"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Gao et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gao2003p3p"
+
+\end_inset
+
+ presentan un completo análisis del problema en el que clasifican por primera
+ vez las condiciones necesarias para que existan múltiples soluciones.
+ En el trabajo se plantea un sistema de ecuaciones algebraicas en el que
+ se expresa la posición y orientación de la cámara por medio de relaciones
+ trigonométricas entre el centro de la cámara, los puntos 3D de control
+ y los ángulos formados entre estos.
+ A este sistema se integran condiciones de realidad (
+\emph on
+reality condition
+\emph default
+s) de manera de que las soluciones obtenidas sean soluciones físicas posibles
+ en el mundo real.
+ Una condición de realidad importante es que los tres puntos de control
+ y el centro de la cámara deben ser no coplanares, es decir, no deben pertenecer
+ al mismo plano dado que en caso contrario los puntos estarían alineados
+ desde la perspectiva de la cámara lo cual no provee suficiente información,
+ degradando a infinitas posibles soluciones al sistema de ecuaciones planteado.
+ Kneip et al.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kneip2011p3p"
+
+\end_inset
+
+ propone una novedosa parametrización del problema permitiendo una resolución
+ más directa, una alta eficiencia y estabilidad en la resolución.
+ El método es comparado con el de Gao en escenarios simulados en presencia
+ de ruido gaussiano obteniendo mayor robustez y velocidad de computo.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Buscar la manera de condensar la idea de la parametrización novedosa! (dificil,
+ es como muy compleja y especifica)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:p3p_ransac"
+
+\end_inset
+
+Importancia del esquema RANSAC
+\end_layout
+
+\begin_layout Standard
+La efectividad de los métodos PnP esta condicionada a la calidad de las
+ correspondencias entre características visuales extraídas de las imágenes.
+ Idealmente se desea trabajar en espacios que mantengan su apariencia a
+ lo largo del tiempo, de manera que los algoritmos de detección y descripción
+ de características visuales sean capaces de encontrar marcas estacionarias
+ en el ambiente.
+ Si bien los métodos PnP son capaces de proveer algún grado de robustez
+ ante el ruido en las observaciones, en entornos reales existe la posibilidad
+ de que características extraídas de las imágenes sean completamente inconsisten
+tes.
+ Cambios en la iluminación, oclusiones u objetos dinámicos pueden generar
+ características visuales efímeras las cuales dificultan el proceso de asociació
+n de descriptores y conformación de correspondencias entre imágenes.
+ La utilización de métodos PnP sobre correspondencias que contengan asociaciones
+ inconsistentes o erróneas puede dar como resultado estimaciones de poses
+ inconsistentes y hasta errores numéricos que imposibiliten la terminación
+ de los métodos antes mencionados.
+\end_layout
+
+\begin_layout Standard
+En el caso de cámaras estéreo la correspondencia de características visuales
+ entre cámaras previamente calibradas permite hacer asociaciones robustas
+ asegurando que las restricciones epipolares sean satisfechas (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:modelo_estereo"
+
+\end_inset
+
+).
+ Esto aumenta la confianza en la precisión de los métodos de triangulación
+ para calcular los puntos de control requeridos por los algoritmos PnP.
+ Sin embargo, al momento de la detección de un ciclo, no se tiene información
+ que relacione geométricamente las cámaras estéreo involucradas.
+ Por lo tanto, la calidad de asociación de correspondencias entre las caracterís
+ticas visuales detectadas dependen únicamente de la expresividad de los
+ descriptores extraídos en cada una de las cámaras.
+\end_layout
+
+\begin_layout Standard
+El esquema RANSAC introducido por Fischler y Bolles 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fischler1981random"
+
+\end_inset
+
+ define una técnica de aprendizaje para estimar los parámetros de un modelo
+ de forma iterativa a través de la selección aleatoria de observaciones.
+ Dado un conjunto de datos permite diferenciar aquellos que se ajusten a
+ un modelo (
+\emph on
+inliers
+\emph default
+) de aquellos espurios que no lo hagan (
+\emph on
+outliers
+\emph default
+).
+ En el caso de la estimación de poses permite usar el caso minimal P3P para
+ la selección de un conjunto consistente de correspondencias.
+ Se eligen de manera aleatoria 4 (para desambiguar a una única solución)
+ correspondencias 2D-3D para estimar la pose a través de algún método P3P,
+ la consistencia de las correspondencias restantes se evalúa proyectando
+ los puntos 3D al plano imagen de la cámara utilizando la pose estimada.
+ Aquellos puntos 3D que proyecten lo suficientemente cerca de sus respectivas
+ correspondencias 2D serán considerados como 
+\emph on
+inliers
+\emph default
+.
+ El proceso se repite una cantidad predeterminada de veces de manera de
+ encontrar una estimación consistente con un número considerable 
+\emph on
+inliers
+\emph default
+.
+ Luego de haber establecido un conjunto de correspondencias 2D-3D consistentes,
+ se utilizan métodos generales PnP de manera de obtener estimaciones de
+ la pose más precisas.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Buscar la manera de unir este texto que explica RANSAC con el que esta en
+ Detección..
+ tratar de explicar RANSAC una única vez
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
