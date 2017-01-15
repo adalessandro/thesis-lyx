@@ -238,31 +238,174 @@ Disparidad en general.
 \end_layout
 
 \begin_layout Itemize
-OpenCV y LIBELAS.
+Problemas inherentes: oclusión, bajo gradiente (esto ya está en el marco
+ teórico?).
+\end_layout
+
+\begin_layout Subsection
+OpenCV
+\end_layout
+
+\begin_layout Subsection
+LIBELAS
+\end_layout
+
+\begin_layout Standard
+LIBELAS (Library for Efficient Large-scale Stereo Matching) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2011stereoscan"
+
+\end_inset
+
+ es una librería multiplataforma de código abierto para computar mapas de
+ disparidad a partir de pares de imágenes estéreo rectificadas de alta resolució
+n.
+\end_layout
+
+\begin_layout Standard
+El método empleado se basa en que, pese al hecho de que muchas correspondencias
+ estéreo son áltamente ambiguas, algunas de ellas pueden ser robustamente
+ matcheadas.
+ Asumiendo variaciones suaves en la disparidad es posible sectorizar la
+ imagen, mediante la triangulación de Delaunay, sobre estos 'puntos de soporte'
+ para la estimación de las restantes disparidades.
+\end_layout
+
+\begin_layout Standard
+TODO: performance la libraría con los distintos datasets mostrando: tiempo
+ por frame, frame rate, numbre of points.
 \end_layout
 
 \begin_layout Section
 Proyección al plano de la imagen
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Subsection
 Frustum of view
 \end_layout
 
-\begin_layout Itemize
-Cálculo matriz de proyección al plano de la imagen
+\begin_layout Standard
+El view frustum es la región 3D que contiene los puntos que son potencialmente
+ (pueden existir oclusiones) visibles en el plano de la imagen dada una
+ determinada posición de la cámara.
+ Esta región es determinada por los parámetros de la cámara y, en las cámaras
+ estenopeicas (pinhole cameras), tiene la forma de una pirámide truncada.
+\end_layout
+
+\begin_layout Standard
+El vértice de la pirámide es la posición de la cámara y su base está definida
+ por el plano lejano -far plane- potencialmente infinito.
+ A su vez, la pirámide es truncada por un plano cercano -near plane- que
+ da el nombre de Frustum of view.
+\end_layout
+
+\begin_layout Standard
+Todo lo que es potencialmente proyectable sobre el plano de la imagen se
+ encuentra dentro de la pirámide trunca, por lo que el resto de los puntos
+ pueden descartarse sin necesidad de realizar la proyección.
+\end_layout
+
+\begin_layout Standard
+La nube de puntos del entorno local al keyframe actual, se filtra mediante
+ el cálculo del Viewing Frustum.
+\end_layout
+
+\begin_layout Standard
+El Frustum of view se calcula de la siguiente manera.
+\end_layout
+
+\begin_layout Standard
+TODO: Frustum of view computation
+\end_layout
+
+\begin_layout Subsection
+Proyección al plano de la imagen - Obtención del depth map
+\end_layout
+
+\begin_layout Standard
+Como se vio en la sección X, dada la posición del keyframe puede obtenerse
+ la matriz de proyección P para proyectar puntos en el sistema de coordenadas
+ del mundo sobre el plano de la imagen.
+\end_layout
+
+\begin_layout Standard
+La nube del entorno local, filtrada mediante el Frustum of View, es proyectada
+ punto por punto sobre el keyframe actual.
+ Si dos puntos del espacio corresponden al mismo píxel, el más lejano es
+ descartado, dado que se ve ocluído por el más cercano y por lo tanto no
+ es visible desde la perspectiva de la cámara.
+\end_layout
+
+\begin_layout Standard
+La matriz resultante asigna a cada píxel un valor numérico que representa
+ la profundidad en Z desde la perspectiva de la cámara.
+ Esto se conoce como mapa de profundidad -depth map-.
+\end_layout
+
+\begin_layout Standard
+TODO: pseudocódigo de proyección.
 \end_layout
 
 \begin_layout Section
 Consistencia y redundancia (StereoScan)
 \end_layout
 
-\begin_layout Itemize
-Heurística de detección de outliers.
+\begin_layout Standard
+Cada punto está asociado al keyframe original del que fueron triangulados
+ y se le asigna un contador de la veces que fue triangulado desde distintos
+ keyframes.
 \end_layout
 
-\begin_layout Itemize
-Fusión en Z.
+\begin_layout Subsection
+Heurística de detección de outliers y fusión.
+\end_layout
+
+\begin_layout Standard
+Basado en el trabajo del paper Stereoscan, se utlizan ambos mapas de profundidad
+ obtenidos en las secciones (disparidad) y (proyección al plano de la imagen).
+\end_layout
+
+\begin_layout Standard
+Aquellos píxeles que poseen una profundidad válidad en ambos mapas y cuya
+ diferencia es menos que un cierto threshold 
+\begin_inset Formula $\xi$
+\end_inset
+
+ se fusionan.
+ El punto no se agrega nuevamente al mapa denso global, sino que permanece
+ asociado solamente a la nube del keyframe que lo trianguló originalmente,
+ y su profundidad en Z se ajusta a la media aritmética de ambos valores.
+\end_layout
+
+\begin_layout Standard
+Si la profundidad en ambos mapas -(disparidad) y (proyección al plano de
+ la imagen)- difiere en un valor mayor al threshold 
+\begin_inset Formula $\xi$
+\end_inset
+
+, un nuevo punto se triangula desde el keyframe actual con un valid_counter
+ de 1.
+ En consecuencia, el punto previo (triangulado en un keyframe anterior)
+ disminuye su valid_counter en 1, siendo descartado cuando este se vuelve
+ nulo.
+\end_layout
+
+\begin_layout Standard
+Utilizando el método descripto, aquellos puntos que presentan inconsistencias
+ son rápidamente descartados, reduciendo drásticamente el número de outliers
+ .
+ De la misma manera, la nube es refinada constantemente, fusionando en Z
+ los puntos existentes con la nueva disparidad triangulada en cada nuevo
+ keyframe.
+\end_layout
+
+\begin_layout Standard
+TODO: mostrar números sobre la reducción de complejidad del mapa.
+\end_layout
+
+\begin_layout Standard
+TODO: mostrar la aceleración en la computación de cada keyframe por StereoScan.
 \end_layout
 
 \begin_layout Section
