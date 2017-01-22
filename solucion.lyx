@@ -208,8 +208,9 @@ textwidth]{imagenes/sptam_dense_diagram.tikz}
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Esquema general del sistema S-PTAM incluyendo densificación de mapas en
- tiempo real.
+Esquema general del sistema de densificación de mapas en tiempo real, procesando
+ la salida del sistema de SLAM (e.g.
+ S-PTAM).
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:sptam_lc_overview"
@@ -240,6 +241,10 @@ Para la obtención de mapas de disparidad se utlizaron dos métodos diferentes,
  determinar la adaptación del método a los requerimientos del sistema.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
 \begin_layout Itemize
 Disparidad en general.
 \end_layout
@@ -249,18 +254,18 @@ Problemas inherentes: oclusión, bajo gradiente (esto ya está en el marco
  teórico?).
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 OpenCV
 \end_layout
 
 \begin_layout Standard
 OpenCV es una biblioteca libre de visión artificial originalmente desarrollada
- por Intel.
- Implementa dos algoritmos de correspondencia estéreo:
-\end_layout
-
-\begin_layout Standard
-El primero, llamado 
+ por Intel, que provee un método de correspondencia estéreo llamado 
 \begin_inset Quotes eld
 \end_inset
 
@@ -268,15 +273,18 @@ Block matching (BM) algorithm
 \begin_inset Quotes erd
 \end_inset
 
-, es un algoritmo rápido y efectivo similar al desarrollado por Kurt Konolige
- 
+.
+\end_layout
+
+\begin_layout Standard
+Este algoritmo, similar al algoritmo desarrollado por Kurt Konolige 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "konolige1998small"
 
 \end_inset
 
-, que funciona utilizando pequeñas ventanas de 
+, funciona utilizando pequeñas ventanas de 
 \begin_inset Quotes eld
 \end_inset
 
@@ -286,29 +294,120 @@ sumas de diferencia absoluta
 
  (SAD) para encontrar puntos coincidentes entre el par de imágenes estéreo
  rectificadas.
- Sin embargo, este algoritmo solo encuentra puntos con alta textura en ambas
- imágenes.
 \end_layout
 
 \begin_layout Standard
-El segundo algoritmo implementado en OpenCV es llamado 
-\begin_inset Quotes eld
+Si bien este método es muy rápido y efectivo, solo encuentra aquellos puntos
+ que presentan alta textura en ambas imágenes, por lo que puede resultar
+ inadecuado para entornos complejos como puede distinguirse en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:stereobm_merge_kitti04_27.jpg-1"
+
 \end_inset
 
-Semi-global block matching (SGBM) algorithm
-\begin_inset Quotes erd
-\end_inset
-
-, que es una variación del método SGM introducido en 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "hirschmuller2008stereo"
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:stereobm_merge_tsukuba_221.jpg"
 
 \end_inset
 
 .
- A diferencia del primero, SGBM es ligéramente más lento pero los resultados
- son mucho más precisos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=10cm]{imagenes/disparity/stereobm_merge_kitti04_27.jpg}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Arriba: Mapa de disparidad calculado mediante OpenCV StereoBM.
+ Tiempo de ejecución: 0.019s.
+ Abajo: Imagen izquierda perteneciente al par estéreo 27, del dataset KITTI
+ secuencia 04.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:stereobm_merge_kitti04_27.jpg-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=10cm]{imagenes/disparity/stereobm_merge_tsukuba_221.jpg}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Arriba: Mapa de disparidad calculado mediante OpenCV StereoBM.
+ Tiempo de ejecución: 0.011s.
+ Abajo: Imagen izquierda perteneciente al par estéreo 221, del dataset Tsukuba
+ Daylight.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:stereobm_merge_tsukuba_221.jpg"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -335,11 +434,115 @@ El método empleado se basa en que, pese al hecho de que muchas correspondencias
  Asumiendo variaciones suaves en la disparidad es posible sectorizar la
  imagen, mediante la triangulación de Delaunay, sobre estos 'puntos de soporte'
  para la estimación de las restantes disparidades.
+ En 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:libelas_merge_kitti04_22.jpg"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:libelas_merge_tsukuba_222.jpg"
+
+\end_inset
+
+ pueden observarse resultados de su ejecución.
 \end_layout
 
 \begin_layout Standard
-TODO: performance la libraría con los distintos datasets mostrando: tiempo
- por frame, frame rate, numbre of points.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=10cm]{imagenes/disparity/libelas_merge_kitti04_22.jpg}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Arriba: Mapa de disparidad calculado mediante LibELAS.
+ Tiempo de ejecución: 0.164s.
+ Abajo: Imagen izquierda perteneciente al par estéreo 22, del dataset KITTI
+ secuencia 04.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:libelas_merge_kitti04_22.jpg"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=10cm]{imagenes/disparity/libelas_merge_tsukuba_222.jpg}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Arriba: Mapa de disparidad calculado mediante LibELAS.
+ Tiempo de ejecución: 0.151s.
+ Abajo: Imagen izquierda perteneciente al par estéreo 222, del dataset Tsukuba
+ Daylight.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:libelas_merge_tsukuba_222.jpg"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -377,11 +580,30 @@ La nube de puntos del entorno local al keyframe actual, se filtra mediante
 \end_layout
 
 \begin_layout Standard
-El Frustum of view se calcula de la siguiente manera.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Paper sobre frustum culling?
 \end_layout
 
-\begin_layout Standard
-TODO: Frustum of view computation
+\begin_layout Plain Layout
+Agregar cómo se calcular el Frustum of view - apéndice?
+\end_layout
+
+\begin_layout Plain Layout
+TODO: agregar imagen del global point cloud antes y después de aplicar el
+ frustum culling.
+ De cuántos puntos a cuántos puntos se reduce el point cloud?
+\end_layout
+
+\begin_layout Plain Layout
+Cuánto tarda?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

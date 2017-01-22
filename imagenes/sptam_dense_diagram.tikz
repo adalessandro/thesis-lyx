@@ -23,11 +23,11 @@
 	\node [blockg] (libelas) at ($(disparityMapThread.south)+(1.1cm,-0.75cm)$) {LibELAS};
 	\node [blockg, below = 1.5cm of disparityMapThread, align=center] (stereoMatching) {Stereo\\ matching};
 	\node [data, below = 0.5cm of stereoMatching, align=center] (disparitymap) {Disparity map};
-	\node [inner sep=0pt, below = 0.25cm of disparitymap] (libelasdisparityimg) {\includegraphics [width=3cm] {imagenes/libelasdisparity_small.jpg}};
+%	\node [inner sep=0pt, below = 0.25cm of disparitymap] (libelasdisparityimg) {\includegraphics [width=3cm] {imagenes/libelasdisparity_small.jpg}};
             
 	\begin{scope}[on background layer]
-		\node [rectangle, draw=yellow!40, fill=yellow!40, 
-			fit=(disparityMapThread) (libelasdisparityimg), rounded corners, transform shape] (disparityMapScope) {}; 
+		\node [rectangle, draw=yellow!40, fill=yellow!40, inner sep=10pt,
+			fit=(disparityMapThread) (disparitymap), rounded corners, transform shape] (disparityMapScope) {}; 
 	\end{scope}
     
 	\node [data, right = 4cm of KeyframeRight] (PosesPath) {Path - Robot poses};
@@ -40,7 +40,7 @@
 	\node [blockg, below = 0.5cm of fuseMatchingPoints, align=center] (removeOutliers) {Remove outliers};
 
 	\begin{scope}[on background layer]
-		\node [rectangle, draw=yellow!40, fill=yellow!40,
+		\node [rectangle, draw=yellow!40, fill=yellow!40, inner sep=10pt,
 			fit=(projectionThread) (removeOutliers), rounded corners, transform shape] (projectionThreadScope) {}; 
 	\end{scope}
 
@@ -50,7 +50,7 @@
 	\node [decisiong, below = 0.5cm of transformPointCloud, align=center] (swapToDisk) {Swap to disk};
 
 	\begin{scope}[on background layer]
-		\node [rectangle, draw=yellow!40, fill=yellow!40,
+		\node [rectangle, draw=yellow!40, fill=yellow!40, inner sep=10pt,
 			fit=(refinementThread) (swapToDisk), rounded corners, transform shape] (refinementThreadScope) {}; 
 	\end{scope}
  
