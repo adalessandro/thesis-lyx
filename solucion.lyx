@@ -233,6 +233,13 @@ name "fig:sptam_lc_overview"
 Cálculo de mapas de disparidad
 \end_layout
 
+\begin_layout Standard
+Para la obtención de mapas de disparidad se utlizaron dos métodos diferentes,
+ que cuentan con implementaciones de código abierto disponibles públicamente.
+ En ambos casos, se analizó el desempeño y los resultados obtenidos, para
+ determinar la adaptación del método a los requerimientos del sistema.
+\end_layout
+
 \begin_layout Itemize
 Disparidad en general.
 \end_layout
@@ -244,6 +251,64 @@ Problemas inherentes: oclusión, bajo gradiente (esto ya está en el marco
 
 \begin_layout Subsection
 OpenCV
+\end_layout
+
+\begin_layout Standard
+OpenCV es una biblioteca libre de visión artificial originalmente desarrollada
+ por Intel.
+ Implementa dos algoritmos de correspondencia estéreo:
+\end_layout
+
+\begin_layout Standard
+El primero, llamado 
+\begin_inset Quotes eld
+\end_inset
+
+Block matching (BM) algorithm
+\begin_inset Quotes erd
+\end_inset
+
+, es un algoritmo rápido y efectivo similar al desarrollado por Kurt Konolige
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "konolige1998small"
+
+\end_inset
+
+, que funciona utilizando pequeñas ventanas de 
+\begin_inset Quotes eld
+\end_inset
+
+sumas de diferencia absoluta
+\begin_inset Quotes erd
+\end_inset
+
+ (SAD) para encontrar puntos coincidentes entre el par de imágenes estéreo
+ rectificadas.
+ Sin embargo, este algoritmo solo encuentra puntos con alta textura en ambas
+ imágenes.
+\end_layout
+
+\begin_layout Standard
+El segundo algoritmo implementado en OpenCV es llamado 
+\begin_inset Quotes eld
+\end_inset
+
+Semi-global block matching (SGBM) algorithm
+\begin_inset Quotes erd
+\end_inset
+
+, que es una variación del método SGM introducido en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hirschmuller2008stereo"
+
+\end_inset
+
+.
+ A diferencia del primero, SGBM es ligéramente más lento pero los resultados
+ son mucho más precisos.
 \end_layout
 
 \begin_layout Subsection
