@@ -197,9 +197,9 @@ status open
 
 
 \backslash
-includegraphics[width=0.6*
+includegraphics[width=0.9*
 \backslash
-textwidth]{imagenes/sptam_lc_diagram.tikz}
+textwidth]{imagenes/sptam_dense_diagram.tikz}
 \end_layout
 
 \end_inset

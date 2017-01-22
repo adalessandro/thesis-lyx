@@ -1,0 +1,107 @@
+\tikzstyle{decision} = [diamond, draw, fill=yellow!40,
+	text width=4.5em, text badly centered, inner sep=0pt,transform shape]
+\tikzstyle{decisiong} = [diamond, draw, fill=blue!40, 
+	text width=4.em,text badly centered, inner sep=0pt, transform shape]
+\tikzstyle{block} = [rectangle, minimum width=1cm, minimum height=0.5cm, draw, fill=yellow!20, 
+	text width=20em, text centered, rounded corners, minimum height=1.5em,transform shape]
+\tikzstyle{blockjusttext} = [rectangle, text centered, rounded corners,transform shape]
+\tikzstyle{blockg} = [rectangle, minimum width=1cm, minimum height=0.5cm, draw, fill=blue!20,
+	text centered, rounded corners, minimum height=1.5em,transform shape]
+\tikzstyle{arrow} = [draw, -latex']
+\tikzstyle{doublearrow} = [draw, latex'-latex']
+\tikzstyle{line} = [draw]
+\tikzstyle{cloud} = [draw, ellipse,fill=yellow!20, minimum height=2em,transform shape]
+\tikzstyle{data} = [draw,trapezium,trapezium left angle=70,trapezium right angle=-70, fill=blue!40,,transform shape]
+
+\begin{tikzpicture}[remember picture, auto]
+
+	\node [data] (KeyframeLeft) {Keyframe Left};
+	\node [data, right = 0.1cm  of KeyframeLeft] (KeyframeRight) {Keyframe Right};
+
+	\node [blockjusttext, text width=12em, anchor=north] (disparityMapThread) at ($(KeyframeLeft.south)+(1.5cm,-1cm)$) {Disparity map thread};
+	\node [blockg] (opencv) at ($(disparityMapThread.south)+(-1.1cm,-0.75cm)$) {OpenCV};
+	\node [blockg] (libelas) at ($(disparityMapThread.south)+(1.1cm,-0.75cm)$) {LibELAS};
+	\node [blockg, below = 1.5cm of disparityMapThread, align=center] (stereoMatching) {Stereo\\ matching};
+	\node [data, below = 0.5cm of stereoMatching, align=center] (disparitymap) {Disparity map};
+	\node [inner sep=0pt, below = 0.25cm of disparitymap] (libelasdisparityimg) {\includegraphics [width=3cm] {imagenes/libelasdisparity_small.jpg}};
+            
+	\begin{scope}[on background layer]
+		\node [rectangle, draw=yellow!40, fill=yellow!40, 
+			fit=(disparityMapThread) (libelasdisparityimg), rounded corners, transform shape] (disparityMapScope) {}; 
+	\end{scope}
+    
+	\node [data, right = 4cm of KeyframeRight] (PosesPath) {Path - Robot poses};
+
+	\node [blockjusttext, text width=12em, anchor=north] (projectionThread) at ($(PosesPath.south)+(-3cm,-1cm)$) {3D reprojection thread};
+	\node [blockg, below = 0.5cm of projectionThread, align=center] (viewFrustumCulling) {View frustum\\ culling};
+	\node [blockg, below = 0.5cm of viewFrustumCulling, align=center] (localProjection) {Local frame\\ projection};
+	\node [data, below = 0.5cm of localProjection] (localDepthMap) {Local depth map};
+	\node [blockg, below = 0.5cm of localDepthMap, align=center] (fuseMatchingPoints) {Fuse matching\\ points};
+	\node [blockg, below = 0.5cm of fuseMatchingPoints, align=center] (removeOutliers) {Remove outliers};
+
+	\begin{scope}[on background layer]
+		\node [rectangle, draw=yellow!40, fill=yellow!40,
+			fit=(projectionThread) (removeOutliers), rounded corners, transform shape] (projectionThreadScope) {}; 
+	\end{scope}
+
+	\node [blockjusttext, text width=12em, anchor=north] (refinementThread) at ($(PosesPath.south)+(3cm,-1cm)$) {Refinement thread};
+	\node [decisiong, below = 0.5cm of refinementThread, align=center] (needRefinement) {Refine?};
+	\node [blockg, below = 0.5cm of needRefinement, align=center] (transformPointCloud) {Transform\\ point cloud};
+	\node [decisiong, below = 0.5cm of transformPointCloud, align=center] (swapToDisk) {Swap to disk};
+
+	\begin{scope}[on background layer]
+		\node [rectangle, draw=yellow!40, fill=yellow!40,
+			fit=(refinementThread) (swapToDisk), rounded corners, transform shape] (refinementThreadScope) {}; 
+	\end{scope}
+ 
+	\node [cloud] (GlobalMap) at ($(PosesPath.south)+(0cm,-9.5cm)$) {Global map};
+	\node [draw, thick, minimum width=4cm, minimum height=1.1cm, fill=gray!40, align=center]
+		(sptam) at ($(projectionThread.north)+(0cm,3cm)$) {SLAM system\\ (S-PTAM)};
+
+	\coordinate (leftToMerge) at ($(KeyframeLeft.south)+(0cm,-0.5cm)$);
+	\coordinate (MergeExtractors) at ($(leftToMerge.east)+(1.5cm,0cm)$);
+
+	\coordinate (Mergedisparitymap) at ($(disparitymap.south)+(0cm,-0.2cm)$);
+  
+	\path [line] (KeyframeLeft) |- (MergeExtractors);
+	\path [line] (KeyframeRight) |- (MergeExtractors);
+	\path [arrow] (MergeExtractors) -- (disparityMapThread);
+
+	\coordinate (opencvToMerge) at ($(disparityMapThread.south)+(0cm,-0.75cm)$); 
+	\path [line] (opencv) -- (opencvToMerge);
+	\path [line] (libelas) -- (opencvToMerge);
+	\path [arrow] (opencvToMerge) -- (stereoMatching);
+	\path [arrow] (stereoMatching) -- (disparitymap);
+
+	\path [arrow] (PosesPath) |- (viewFrustumCulling);
+
+	\path [arrow] (viewFrustumCulling) -- (localProjection);
+	\path [arrow] (localProjection) -- (localDepthMap);
+	\path [arrow] (localDepthMap) -- (fuseMatchingPoints);
+	\path [arrow] (fuseMatchingPoints) -- (removeOutliers);
+	\path [arrow] (removeOutliers) |- (GlobalMap);
+
+	\path [arrow] (GlobalMap) |- (viewFrustumCulling);
+
+	\coordinate (disparityToProjection) at ($(disparityMapThread.east)+(0.6cm,-4cm)$); 
+	\path [line] (disparitymap) -| (disparityToProjection);
+	\path [arrow] (disparityToProjection) |- (fuseMatchingPoints);
+
+	\path [arrow] (needRefinement) -- (transformPointCloud);
+	\path [arrow] (transformPointCloud) -- (swapToDisk);
+	\coordinate (refineToSwap) at ($(needRefinement.east)+(1cm,0cm)$); 
+	\path [line] (needRefinement) -- (refineToSwap);
+	\path [arrow] (refineToSwap) |- (swapToDisk);
+	\path [arrow] (swapToDisk) |- (GlobalMap);
+
+	\path [arrow] (PosesPath) |- (needRefinement);
+
+	\coordinate (sptamToMerge) at ($(KeyframeLeft.north)+(0cm,0.5cm)$);
+	\coordinate (MergeInput) at ($(sptamToMerge.east)+(1.5cm,0cm)$);
+
+	\path [line] (sptam) -| (MergeInput);
+	\path [arrow] (MergeInput) -| (KeyframeLeft);
+	\path [arrow] (MergeInput) -| (KeyframeRight);
+	\path [arrow] (sptam) -| (PosesPath);
+  
+\end{tikzpicture}
