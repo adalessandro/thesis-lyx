@@ -566,17 +566,159 @@ El vértice de la pirámide es la posición de la cámara y su base está defini
  por el plano lejano -far plane- potencialmente infinito.
  A su vez, la pirámide es truncada por un plano cercano -near plane- que
  da el nombre de Frustum of view.
-\end_layout
-
-\begin_layout Standard
-Todo lo que es potencialmente proyectable sobre el plano de la imagen se
+ Todo lo que es potencialmente proyectable sobre el plano de la imagen se
  encuentra dentro de la pirámide trunca, por lo que el resto de los puntos
  pueden descartarse sin necesidad de realizar la proyección.
 \end_layout
 
 \begin_layout Standard
-La nube de puntos del entorno local al keyframe actual, se filtra mediante
- el cálculo del Viewing Frustum.
+Para el keyframe 
+\begin_inset Formula $K_{i}$
+\end_inset
+
+, se calcula su entorno local 
+\begin_inset Formula $V_{i}$
+\end_inset
+
+ como la unión de las últimas 
+\begin_inset Formula $N$
+\end_inset
+
+ nubes de puntos, donde 
+\begin_inset Formula $P_{j}$
+\end_inset
+
+ es la nube de puntos generada desde el keyframe 
+\begin_inset Formula $K_{j}$
+\end_inset
+
+.
+ 
+\begin_inset Formula 
+\[
+V_{i}=\left\{ P_{i-N},\cdots,P_{i-1}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El Frustum of view es utilizado para filtrar la nube de puntos del entorno
+ local 
+\begin_inset Formula $V_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Sean 
+\begin_inset Formula $\pi_{i,\left[1,\ldots,6\right]}$
+\end_inset
+
+ los planos correspondientes al Frustum of view del keyframe 
+\begin_inset Formula $K_{i}$
+\end_inset
+
+, expresados en su forma general como:
+\begin_inset Formula 
+\[
+\pi_{i,k}=\left(a_{i,k},b_{i,k},c_{i,k},d_{i,k}\right)\textrm{ tal que }
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+a_{i,k}.x+b_{i,k}.y+c_{i,k}.z+d_{i,k}.w=0\textrm{ para cada }(x,y,z,w)\in\pi_{i,k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notar que los puntos del espacio 3D se encuentran representados en sus coordenad
+as homogéneas.
+ Para más detalle sobre la obtención de los planos ver [apéndice sobre frustum].
+\end_layout
+
+\begin_layout Standard
+Asumiendo que los planos tienen su vector normal apuntando hacia el interior
+ de la pirámide, el entorno local filtrado 
+\begin_inset Formula $V_{i}^{'}$
+\end_inset
+
+ queda determinado por:
+\begin_inset Formula 
+\[
+V_{i}^{'}=\left\{ p\in V_{i}\textrm{ tal que }p.\pi_{i,k}\geq0\textrm{ para cada }k\in\left[1,\ldots,6\right]\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=8cm]{imagenes/frustum_of_view.jpg}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Representación de la pirámide trunca 
+\begin_inset Quotes eld
+\end_inset
+
+Frustum of view
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Todo lo que se encuentra entre los planos cercano y lejano es el área de
+ visión de la cámara.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:frustum_of_view.jpg"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
