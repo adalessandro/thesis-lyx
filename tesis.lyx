@@ -184,7 +184,8 @@ maketitle
 \end_layout
 
 \begin_layout Section*
-Mapeo denso en tiempo real sobre sistemas SLAM basados en visión estéreo
+Reconstrucción densa en tiempo real sobre sistemas SLAM basados en visión
+ estéreo
 \end_layout
 
 \begin_layout Standard
@@ -272,17 +273,6 @@ datasets
 
 \end_layout
 
-\begin_layout Section*
-TODO: translate intro
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage cleardoublepage
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
@@ -312,47 +302,17 @@ filename "introduccion.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
+filename "estado_del_arte.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
 filename "camara.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "vslam.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "deteccion.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "pnp.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "cierre.lyx"
 
 \end_inset
 

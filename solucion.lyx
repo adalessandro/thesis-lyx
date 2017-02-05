@@ -84,6 +84,74 @@ Método propuesto de mapeo denso basado en disparidad
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+En la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:esq_sptam-1"
+
+\end_inset
+
+ se pueden observar los distintos componentes que constituyen S-PTAM.
+ 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=0.7*
+\backslash
+textwidth]{imagenes/sptam_diagram.tikz}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Esquema general de los diferentes componentes de S-PTAM
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:esq_sptam-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 A continuación se expone en detalle la solución propuesta para el problema
  de mapeo denso basado en disparidad.
  El método fue concebido para ejecutarse en paralelo y conjuntamente al
