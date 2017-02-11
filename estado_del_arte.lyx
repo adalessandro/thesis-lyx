@@ -104,8 +104,8 @@ Trabajo relacionado
 La presente tesina investiga y propone un método de reconstrucción 3D o
  mapeo denso en tiempo real sobre sistemas de localización y mapeo simultáneo
  (SLAM) basados en visión estéreo.
- En esta sección, se exponen brevemente los trabajos relacionados, describiendo
- la naturaleza del problema que abordan.
+ En este capítulo, se exponen brevemente los trabajos relacionados al problema
+ de mapeo denso en SLAM, describiendo la naturaleza del problema que abordan.
 \end_layout
 
 \begin_layout Section
@@ -113,53 +113,76 @@ Reconstrucción 3D
 \end_layout
 
 \begin_layout Standard
-La reconstrucción 3D se define como proceso mediante el cual se captura
+La reconstrucción 3D se define como el proceso mediante el cual se captura
  y representa la forma y apariencia de entornos u objetos presentes en la
  realidad.
  
 \end_layout
 
 \begin_layout Standard
-Ha sido un tópico central en visión computarizada durante décadas aunque
- también es una línea de investigación activa en diversos campos como el
- diseño asistido por computadoras, imágenes médicas, realidad virtual y
- extendida, robótica movil, entre otros.
+Ha sido un tópico central en visión computarizada durante décadas, siendo
+ también una línea de investigación activa en diversos campos como el diseño
+ asistido por computadora, imágenes médicas, realidad virtual y extendida,
+ robótica movil, entre otros.
  Numerosos métodos han sido propuestos para abordar las variantes de este
- problema, de diferentes naturalezas según el área de interés y los sensores
+ problema de diferente naturaleza, según el área de interés y los sensores
  utilizados para obtener información del ambiente.
 \end_layout
 
 \begin_layout Standard
 Dado el enfoque de la presente tesina, resultan de interés principalmente
- aquellos métodos de reconstrucción 3D que utilizan cámaras como sensores.
- En la última década numerosos trabajos se han publicado en este área, como
- pueden verse clasificados y comparados en
+ aquellos métodos de reconstrucción 3D que utilizan cámaras como sensores
+ primarios, es decir que la información del entorno es capturada a través
+ de imágenes.
+ En la última década numerosos trabajos se han publicado en esta área 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "seitz2006comparison,koch1998multi,pollefeys2004visual"
 
 \end_inset
 
-.
+, lo cual demuestra la relevancia actual del problema abordado en esta tesina.
 \end_layout
 
 \begin_layout Section
-SLAM - Localización y mapeo simultáneo
+SLAM
 \end_layout
 
 \begin_layout Standard
 Complementariamente al problema de reconstrucción 3D, particularmente en
  el campo de la robótica móvil, se plantea el problema de localización y
- mapeo simultáneo, conocido como SLAM (Simultaneous Localisation and Mapping).
+ mapeo simultáneo, conocido como SLAM (
+\emph on
+Simultaneous Localisation and Mapping
+\emph default
+).
  El desafío consiste en construir incrementalmente un mapa consistente de
  un entorno desconocido mientras se determina la posición y orientación
- del agente (robot).
+ del robot.
 \end_layout
 
 \begin_layout Standard
-En las últimas décadas, ha sido extensivamente estudiado utilizando diferentes
- sensores: IMUs (unidades de medición inercial), sensores de tipo SONAR
- 
+El interés sobre el problema de SLAM ha crecido en gran medida debido a
+ que su solución resulta útil en la navegación autónoma de robots.
+ En las últimas décadas, el problema de SLAM ha sido extensivamente estudiado
+ utilizando diferentes sensores: IMUs (inertial measurement units 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+unidades de medición inercial
+\end_layout
+
+\end_inset
+
+) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nutzi2011fusion"
+
+\end_inset
+
+, sensores de tipo SONAR 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "kleeman2003advanced"
@@ -180,15 +203,43 @@ key "cole2006using"
 
 \end_inset
 
-, GPS (sistema de posicionamiento global), codificadores rotatorios y cámaras.
- El interés sobre el problema de SLAM ha crecido en gran medida dado que
- al solucionarlo se proveen herramientas necesarias para que los robots
- móviles puedan navegar de manera autónoma.
+, GPS (global positioning system 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+sistema de posicionamiento global
+\end_layout
+
+\end_inset
+
+) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "carlson2010mapping"
+
+\end_inset
+
+, encoders 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "armesto2004encoder"
+
+\end_inset
+
+ y cámaras 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hartley2003multiple,trucco1998introductory,ma2012invitation,li2009robust"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-Una introducción a Localización y mapeo simultáneo (SLAM), descripción del
- problema y soluciones esenciales pueden encontrarse en 
+Una introducción a SLAM, descripción del problema y soluciones al mismo
+ pueden encontrarse en 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "durrant2006simultaneous,bailey2006simultaneous"
@@ -198,6 +249,20 @@ key "durrant2006simultaneous,bailey2006simultaneous"
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Sería bueno ver alguna imagen sobre SLAM (un mapa incompleto con el robot
+ localizado, etc)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 V-SLAM - Localización y mapeo simultáneo visual
 \end_layout
@@ -205,19 +270,20 @@ V-SLAM - Localización y mapeo simultáneo visual
 \begin_layout Standard
 Recientemente ha habido un creciente interés en sistemas de SLAM visual,
  que utilizan cámaras como sensor principal, debido a las importantes ventajas
- que estos presentan: bajo costo y menor consumo energético en comparación
- con otros sensores como escáneres laser y su alta disponibilidad en dispositivo
-s móviles.
- Las cámaras son sensores pasivos por lo que no interfieren entre sí y pueden
- utilizarse en entornos cerrados donde el uso de GPS puede verse imposibilitado.
- Asímismo, son menos restrictivos que los codificadores rotatorios, limitados
- a robots terrestres y altamente imprecisos en terrenos irregulares.
+ que las cámaras presentan: bajo costo, menor consumo energético -en comparación
+ con otros sensores, como lásers- y su alta disponibilidad en dispositivos
+ móviles.
+ Además, las cámaras son sensores pasivos por lo que no interfieren con
+ otros sensores y pueden utilizarse en entornos cerrados donde el uso de
+ GPS puede verse imposibilitado.
+ Asímismo, son menos restrictivos que los encoders, los cuales se encuentran
+ limitados a robots terrestres y altamente imprecisos en terrenos irregulares.
 \end_layout
 
 \begin_layout Standard
-La mayoría de los métodos utilizan secuencias de imágenes 2D o video 2D
- como entrada del sistema, que es procesada para estimar la profundidad
- de la escena capturada, reconstruyendo su estructura 3D 
+Los métodos de SLAM visual utilizan una secuencia de imágenes como entrada,
+ que es procesada para estimar la profundidad de la escena capturada, reconstruy
+endo su estructura 3D 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "hartley2003multiple,trucco1998introductory,ma2012invitation,li2009robust"
@@ -230,16 +296,20 @@ key "hartley2003multiple,trucco1998introductory,ma2012invitation,li2009robust"
 \emph on
 landmarks
 \emph default
-), la mayoría de los sistemas de SLAM visual estiman tanto la posición del
- robot como la ubicación de las marcas en el entorno.
+), los sistemas de SLAM visual estiman tanto la posición del robot como
+ la ubicación de las marcas en el entorno.
  El mapa se construye con las estimaciones de las posiciones de dichas marcas,
- las cuales van siendo ajustadas a medida que son observadas desde distintas
- posiciones.
+ las cuales son ajustadas a medida que son observadas desde distintas posiciones.
 \end_layout
 
 \begin_layout Standard
-Las técnicas existentes son capaces de estimar con precisión el desplazamiento
- de la cámara y computar un mapa esparso en tiempo real 
+Los métodos de SLAM visual basados en la extracción de características visuales
+ en la imágenes (
+\emph on
+features
+\emph default
+) son capaces de estimar con precisión el desplazamiento de la cámara y
+ computar un mapa esparso del entorno en tiempo real 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "zhang2000flexible,beardsley19963d,fitzgibbon1998automatic,pollefeys1999self,devernay1995automatic,cornelis20083d,pollefeys2008detailed"
@@ -247,13 +317,39 @@ key "zhang2000flexible,beardsley19963d,fitzgibbon1998automatic,pollefeys1999self
 \end_inset
 
 .
- Sin embargo, este contiene solamente una pequeña porción de los puntos
- 3D de la escena y una reconstrucción completa requiere conocer la profundidad
- de cada uno de ellos.
+ Sin embargo, el mapa reconstruido contiene solamente una pequeña porción
+ de los puntos 3D de la escena y una reconstrucción completa requiere conocer
+ la profundidad de cada uno de ellos.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+reformular
+\end_layout
+
+\begin_layout Plain Layout
+Acá también sería bueno mostrar una imagen de VSLAM, por ejemplo un mapa
+ con landmarks
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-S-PTAM
+S-PTAM 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+esta sección va en el capítulo de método propuesto
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -264,20 +360,32 @@ key "pire2015"
 
 \end_inset
 
- se presenta un sistema SLAM basado en visión estéreo, capaz de estimar
- la localización de un robot móvil en tiempo real en trayectorias de gran
- longitud.
- S-PTAM se inspira en PTAM 
+ se presenta un sistema SLAM basado en visión estéreo llamado S-PTAM (
+\emph on
+Stereo Parallel Tracking and Mapping
+\emph default
+), capaz de estimar la localización de un robot móvil en tiempo real en
+ trayectorias de gran longitud.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Sacar inspirado en PTAM???
+\end_layout
+
+\end_inset
+
+Inspirado en PTAM 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Klein:Murray:ISMAR07"
 
 \end_inset
 
- aprovechando la capacidad de cómputo de unidades de procesamiento paralelo,
- dividiendo el problema al igual que PTAM en dos tareas principales: seguimiento
- de la cámara y la construcción del mapa.
- 
+, S-PTAM divide las tareas de localización y mapeo en dos hilos de ejecución
+ diferentes, aprovechando la capacidad de cómputo de procesadorees con dos
+ o más núcleos.
 \end_layout
 
 \begin_layout Standard
@@ -345,12 +453,38 @@ V-SLAM denso
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+* reformular primera oración.
+\end_layout
+
+\begin_layout Plain Layout
+* explicar o poner referencia al muro blanco.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Para obtener un mapa denso a partir de información visual se debe resolver
- el problema de correspondencia, es decir el alineamiento de cada píxel
- entre un par de imágenes.
+ el problema de correspondencia, es decir asociar cada píxel de una imagen
+ con su correspondiente en otra.
  Sin embargo, en las regiones con poca textura -bajo gradiente en la intensidad-
- es difícil realizar esta correspondencia píxel-a-píxel, problema denominado
- como 
+ resulta complejo realizar esta correspondencia píxel-a-píxel 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+reformular, debido a que...
+\end_layout
+
+\end_inset
+
+, problema denominado como 
 \begin_inset Quotes eld
 \end_inset
 
@@ -374,12 +508,31 @@ El enfoque tradicional, conocido como búsqueda sobre la línea epipolar,
 \end_layout
 
 \begin_layout Subsection
-Densificación de métodos esparsos
+Densificación de métodos esparsos 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+* mover librerías a otro capítulo: Cámaras como sensores, Método propuesto,
+ Resultados
+\end_layout
+
+\begin_layout Plain Layout
+* agregar más citas de trabajos que sean esparsos y luego densifiquen.
+\end_layout
+
+\begin_layout Plain Layout
+* dejar lo de estéreoscan
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 El problema de asociación densa de píxeles entre imágenes ha sido abordado
- en la última década por diversos trabajos
+ en la última década por diversos trabajos 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "kim2005gaussian,strecha2002pde"
@@ -388,51 +541,80 @@ key "kim2005gaussian,strecha2002pde"
 
  mostrando que es posible aumentar la densidad de los mapas a partir de
  información visual.
- Pparticularmente, el interes en los mapas de disparidad ha crecido con
- la introducción de cámaras estéreo.
+ Particularmente, el interés en los mapas de disparidad ha crecido con la
+ introducción de cámaras estéreo 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+ya que pueden calcularse con un baseline fijo?
 \end_layout
 
-\begin_layout Subsubsection
-OpenCV
-\end_layout
-
-\begin_layout Standard
-OpenCV es una biblioteca libre de visión artificial originalmente desarrollada
- por Intel, que provee un método de correspondencia estéreo llamado 
-\begin_inset Quotes eld
-\end_inset
-
-Block matching (BM) algorithm
-\begin_inset Quotes erd
 \end_inset
 
 .
 \end_layout
 
+\begin_layout Subsubsection
+OpenCV 
+\end_layout
+
 \begin_layout Standard
-Este algoritmo, similar al algoritmo desarrollado por Kurt Konolige 
+OpenCV es una biblioteca libre de visión artificial originalmente desarrollada
+ por Intel, que provee un método de correspondencia estéreo llamado 
+\emph on
+Block matching (BM) algorithm
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+In digital image processing, the sum of absolute differences (SAD) is a
+ measure of the similarity between image blocks.
+ It is calculated by taking the absolute difference between each pixel in
+ the original block and the corresponding pixel in the block being used
+ for comparison.
+ These differences are summed to create a simple metric of block similarity,
+ the L1 norm of the difference image or Manhattan distance between two image
+ blocks
+\end_layout
+
+\begin_layout Standard
+Este algoritmo, similar al desarrollado por Kurt Konolige et al.
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "konolige1998small"
 
 \end_inset
 
-, funciona utilizando pequeñas ventanas de 
-\begin_inset Quotes eld
-\end_inset
+, divide las imágenes en pequeños bloques y los compara utilizando SAD (
+\emph on
+sum of absolute differences
+\emph default
+ 
+\begin_inset Foot
+status collapsed
 
+\begin_layout Plain Layout
 sumas de diferencia absoluta
-\begin_inset Quotes erd
+\end_layout
+
 \end_inset
 
- (SAD) para encontrar puntos coincidentes entre el par de imágenes estéreo
- rectificadas.
+).
+ Esta suma es calculada tomando la diferencia absoluta entre cada píxel
+ del bloque original y su correspondiente píxel en el bloque comparado.
+ Luego, las diferencias son sumadas para crear un métrica simple de similaridad
+ entre bloques que permite encontrar coincidencias entre la imagen izquierda
+ y derecha de un par estéreo.
 \end_layout
 
 \begin_layout Standard
 Si bien este método es muy rápido y efectivo, solo encuentra aquellos puntos
  que presentan alta textura en ambas imágenes, por lo que puede resultar
- inadecuado para entornos complejos como puede distinguirse en 
+ inadecuado para entornos complejos como puede distinguirse en las figuras
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:stereobm_merge_kitti04_27.jpg-1-1"
@@ -473,7 +655,10 @@ status open
 
 \begin_layout Plain Layout
 Arriba: Mapa de disparidad calculado mediante OpenCV StereoBM.
- Abajo: Imagen izquierda perteneciente al dataset KITTI secuencia 04.
+ Abajo: Imagen perteneciente al dataset KITTI secuencia 04.
+ El mapa de disparidad representa los valores en el espectro comprendido
+ entre el color rojo (mayor disparidad) y violeta (menor disparidad).
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:stereobm_merge_kitti04_27.jpg-1-1"
@@ -516,8 +701,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Arriba: Mapa de disparidad calculado mediante OpenCV StereoBM.
- Abajo: Imagen izquierda perteneciente al dataset Tsukuba Daylight.
+Izquierda: Mapa de disparidad calculado mediante OpenCV StereoBM.
+ Derecha: Imagen perteneciente al dataset Tsukuba Daylight.
+ El mapa de disparidad representa los valores en el espectro comprendido
+ entre el color rojo (mayor disparidad) y violeta (menor disparidad).
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:stereobm_merge_tsukuba_221.jpg-1"
@@ -542,7 +730,11 @@ LIBELAS
 \end_layout
 
 \begin_layout Standard
-LIBELAS (Library for Efficient Large-scale Stereo Matching) 
+LIBELAS (
+\emph on
+Library for Efficient Large-scale Stereo Matching
+\emph default
+) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "geiger2011stereoscan"
@@ -556,12 +748,18 @@ n.
 
 \begin_layout Standard
 El método empleado se basa en que, pese al hecho de que muchas correspondencias
- estéreo son áltamente ambiguas, algunas de ellas pueden ser robustamente
+ estéreo son altamente ambiguas, algunas de ellas pueden ser robustamente
  matcheadas.
  Asumiendo variaciones suaves en la disparidad es posible sectorizar la
- imagen, mediante la triangulación de Delaunay, sobre estos 'puntos de soporte'
- para la estimación de las restantes disparidades.
- En 
+ imagen, mediante la triangulación de Delaunay 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "delaunay1934sphere"
+
+\end_inset
+
+, sobre estos puntos de soporte para la estimación de las restantes disparidades.
+ En las figuras 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:libelas_merge_kitti04_22.jpg-1"
@@ -601,8 +799,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Arriba: Mapa de disparidad calculado mediante LibELAS.
- Abajo: Imagen izquierda perteneciente al dataset KITTI secuencia 04.
+Arriba: Mapa de disparidad calculado mediante LIBELAS.
+ Abajo: Imagen perteneciente al dataset KITTI secuencia 04.
+ El mapa de disparidad representa los valores en el espectro comprendido
+ entre el color rojo (mayor disparidad) y violeta (menor disparidad).
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:libelas_merge_kitti04_22.jpg-1"
@@ -645,8 +846,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Izquierda: Mapa de disparidad calculado mediante LibELAS.
- Derecha: Imagen izquierda perteneciente al dataset Tsukuba Daylight.
+Izquierda: Mapa de disparidad calculado mediante LIBELAS.
+ Derecha: Imagen perteneciente al dataset Tsukuba Daylight.
+ El mapa de disparidad representa los valores en el espectro comprendido
+ entre el color rojo (mayor disparidad) y violeta (menor disparidad).
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:libelas_merge_tsukuba_222.jpg-1"
@@ -692,27 +896,26 @@ Métodos directos
 \end_layout
 
 \begin_layout Standard
-Recientemente, una nueva línea de investigación se ha desarrollado entorno
- a los métodos directos 
+Recientemente, los métodos directos propiciaron una nueva línea de investigación
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "stuhmer2010real,graber2011online,newcombe2011dtam"
 
 \end_inset
 
-, que a diferencia de los basados en features, ajustan la geometría y fotometría
- de la escena directamente sobre las intensidades de la imagen, utilizando
- todos los píxeles de alto contraste, incluyendo vértices, aristas y áreas
- de alta textura.
- Este enfoque utiliza mayor parte de la información disponible en las imágenes,
- por lo que puede obtener mapas 3D con mayor densidad (densos y semi-densos).
+ que, en vez utilizar puntos clave, operan directamente sobre las intensidades
+ de la imagen para realizar la localización y mapeo.
+ A su vez, estos métodos aprovechan mayor parte de la información disponible
+ en las imágenes -todos los píxeles de alto contraste, incluyendo vértices,
+ aristas y áreas de alta textura- obteniendo mapas 3D de mayor densidad
+ denominados semi-densos.
 \end_layout
 
 \begin_layout Standard
 Sin embargo, el nivel de desarrollo de SLAM directo aún es bajo en comparación
- con los métodos basados en características visuales, resultan menos flexibles
- para la eliminación de outliers y su exactitud es menor, como puede verse
- en 
+ con los métodos basados en características visuales, resultando ser menos
+ flexibles para la eliminación de outliers y precisos 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mur2015probabilistic"
@@ -730,8 +933,12 @@ key "engel2014lsd"
 
 \end_inset
 
- (Large Scale Direct SLAM) que implementa una solución para secuencias de
- larga escala en tiempo real en CPU (sin GPU) utilizando una cámara monocular.
+ (
+\emph on
+Large Scale Direct SLAM
+\emph default
+) que implementa una solución para secuencias de larga escala en tiempo
+ real en CPU (sin GPU) utilizando una cámara monocular.
  Posteriormente, este sistema se extiende para cámaras estéreo 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -757,8 +964,14 @@ key "concha2016visual"
 
 \end_inset
 
- se ha publicado un sistema de V-SLAM directo que fusiona información fotométric
-a con inercial, proveniente de unidades de medición inercial (IMU).
+ se ha publicado un sistema de V-SLAM directo que fusiona información visual
+ e inercial provenientes de una cámara monocular y una IMU respectivamente.
+ La información inercial permite conocer la velocidad, orientación y fuerzas
+ gravitacionales que afectan al robot, lo que contribuye a mejorar y acelerar
+ la estimación de las posiciones de la cámara.
+ Por otro lado, la fusión visual-inercial resuelve la ambigüedad en la escala,
+ limitación inherente a los sistemas de SLAM monocular, que implica la existenci
+a de un factor desconocido entre el mapa y la escala del mundo real.
 \end_layout
 
 \begin_layout Standard
@@ -772,7 +985,7 @@ status open
 \begin_inset Graphics
 	filename imagenes/lsdslam_semidense.png
 	lyxscale 50
-	scale 75
+	width 14cm
 
 \end_inset
 
@@ -783,8 +996,20 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Nubes de puntos y mapas de profundidad semi-densos para el dataset Kitti
- generados por Stereo LSD-SLAM 
+Arriba: Nubes de puntos 3D del entorno reconstruído.
+ Medio y abajo: Mapas de profundidad generados sobre el dataset Kitti.
+ Los mapas de profundidad son coloreados según la distancia de los puntos
+ a la cámara utilizando el espectro entre los colores rojo (más cercano)
+ y azul (más lejano).
+ Imagen recuperada de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "engel2015large"
+
+\end_inset
+
+.
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:lsdslam"
@@ -820,10 +1045,50 @@ encias en áreas de la imagen altamente texturadas -características visuales
 \end_layout
 
 \begin_layout Standard
-Los superpíxeles consisten en regiones de la imagen con textura homogénea.
- A diferencia de las características visuales de bajo nivel, presenta algunos
- inconvenientes como son la baja repetibilidad y la alta dependencia a las
- especularidades de los objetos.
+Los superpíxeles representan regiones de la imagen con textura homogénea,
+ i.e.
+ un conjunto de píxeles con valores similares.
+ La segmentación de una imagen en superpíxeles puede variar en forma y tamaño
+ de acuerdo al algoritmo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "felzenszwalb2004efficient,mori2005guiding,levinshtein2009turbopixels,vedaldi2008quick,achanta2010slic,achanta2012slic"
+
+\end_inset
+
+ y configuración utilizados (ver Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:superpixel_slic"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+A diferencia de los 
+\emph on
+features
+\emph default
+, los superpíxeles poseen baja repetibilidad y una marcada dependencia a
+ oclusiones, como puede observarse en Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:superpixel_monocularslam"
+
+\end_inset
+
+.
+ La baja repetibilidad significa que una misma región, observada desde distintas
+ posiciones de la cámara, puede dar lugar a diferentes segmentaciones dificultan
+do la asociación de superpíxeles a lo largo de una secuencia de imágenes.
+ Asímismo, la repetibilidad de los superpíxeles se ve afectada las especularidad
+es propias de los objetos (i.e.
+ variaciones en el brillo debido a la reflectancia de la superficie) debido
+ a que esto puede modificar la textura de la región observada.
 \end_layout
 
 \begin_layout Standard
@@ -834,26 +1099,55 @@ key "concha2014using"
 
 \end_inset
 
- se segmentan las imágenes en superpíxeles y se asume que cada región correspond
-e a una superficie planar, cuyos contornos son projectados y mapeados a
- lo largo de la secuencia.
- El sistema se integra a PTAM 
+ se segmentan las imágenes utilizando el algoritmo propuesto por Felzenszwalb
+ et al.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "felzenszwalb2004efficient"
+
+\end_inset
+
+ y se asume que cada superpíxel corresponde a una superficie planar 3D denominad
+a superpíxel 3D o parche.
+ Los contornos de los superpíxeles son proyectados y mapeados a lo largo
+ de la secuencia para validar y ajustar la posición y figura de estas superficie
+s planares.
+ En 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "concha3d"
+
+\end_inset
+
+ este sistema es integrado a PTAM 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Klein:Murray:ISMAR07"
 
 \end_inset
 
- para aumentar el mapa producido en tiempo real.
- De manera similar, DPPTAM 
+ y DTAM 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "newcombe2011dtam"
+
+\end_inset
+
+ mejorando en tiempo real los mapas provenientes de estos sistemas.
+\end_layout
+
+\begin_layout Standard
+De manera similar, en 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "concha2015dpptam"
 
 \end_inset
 
- utiliza información semi-densa de la imagen para mapear el contorno de
- los superpíxeles como parches (superficies planares) en el entorno 3D.
+ se utiliza información semi-densa (i.e.
+ píxeles con alto gradiente en las imágenes) para realizar la reconstrucción
+ del entorno agregando superpíxeles 3D.
 \end_layout
 
 \begin_layout Standard
@@ -865,9 +1159,9 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/superpixel_segmentation.jpg
-	lyxscale 50
-	scale 50
+	filename imagenes/superpixel_slic.png
+	lyxscale 10
+	width 14cm
 
 \end_inset
 
@@ -878,12 +1172,113 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Segmentación de una imagen en superpíxeles con dos niveles de granularidad
- diferentes.
+Segmentación de imágenes en superpíxeles de diferente tamaño.
+ Imagen recuperada de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "achanta2010slic"
+
+\end_inset
+
+.
  
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:superpixel_segmentation"
+name "fig:superpixel_slic"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/superpixel_monocularslam.png
+	lyxscale 10
+	width 14cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Imagen adaptada de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "concha2014using"
+
+\end_inset
+
+.
+ Par de imágenes pertenecientes a una misma secuencia (arriba) y su correspondie
+nte segmentación en superpíxeles (abajo).
+ El superpíxel 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ es segmentado con precisión en abmas imágenes (
+\begin_inset Formula $s_{1}^{1}$
+\end_inset
+
+ y 
+\begin_inset Formula $s_{1}^{2}$
+\end_inset
+
+).
+ El superpíxel 
+\begin_inset Formula $s_{2}$
+\end_inset
+
+, aunque es observado en ambas imágenes (
+\begin_inset Formula $s_{2}^{1}$
+\end_inset
+
+ y 
+\begin_inset Formula $s_{2}^{2}$
+\end_inset
+
+), presenta baja repetibilidad: notar que, en el recuadro rojo de la imagen
+ inferior izquierda, 
+\begin_inset Formula $s_{2}^{1}$
+\end_inset
+
+ se extiende por fuera de los límites del teclado, a diferencia de 
+\begin_inset Formula $s_{2}^{2}$
+\end_inset
+
+.
+ Además, como se observa en el recuadro rojo de la imagen inferior derecha,
+ el superpíxel 
+\begin_inset Formula $s_{2}$
+\end_inset
+
+ es segmentado de diferentes formas debido a que la oclusión varía según
+ la posición de la cámara.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:superpixel_monocularslam"
 
 \end_inset
 
@@ -906,9 +1301,10 @@ Métodos semánticos
 
 \begin_layout Standard
 Recientemente, en SLAM visual se ha comenzado a utilizar características
- visuales de alto nivel, que permite reconocer y mapear objetos.
- Este área de investigación se encuentra altamente relacionada a tópicos
- de aprendizaje automatizado e inteligencia artificial.
+ visuales de alto nivel, que permiten reconocer y mapear objetos presentes
+ en el entorno.
+ Este área de investigación se encuentra relacionada a tópicos de aprendizaje
+ automatizado e inteligencia artificial.
 \end_layout
 
 \begin_layout Standard
@@ -919,8 +1315,12 @@ key "civera2011towards"
 
 \end_inset
 
- se logra reconocer un conjunto de objetos conocidos en el mapa a través
- de los descriptores de bajo nivel (features) que presenta.
+ se logra reconocer un conjunto de objetos, determinado con anterioridad,
+ en el mapa a través de los descriptores de bajo nivel (
+\emph on
+features
+\emph default
+) que presenta.
  En SLAM++ 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -959,7 +1359,8 @@ key "vineet2015incremental"
 \end_inset
 
  que realiza segmentación semántica en tiempo real para distintas categorías
- como se ilustra en 
+ como se ilustra en Fig.
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:semantic_segmentation"
@@ -991,16 +1392,16 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Reconstrucción 3D con segmentación semántica producido por el método propuesto
- en 
-\begin_inset Quotes eld
+Imagen recuperada de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "vineet2015incremental"
+
 \end_inset
 
-Incremental Dense Semantic Stereo Fusion for Large-Scale Semantic Scene
- Reconstruction
-\begin_inset Quotes erd
-\end_inset
-
+.
+ Reconstrucción 3D (arriba) y segmentación semántica (abajo) del dataset
+ KITTI secuencia 05.
  
 \begin_inset CommandInset label
 LatexCommand label
