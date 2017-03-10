@@ -314,15 +314,12 @@ Cálculo de mapas de disparidad
 \end_layout
 
 \begin_layout Standard
-Para la obtención de mapas de disparidad se utlizaron dos métodos diferentes,
- que cuentan con implementaciones de código abierto disponibles públicamente.
- En ambos casos, se analizó el desempeño y los resultados obtenidos, para
- determinar la adaptación del método a los requerimientos del sistema.
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status open
+
+\begin_layout Itemize
+Qué pongo acá? Ya lo moví a experimentación.
+\end_layout
 
 \begin_layout Itemize
 Disparidad en general.
@@ -338,50 +335,76 @@ Problemas inherentes: oclusión, bajo gradiente (esto ya está en el marco
 
 \end_layout
 
+\begin_layout Standard
+Para la obtención de mapas de disparidad se utlizaron dos métodos diferentes,
+ que cuentan con implementaciones de código abierto disponibles públicamente.
+ En ambos casos, se analizó el desempeño y los resultados obtenidos, para
+ determinar la adaptación del método a los requerimientos del sistema.
+\end_layout
+
 \begin_layout Subsection
-OpenCV
+OpenCV 
 \end_layout
 
 \begin_layout Standard
 OpenCV es una biblioteca libre de visión artificial originalmente desarrollada
  por Intel, que provee un método de correspondencia estéreo llamado 
-\begin_inset Quotes eld
-\end_inset
-
+\emph on
 Block matching (BM) algorithm
-\begin_inset Quotes erd
-\end_inset
-
+\emph default
 .
 \end_layout
 
 \begin_layout Standard
-Este algoritmo, similar al algoritmo desarrollado por Kurt Konolige 
+In digital image processing, the sum of absolute differences (SAD) is a
+ measure of the similarity between image blocks.
+ It is calculated by taking the absolute difference between each pixel in
+ the original block and the corresponding pixel in the block being used
+ for comparison.
+ These differences are summed to create a simple metric of block similarity,
+ the L1 norm of the difference image or Manhattan distance between two image
+ blocks
+\end_layout
+
+\begin_layout Standard
+Este algoritmo, similar al desarrollado por Kurt Konolige et al.
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "konolige1998small"
 
 \end_inset
 
-, funciona utilizando pequeñas ventanas de 
-\begin_inset Quotes eld
-\end_inset
+, divide las imágenes en pequeños bloques y los compara utilizando SAD (
+\emph on
+sum of absolute differences
+\emph default
+ 
+\begin_inset Foot
+status collapsed
 
+\begin_layout Plain Layout
 sumas de diferencia absoluta
-\begin_inset Quotes erd
+\end_layout
+
 \end_inset
 
- (SAD) para encontrar puntos coincidentes entre el par de imágenes estéreo
- rectificadas.
+).
+ Esta suma es calculada tomando la diferencia absoluta entre cada píxel
+ del bloque original y su correspondiente píxel en el bloque comparado.
+ Luego, las diferencias son sumadas para crear un métrica simple de similaridad
+ entre bloques que permite encontrar coincidencias entre la imagen izquierda
+ y derecha de un par estéreo.
 \end_layout
 
 \begin_layout Standard
 Si bien este método es muy rápido y efectivo, solo encuentra aquellos puntos
  que presentan alta textura en ambas imágenes, por lo que puede resultar
- inadecuado para entornos complejos como puede distinguirse en 
+ inadecuado para entornos complejos como puede distinguirse en las figuras
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:stereobm_merge_kitti04_27.jpg-1"
+reference "fig:stereobm_merge_kitti04_27.jpg"
 
 \end_inset
 
@@ -403,29 +426,29 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-includegraphics[width=10cm]{imagenes/disparity/stereobm_merge_kitti04_27.jpg}
-\end_layout
+\begin_inset Graphics
+	filename imagenes/disparity/stereobm_merge_kitti04_27.jpg
+	lyxscale 20
+	width 12cm
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Arriba: Mapa de disparidad calculado mediante OpenCV StereoBM.
- Tiempo de ejecución: 0.019s.
- Abajo: Imagen izquierda perteneciente al par estéreo 27, del dataset KITTI
- secuencia 04.
+ Abajo: Imagen perteneciente al dataset KITTI secuencia 04.
+ El mapa de disparidad representa los valores en el espectro comprendido
+ entre el color rojo (mayor disparidad) y violeta (menor disparidad).
+ 
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:stereobm_merge_kitti04_27.jpg-1"
+name "fig:stereobm_merge_kitti04_27.jpg"
 
 \end_inset
 
@@ -450,29 +473,29 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-includegraphics[width=10cm]{imagenes/disparity/stereobm_merge_tsukuba_221.jpg}
-\end_layout
+\begin_inset Graphics
+	filename imagenes/disparity/stereobm_merge_tsukuba_221.jpg
+	lyxscale 20
+	width 14cm
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Arriba: Mapa de disparidad calculado mediante OpenCV StereoBM.
- Tiempo de ejecución: 0.011s.
- Abajo: Imagen izquierda perteneciente al par estéreo 221, del dataset Tsukuba
- Daylight.
+Izquierda: Mapa de disparidad calculado mediante OpenCV StereoBM.
+ Derecha: Imagen perteneciente al dataset Tsukuba Daylight.
+ El mapa de disparidad representa los valores en el espectro comprendido
+ entre el color rojo (mayor disparidad) y violeta (menor disparidad).
+ 
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:stereobm_merge_tsukuba_221.jpg"
+name "fig:stereobm_merge_tsukuba_221.jpg-1"
 
 \end_inset
 
@@ -494,7 +517,11 @@ LIBELAS
 \end_layout
 
 \begin_layout Standard
-LIBELAS (Library for Efficient Large-scale Stereo Matching) 
+LIBELAS (
+\emph on
+Library for Efficient Large-scale Stereo Matching
+\emph default
+) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "geiger2011stereoscan"
@@ -508,22 +535,28 @@ n.
 
 \begin_layout Standard
 El método empleado se basa en que, pese al hecho de que muchas correspondencias
- estéreo son áltamente ambiguas, algunas de ellas pueden ser robustamente
+ estéreo son altamente ambiguas, algunas de ellas pueden ser robustamente
  matcheadas.
  Asumiendo variaciones suaves en la disparidad es posible sectorizar la
- imagen, mediante la triangulación de Delaunay, sobre estos 'puntos de soporte'
- para la estimación de las restantes disparidades.
- En 
+ imagen, mediante la triangulación de Delaunay 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "delaunay1934sphere"
+
+\end_inset
+
+, sobre estos puntos de soporte para la estimación de las restantes disparidades.
+ En las figuras 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:libelas_merge_kitti04_22.jpg"
+reference "fig:libelas_merge_kitti04_22.jpg-1-1"
 
 \end_inset
 
  y 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:libelas_merge_tsukuba_222.jpg"
+reference "fig:libelas_merge_tsukuba_222.jpg-1-1"
 
 \end_inset
 
@@ -538,29 +571,29 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-includegraphics[width=10cm]{imagenes/disparity/libelas_merge_kitti04_22.jpg}
-\end_layout
+\begin_inset Graphics
+	filename imagenes/disparity/libelas_merge_kitti04_22.jpg
+	lyxscale 20
+	width 12cm
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Arriba: Mapa de disparidad calculado mediante LibELAS.
- Tiempo de ejecución: 0.164s.
- Abajo: Imagen izquierda perteneciente al par estéreo 22, del dataset KITTI
- secuencia 04.
+Arriba: Mapa de disparidad calculado mediante LIBELAS.
+ Abajo: Imagen perteneciente al dataset KITTI secuencia 04.
+ El mapa de disparidad representa los valores en el espectro comprendido
+ entre el color rojo (mayor disparidad) y violeta (menor disparidad).
+ 
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:libelas_merge_kitti04_22.jpg"
+name "fig:libelas_merge_kitti04_22.jpg-1-1"
 
 \end_inset
 
@@ -585,29 +618,29 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-includegraphics[width=10cm]{imagenes/disparity/libelas_merge_tsukuba_222.jpg}
-\end_layout
+\begin_inset Graphics
+	filename imagenes/disparity/libelas_merge_tsukuba_222.jpg
+	lyxscale 20
+	width 14cm
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Arriba: Mapa de disparidad calculado mediante LibELAS.
- Tiempo de ejecución: 0.151s.
- Abajo: Imagen izquierda perteneciente al par estéreo 222, del dataset Tsukuba
- Daylight.
+Izquierda: Mapa de disparidad calculado mediante LIBELAS.
+ Derecha: Imagen perteneciente al dataset Tsukuba Daylight.
+ El mapa de disparidad representa los valores en el espectro comprendido
+ entre el color rojo (mayor disparidad) y violeta (menor disparidad).
+ 
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:libelas_merge_tsukuba_222.jpg"
+name "fig:libelas_merge_tsukuba_222.jpg-1-1"
 
 \end_inset
 
