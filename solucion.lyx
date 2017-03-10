@@ -889,6 +889,12 @@ TODO: pseudocódigo de proyección.
 \end_layout
 
 \begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Consistencia-y-redundancia"
+
+\end_inset
+
 Consistencia y redundancia (StereoScan)
 \end_layout
 

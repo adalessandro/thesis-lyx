@@ -110,8 +110,8 @@ Robot Operating System
 \emph default
 ), el cual provee las herramientas necesarias para comprobar el desempeño
  del sistema en distintos tipos de escenarios.
- El método propuesto se implementó como un nodo ROS que corre en simultáneo
- al nodo ROS correspondiente al sistema S-PTAM.
+ El método propuesto se implementó como un nodo ROS que es ejecutado en
+ simultáneo al nodo ROS correspondiente al sistema S-PTAM.
 \end_layout
 
 \begin_layout Section
@@ -125,9 +125,9 @@ Para la experimentación y evaluación se utilizan colecciones de datos de
 datasets
 \emph default
 .
- Estas colecciones se compoLos datos recolectados corresponden a mediciones
- efectuadas mediante diferentes sensores a lo largo de un trayecto realizado
- por robots móviles o vehículos.
+ Los datos recolectados en estas colecciones corresponden a mediciones efectuada
+s mediante diferentes sensores a lo largo de un trayecto realizado por robots
+ móviles o vehículos.
  ROS posibilita la confección y posterior reproducción de estos 
 \emph on
 datasets
@@ -191,14 +191,13 @@ Para la evaluación del método propuesto se utilizaron las primeras 11 secuenci
 \emph on
 dataset
 \emph default
- (secuencias 00 a 10) ya que, además de las imágenes estéreo, proporcionan
+ (secuencias 00 a 10) dado que, además de las imágenes estéreo, proporcionan
  información del 
 \emph on
 ground truth
 \emph default
-, que permite conocer la localización precisa del vehículo en cada momento,
- y mediciones tomadas con un láser Velodyne que permiten reconstruir el
- entorno 3D.
+, permitiendo conocer la localización precisa del vehículo en cada momento
+ y reconstruir el entorno 3D en base a mediciones tomadas con un láser Velodyne.
 \end_layout
 
 \begin_layout Standard
@@ -207,7 +206,7 @@ ground truth
 placement th
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -391,6 +390,19 @@ name "fig:kitti_sensors"
 \end_inset
 
 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+FloatBarrier
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -439,9 +451,9 @@ ground truth
 frame
 \emph default
 .
- Para la evaluación del método propuesto, esta información es combinada
- para conocer la distancia entre el lente de la cámara y cualquier objeto
- en la escena.
+ Combinando esta información es posible reconstruir el entorno 3D a medida
+ que la cámara recorre la trayectoria, determinando con exactitud la distancia
+ entre el lente de la cámara y cualquier objeto o punto 3D en la escena.
  En la Fig.
  
 \begin_inset CommandInset ref
@@ -455,10 +467,11 @@ reference "fig:kitti_sensors"
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -497,10 +510,98 @@ name "fig:tsukuba_1"
 \end_inset
 
 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+FloatBarrier
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 Desempeño del método de mapeo denso sobre S-PTAM
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Agregar conclusiones sobre los datos? e.g.:
+\end_layout
+
+\begin_layout Plain Layout
+* el cálculo de disparidad suele ser 3 veces el tiempo de la proyección.
+\end_layout
+
+\begin_layout Plain Layout
+* O poner que se encuentra entre X% e Y%
+\end_layout
+
+\begin_layout Plain Layout
+* el tiempo de refinamiento es despreciable?
+\end_layout
+
+\begin_layout Plain Layout
+* sumar tiempos de las 2 etapas? el tiempo desde que llega el keyframe hasta
+ que se obtiene la nube de puntos
+\end_layout
+
+\begin_layout Plain Layout
+* esto está dando un rate < 10Hz, pedir a Taihú que lo corra en i7quadcore
+ o poner que se near-real-time?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Durante la ejecución del método se calculó y almacenó el tiempo de procesamiento
+ requerido en cada etapa o hilo de ejecución:
+\end_layout
+
+\begin_layout Itemize
+Cálculo mapa de disparidad
+\end_layout
+
+\begin_layout Itemize
+Fusión (consistencia y redundancia) y proyección 3D
+\end_layout
+
+\begin_layout Itemize
+Refinamiento de posición
+\end_layout
+
+\begin_layout Standard
+El tiempo promedio de cada etapa para cada secuencia del 
+\emph on
+dataset KITTI 
+\emph default
+se detalla en la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:tiempo_por_etapa_kitti"
+
+\end_inset
+
+.
+ Estos mismos datos son representados en el gráfico 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tiempo_por_etapa_kitti_grafico"
+
+\end_inset
+
+ para facilitar su visualización y comparación.
 \end_layout
 
 \begin_layout Standard
@@ -509,7 +610,7 @@ Desempeño del método de mapeo denso sobre S-PTAM
 placement h
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -591,7 +692,7 @@ Tiempo promedio por etapa (ms)
 \begin_inset Text
 
 \begin_layout Plain Layout
-Mapa de disparidad
+Cálculo mapa de disparidad
 \end_layout
 
 \end_inset
@@ -600,7 +701,7 @@ Mapa de disparidad
 \begin_inset Text
 
 \begin_layout Plain Layout
-Fusión y proyección 3D
+Fusión (consistencia y redundancia) y proyección 3D
 \end_layout
 
 \end_inset
@@ -1069,14 +1170,21 @@ name "tab:tiempo_por_etapa_kitti"
 
 \end_layout
 
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
 \begin_layout Plain Layout
-\noindent
 \align center
 \begin_inset Graphics
 	filename imagenes/experimentacion/phase_time_plot.png
 	lyxscale 20
 	width 16cm
-	clip
 
 \end_inset
 
@@ -1084,12 +1192,13 @@ name "tab:tiempo_por_etapa_kitti"
 \end_layout
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "tab:tiempo_por_etapa_kitti_grafico"
+name "fig:tiempo_por_etapa_kitti_grafico"
 
 \end_inset
 
@@ -1099,6 +1208,19 @@ name "tab:tiempo_por_etapa_kitti_grafico"
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+FloatBarrier
 \end_layout
 
 \end_inset
@@ -1107,12 +1229,41 @@ name "tab:tiempo_por_etapa_kitti_grafico"
 \end_layout
 
 \begin_layout Standard
+Para cada secuencia, se registró el tamaño de la nube de puntos obtenida
+ mediante la ejecución del método propuesto en la Tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:numero_puntos_kitti"
+
+\end_inset
+
+.
+ En este cuadro también se incluyen el número de puntos fusionados y descartados
+ en la etapa de 
+\emph on
+Fusión (consistencia y redundancia) y proyección 3D 
+\emph default
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Consistencia-y-redundancia"
+
+\end_inset
+
+ y el total de 
+\emph on
+keyframes 
+\emph default
+procesados.
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Float table
 placement h
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1736,7 +1887,8 @@ name "tab:numero_puntos_kitti"
 
 \end_inset
 
-
+ Resultados de procesamiento realizado en una ejecución del método propuesto
+ sobre cada secuencia del dataset KITTI.
 \end_layout
 
 \end_inset
@@ -1744,14 +1896,21 @@ name "tab:numero_puntos_kitti"
 
 \end_layout
 
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
 \begin_layout Plain Layout
-\noindent
 \align center
 \begin_inset Graphics
 	filename imagenes/experimentacion/cloud_points_plot.png
 	lyxscale 20
 	width 16cm
-	clip
 
 \end_inset
 
@@ -1759,12 +1918,20 @@ name "tab:numero_puntos_kitti"
 \end_layout
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "tab:numero_puntos_kitti_grafico"
+name "fig:numero_puntos_kitti_grafico"
+
+\end_inset
+
+Gráfico de barras sobre los datos detallados en la tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:numero_puntos_kitti"
 
 \end_inset
 
@@ -1774,6 +1941,19 @@ name "tab:numero_puntos_kitti_grafico"
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+FloatBarrier
 \end_layout
 
 \end_inset
@@ -1787,26 +1967,33 @@ Evaluación
 
 \begin_layout Standard
 La precisión de la reconstrucción 3D obtenida se evaluó mediante la comparación
- de mapas de profundidad.
+ de 
+\emph on
+mapas de profundidad
+\emph default
+ generados por el método propuesto y en base a información de 
+\emph on
+ground truth
+\emph default
+.
+ Un 
+\emph on
+mapa de profundidad 
+\emph default
+es una imagen donde a cada píxel se le asigna el valor determinado por la
+ profundidad (distancia en el eje Z) del punto 3D proyectado.
+ En caso que un píxel no corresponda a la proyección de ningún punto del
+ entorno 3D, se considera que el píxel tiene un valor de profundidad inválido.
 \end_layout
 
 \begin_layout Standard
-Para evaluar la precisión de la reconstrucción 3D obtenida se utilizó informació
-n del 
+Los mapas de profundidad asociados al mismo 
 \emph on
-ground truth 
+keyframe 
 \emph default
-provista por cada 
-\emph on
-dataset.
- 
-\emph default
-Esta información fue procesada para generar mapas de profundidad en cada
- 
-\emph on
-frame 
-\emph default
-y compararlos con los obtenidos mediante el método propuesto.
+son comparados píxel a píxel, calculando el error absoluto existente en
+ la profundidad, omitiendo aquellos píxeles que no posean un profundidad
+ válida.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1814,27 +2001,584 @@ Evaluación sobre el dataset KITTI
 \end_layout
 
 \begin_layout Standard
-El dataset KITTI provee información del 
+El dataset KITTI provee información de la trayectoria real de la cámara,
+ por lo que en cada 
 \emph on
-ground t
+frame
 \emph default
- la trayectoria real de la cámara en cada 
+ es posible conocer la posición y orientación 3D dentro del sistema de coordenad
+as global
 \emph on
-frame.
+.
 
 \emph default
- Por otro lado, para los mismos instantes de tiempo, el dataset proporciona
- mediciones tomadas mediante un láser Velodyne brindando sus coordenadas
- 3D en el sistema de coordenadas del láser Velodyne.
+ A su vez, el dataset KITTI incluye mediciones tomadas mediante un láser
+ Velodyne, brindando las coordenadas 3D de cada punto en el sistema de coordenad
+as del láser Velodyne.
+ La transformación entre los sistemas de coordenadas del láser Velodyne
+ y la cámara es fija durante cada secuencia y es proporcionada por el dataset:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $R_{velo}^{cam}\in\mathbb{R}^{3x3}$
+\end_inset
+
+: matriz de rotación: velodyne 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ cámara
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t_{velo}^{cam}\in\mathbb{R}^{1x3}$
+\end_inset
+
+: vector de traslación: velodyne 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ cámara
 \end_layout
 
 \begin_layout Standard
-Para transformar los puntos desde el sistema de coordenadas del láser Velodyne
- al de la cámara, el 
+\begin_inset Formula 
+\[
+T_{velo}^{cam}=\begin{pmatrix}R_{velo}^{cam} & t_{velo}^{cam}\\
+0 & 1
+\end{pmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En el 
 \emph on
-dataset 
+
+\begin_inset Formula $frame_{i}$
+\end_inset
+
+,
 \emph default
-incluye la matriz de rotación y traslacióncorrespondiente
+ un punto 3D 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ es sensado por el láser Velodyne dentro de su sistema de coordenadas.
+ Luego, la proyección de este punto 3D corresponde al píxel 
+\begin_inset Formula $Y_{j}$
+\end_inset
+
+ en el plano de la imagen del 
+\emph on
+
+\begin_inset Formula $frame_{j}$
+\end_inset
+
+
+\emph default
+ según la siguiente ecuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Y_{j}=P_{j}\;T_{i}^{j}\;T_{velo}^{cam}\;X_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde: 
+\begin_inset Formula $T_{i}^{j}$
+\end_inset
+
+ corresponde a la transformación entre el 
+\emph on
+
+\begin_inset Formula $frame_{i}$
+\end_inset
+
+
+\emph default
+ y 
+\emph on
+
+\begin_inset Formula $frame_{j}$
+\end_inset
+
+;
+\emph default
+ 
+\begin_inset Formula $P_{j}$
+\end_inset
+
+ es la matriz de proyección del 
+\emph on
+
+\begin_inset Formula $frame_{j}$
+\end_inset
+
+
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+En la Figura pueden verse diferentes mapas de disparidad generados por el
+ método propuesto y en base al ground truth.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mapas de disparidad
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti00.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI00
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti01.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI01
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti02.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI02
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti03.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI03
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti04.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI04
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti05.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI05
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti06.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI06
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti07.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI07
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti08.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI08
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti09.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI09
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/experimentacion/depth_map_comparison/kitti10.png
+	lyxscale 10
+	width 18cm
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+KITTI10
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+FloatBarrier
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

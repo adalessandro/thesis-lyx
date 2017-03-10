@@ -11,6 +11,7 @@
 \usepackage{a4wide}
 \usepackage[graf, intHoriz, sinLU, showDirectores, showCoDirectores]{caratula}
 \usepackage{hyperref}
+\input{lyx_preamble}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -84,53 +85,22 @@ figs-within-sections
 \begin_body
 
 \begin_layout Chapter
-Cámaras como sensores
+Conceptos básicos
 \end_layout
 
 \begin_layout Standard
-En el último tiempo, el desarrollo de la robótica móvil y de la visión por
- computadora han dado lugar a una nueva disciplina conocida como visión
- robótica (
-\emph on
-robot vision
-\emph default
-) que propone utilizar cámaras como los sensores primarios para capturar
- la información del ambiente.
- Las cámaras poseen varias ventajas por sobre otros sensores.
- Para empezar son mucho más económicas, de bajo consumo y fáciles de montar
- en robots móviles que otros sensores típicos como los lásers.
- Las nuevas generaciones de cámaras digitales son cada vez más asequibles
- y más pequeñas, y pueden proporcionar datos de alta resolución en tiempo
- real y rangos de medición virtualmente ilimitados.
- Además, las cámaras son sensores pasivos, por tanto, no interfieren unos
- con otros como lo hacen los sensores activos.
- Los requerimientos de cómputo para ejecutar los algoritmos de procesamiento
- de imágenes a bordo del robot móvil pueden satisfacerse en la actualidad
- gracias a las unidades de procesamiento disponibles.
- Por lo tanto, se puede afirmar que las cámaras a bordo de los robots móviles
- se han transformado en una parte estándar en el sistema de sensado y percepción
- de cualquier robot móvil, para reunir información detallada y en tiempo
- real sobre el entorno.
-\end_layout
-
-\begin_layout Standard
-El modelo de sensado en el caso de las cámaras consiste básicamente en un
- mapeo entre el entorno tridimencional y el plano de la imagen bidimensional.
- Dependiendo el tipo de cámara (monocular, estéreo, omnidireccional, etc.)
- es posible utilizar diferentes modelos matemáticos que permitan relacionar
- puntos del mundo con su respectiva representación en la imagen.
-\end_layout
-
-\begin_layout Standard
-A continuación se exponen los detalles del modelo de cámara monocular y
- estéreo expuestos en 
+En este capítulo se presenta el marco conceptual utilizado a lo largo de
+ la tesina.
+ Los conceptos matemáticos y geométricos detallados en este capítulo son
+ de común conocimiento en el campo de la robótica y visión computarizada,
+ y han sido principalmente recopilados de 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "hartley2003multiple"
 
 \end_inset
 
- junto con resultados geométricos de interés.
+, entre otras fuentes.
 \end_layout
 
 \begin_layout Section
@@ -138,48 +108,433 @@ Modelo y geometría de una cámara monocular
 \end_layout
 
 \begin_layout Standard
-Se modela a la cámara de manera que los puntos del espacio sean proyectados
- en el plano de la imagen o plano focal como se muestra en la Figura 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:pinhole_camera"
+Una cámara es definida matemáticamente como un mapeo entre el mundo 3D y
+ una imagen 2D.
+ Existen diferentes modelos para representar una cámara, siendo el modelo
+ de cámara 
+\emph on
+pinhole 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+modelo de cámara estenopeica
+\end_layout
 
 \end_inset
 
+ 
+\emph default
+aquel que resulta más simple y mayormente utilizado.
+\end_layout
+
+\begin_layout Subsection
+Modelo de cámara 
+\emph on
+pinhole
+\end_layout
+
+\begin_layout Standard
+En el modelo de cámara 
+\emph on
+pinhole, 
+\emph default
+el punto de la imagen 
+\begin_inset Formula $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$
+\end_inset
+
+es determinado como la intersección entre el 
+\emph on
+plano de la imagen 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+también denominado 
+\emph on
+plano focal.
+\end_layout
+
+\end_inset
+
+
+\emph default
+ y el rayo que une el punto del mundo 3D 
+\begin_inset Formula $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$
+\end_inset
+
+ con el 
+\emph on
+centro focal
+\emph default
+ 
+\begin_inset Formula $\cameraCenter$
+\end_inset
+
 .
- Para esto se define la calibración intrínseca de la cámara como: 
+ En la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pinhole"
+
+\end_inset
+
+ se ilustra esta definición y las relaciones geométricas involucradas en
+ este modelo de cámara.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /BACKUP/tesina/tesis_doctorado/images/math/pinhole_camera_model.svg
+	lyxscale 50
+	width 35page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /BACKUP/tesina/tesis_doctorado/images/math/pinhole_camera_model2.svg
+	width 35page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Relaciones geométricas presentes en el modelo de cámara 
+\emph on
+pinhole
+\emph default
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pinhole"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Llamamos 
+\emph on
+rayo principal 
+\emph default
+o 
+\emph on
+eje principal 
+\emph default
+de la cámara al rayo que se origina en el centro focal 
+\begin_inset Formula $\cameraCenter$
+\end_inset
+
+ y es perpendicular al plano de la imagen.
+ El punto donde este rayo intersecta al plano de la imagen es denominado
+ 
+\emph on
+punto principal.
+\end_layout
+
+\begin_layout Standard
+Considerando que el centro focal se encuentra en el origen de coordenadas
+ y el plano focal 
+\begin_inset Formula $Z=f$
+\end_inset
+
+, por criterio de semenjanza de triángulos puede verse facilmente que el
+ punto 3D 
+\begin_inset Formula $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$
+\end_inset
+
+es mapeado al punto 
+\begin_inset Formula $\imagePoint=\begin{bmatrix}fx/z & fy/z\end{bmatrix}^{\top}$
+\end_inset
+
+en el plano de la imagen.
+ Esto da lugar a la siguiente proyección central:
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-K=\begin{bmatrix}f & 0 & p_{x}\\
-0 & f & p_{y}\\
-0 & 0 & 1
-\end{bmatrix}
+\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}\longmapsto\begin{bmatrix}fx/z\\
+fy/z
+\end{bmatrix}\label{eq:central_mapping}
 \end{equation}
 
 \end_inset
 
-de manera de poder, utilizando coordenadas homogéneas, realizar un mapeo
- de la forma 
-\begin_inset Formula $(X,Y,Z,1)^{\top}\underset{K}{\rightarrow}(f\frac{X}{Z}+p_{x},f\frac{Y}{Z}+p_{y},1)^{\top}$
+
+\end_layout
+
+\begin_layout Subsubsection
+Matriz de calibración intrínseca 
+\begin_inset Formula $\intrinsicMatrix$
 \end_inset
 
- por multiplicación a izquierda: 
+
+\end_layout
+
+\begin_layout Standard
+El mapeo de la ecuación 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:central_mapping"
+
+\end_inset
+
+ asume que el origen de coordenadas del plano de la imagen se encuentra
+ en el punto principal.
+ En la práctica, esto no siempre se cumple, por lo que en general la proyección
+ se expresa como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}\longmapsto\begin{bmatrix}fx/z+c_{u}\\
+fy/z+c_{v}
+\end{bmatrix}^{\top}\label{eq:central_mapping-2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+siendo 
+\begin_inset Formula $\begin{bmatrix}c_{u} & c_{v}\end{bmatrix}^{\top}$
+\end_inset
+
+la posición del punto principal.
+\end_layout
+
+\begin_layout Standard
+Notamos con 
+\begin_inset Formula $\homo{\point}=\begin{bmatrix}x & y & z & 1\end{bmatrix}^{\top}$
+\end_inset
+
+ la representación en coordenadas homogéneas del punto 
+\begin_inset Formula $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$
+\end_inset
+
+.
+ De esta manera, la proyección central del modelo de cámara 
+\emph on
+pinhole 
+\emph default
+de la ecuación 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:central_mapping-2"
+
+\end_inset
+
+ puede expresarse como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}x\\
+y\\
+z\\
+1
+\end{bmatrix}\longmapsto\begin{bmatrix}fx+zc_{u}\\
+fy+zc_{v}\\
+z
+\end{bmatrix}=\begin{bmatrix}f &  & c_{u} & 0\\
+ & f & c_{v} & 0\\
+ &  & 1 & 0
+\end{bmatrix}\begin{bmatrix}x\\
+y\\
+z\\
+1
+\end{bmatrix}\label{eq:central_projection}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Definiendo la 
+\emph on
+matriz de calibración intrínseca
+\emph default
+ 
+\begin_inset Formula $\intrinsicMatrix$
+\end_inset
+
+ como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\intrinsicMatrix=\begin{bmatrix}f & 0 & c_{u}\\
+0 & f & c_{v}\\
+0 & 0 & 1
+\end{bmatrix}\label{eq:intrinsic_matrix}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+la ecuación 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:central_projection"
+
+\end_inset
+
+ tiene la siguiente forma concisa:
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-[K|\overrightarrow{0}](X,Y,Z,1)^{\top}=\begin{bmatrix}f & 0 & p_{x} & 0\\
-0 & f & p_{y} & 0\\
-0 & 0 & 1 & 0
-\end{bmatrix}\begin{pmatrix}X\\
-Y\\
-Z\\
+\homo{\imagePoint}=\intrinsicMatrix\begin{bmatrix}\vec{{I}} & \vec{{0}}\end{bmatrix}\homo{\point}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Matriz de proyección 
+\series medium
+
+\begin_inset Formula $\projectionMatrix$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En general, los puntos del ambiente son expresados en referencia a un sistema
+ de coordenadas conocido como 
+\emph on
+mundo
+\emph default
+.
+ Dado que la cámara no se encuentra necesariamente ubicada en el centro
+ de este sistema, las ecuaciones previamente definidas deben extenderse
+ agregando la transformación existente entre los sistemas de coordenadas
+ de la cámara y el mundo.
+\end_layout
+
+\begin_layout Standard
+Sea 
+\begin_inset Formula $\homoWorldPoint=\begin{bmatrix}x & y & z & 1\end{bmatrix}^{\top}$
+\end_inset
+
+ un punto del espacio en referencia al sistema de coordenadas del mundo
+ y 
+\begin_inset Formula $\homoCameraPoint$
+\end_inset
+
+ el mismo punto expresado en referencia a la cámara, es posible definir
+ una transformación 
+\begin_inset Formula $\seMatrix^{\mathrm{c}\mathrm{w}}$
+\end_inset
+
+ tal que:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\homoCameraPoint=\begin{bmatrix}\rotation & \translation\\
+0 & 1
+\end{bmatrix}\begin{bmatrix}x\\
+y\\
+z\\
 1
-\end{pmatrix}=\begin{pmatrix}fX+Zp_{x}\\
-fY+Zp_{y}\\
-Z
-\end{pmatrix}=\begin{pmatrix}f\frac{X}{Z}+p_{x}\\
-f\frac{Y}{Z}+p_{y}\\
-1
-\end{pmatrix}.
+\end{bmatrix}=\seMatrix^{\mathrm{c}\mathrm{w}}\homoWorldPoint
 \]
 
 \end_inset
@@ -188,125 +543,12 @@ f\frac{Y}{Z}+p_{y}\\
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-placement h
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename imagenes/pinhole_camera_model.png
-	lyxscale 50
-	width 100col%
-
+En particular, 
+\begin_inset Formula $\seMatrix^{\mathrm{c}\mathrm{w}}$
 \end_inset
 
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Modelo geométrico 
-\emph on
-Pinhole
-\emph default
- donde 
-\begin_inset Formula $\mathbf{C}$
-\end_inset
-
- es el centro de cámara, 
-\begin_inset Formula $\mathbf{p}=(p_{x},p_{y})$
-\end_inset
-
- punto principal y la cámara se considera centrada en el origen del eje
- de coordenadas.
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:pinhole_camera"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-En general los puntos del ambiente son expresados en referencia al sistema
- de coordenadas conocido como 
-\begin_inset Quotes eld
-\end_inset
-
-mundo
-\begin_inset Quotes erd
-\end_inset
-
- (
-\emph on
-world coordinate system
-\emph default
-), el cual esta relacionado con el sistema de coordenadas de la cámara a
- través de una rotación y una traslación.
- Sea 
-\begin_inset Formula $X_{w}=(X,Y,Z,1)^{\top}$
-\end_inset
-
- un punto del espacio en referencia al sistema de coordenadas del mundo
- y 
-\begin_inset Formula $X_{c}$
-\end_inset
-
- el mismo punto expresado en referencia a la cámara, es posible definir
- una transformación 
-\begin_inset Formula $T_{cw}$
-\end_inset
-
- tal que:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-X_{c}=\begin{bmatrix}R & t\\
-0 & 1
-\end{bmatrix}\begin{pmatrix}X\\
-Y\\
-Z\\
-1
-\end{pmatrix}=T_{cw}X_{w}
-\end{equation}
-
-\end_inset
-
-donde 
-\begin_inset Formula $R$
-\end_inset
-
- es una matriz de rotación 
-\begin_inset Formula $3\times3$
-\end_inset
-
-, 
-\begin_inset Formula $t$
-\end_inset
-
- un vector de traslación 
-\begin_inset Formula $3\times1$
-\end_inset
-
- y 
-\begin_inset Formula $T_{cw}$
-\end_inset
-
- pertenece al grupo de movimientos de cuerpo rígido 3D (
+es una transformación perteneciente al grupo de movimientos de cuerpo rígido
+ 3D (
 \emph on
 Lie Group
 \emph default
@@ -321,23 +563,37 @@ key "varadarajan2013lie"
 
 \end_inset
 
-.
- De esta manera, utilizando la matriz de calibración intrínseca 
-\begin_inset Formula $K$
+, donde 
+\begin_inset Formula $\rotation$
+\end_inset
+
+ es una matriz de rotación y 
+\begin_inset Formula $\translation$
+\end_inset
+
+ un vector de traslación.
+ Utilizando la matriz de calibración intrínseca 
+\begin_inset Formula $\intrinsicMatrix$
+\end_inset
+
+ definida en 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:intrinsic_matrix"
+
 \end_inset
 
 , se define la matriz de proyección 
-\begin_inset Formula $P$
+\begin_inset Formula $\projectionMatrix$
 \end_inset
 
- que nos permitirá proyectar cualquier punto del espacio en coordenadas
- del mundo al plano de la imagen:
+:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-P=K[R|t]
+\projectionMatrix=\intrinsicMatrix\begin{bmatrix}\rotation & \translation\end{bmatrix}\label{eq:projection_matrix}
 \end{equation}
 
 \end_inset
@@ -346,55 +602,698 @@ P=K[R|t]
 \end_layout
 
 \begin_layout Standard
-La matriz 
-\begin_inset Formula $P$
+De esta manera, es posible proyectar cualquier punto 3D 
+\begin_inset Formula $\homoWorldPoint$
 \end_inset
 
- posee 9 grados de libertad (3 por 
-\begin_inset Formula $K$
+ en el sistema de coordenadas del mundo al correspondiente punto 
+\begin_inset Formula $\homo{\imagePoint}$
 \end_inset
 
-, 3 por 
-\begin_inset Formula $R$
-\end_inset
-
- y 3 por 
-\begin_inset Formula $t$
-\end_inset
-
-) y
+ en el plano de la imagen mediante:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-x=PX_{w}
+\homo{\imagePoint}=\projectionMatrix\homoWorldPoint\label{eq:projection_equation}
 \end{equation}
 
 \end_inset
 
-donde 
-\begin_inset Formula $x$
-\end_inset
 
- es la proyección en coordenadas homogéneas (
-\begin_inset Formula $3\times1$
-\end_inset
-
-) del punto 
-\begin_inset Formula $X_{w}$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+camera distortion?
+\end_layout
+
+\begin_layout Plain Layout
+backprojection?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Re-proyección"
+
+\end_inset
+
+Re-proyección
+\end_layout
+
+\begin_layout Standard
+Dado un punto 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ en la imagen, es posible determinar el conjunto de puntos en el espacio
+ que son proyectados sobre este punto.
+ El conjunto de puntos conforma un rayo en el espacio que pasa por el centro
+ focal y el punto de la imagen 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+.
+ Así, el rayo 
+\begin_inset Formula $\vec{x}(\lambda)$
+\end_inset
+
+ puede definirse como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vec{x}(\lambda)=\projectionMatrix^{+}\imagePoint+\lambda\cameraCenter
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde 
+\begin_inset Formula $\projectionMatrix^{+}$
+\end_inset
+
+ es la matriz 
+\emph on
+pseudo-inversa 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+La matriz pseudo-inversa 
+\begin_inset Formula $\projectionMatrix^{+}$
+\end_inset
+
+ es definida como 
+\begin_inset Formula $\projectionMatrix^{+}=\projectionMatrix^{\top}\left(\projectionMatrix\projectionMatrix^{\top}\right)^{-1}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\emph default
+ de 
+\begin_inset Formula $\projectionMatrix$
+\end_inset
+
+ y 
+\begin_inset Formula $\cameraCenter$
+\end_inset
+
+ es el centro focal de la cámara.
+ La Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:back_projection"
+
+\end_inset
+
+ muestra la re-proyección de un punto perteneciente a la imagen.
+ Puede observarse que el rayo 
+\begin_inset Formula $\vec{x}(\lambda)$
+\end_inset
+
+ es la linea que pasa por los puntos 
+\begin_inset Formula $\projectionMatrix^{+}\imagePoint$
+\end_inset
+
+ y 
+\begin_inset Formula $\cameraCenter$
+\end_inset
+
+ en el espacio 3D dado que 
+\begin_inset Formula $\projectionMatrix\projectionMatrix^{+}\imagePoint=\vec{I}\imagePoint=\imagePoint$
+\end_inset
+
+ y 
+\begin_inset Formula $\projectionMatrix\cameraCenter=\boldsymbol{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../tesis_doctorado/images/math/back_projection.svg
+	lyxscale 50
+	width 40page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Re-proyección de un punto de la imagen.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:back_projection"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+De la anterior definición puede concluirse que no es posible realizar una
+ reconstrucción 3D del entorno partiendo de una única imagen.
+ En la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Modelo-y-geometría-estereo"
+
+\end_inset
+
+ veremos cómo es posible obtener una reconstrucción 3D de la escena capturada
+ desde dos puntos de vista diferentes, cuando el desplazamiento entre ambas
+ cámaras es conocido.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Revisar
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Frustum culling
+\end_layout
+
+\begin_layout Standard
+El 
+\emph on
+frustum of view
+\emph default
+ es la región 3D que contiene todos los puntos que son potencialmente visibles
+ en el plano de la imagen.
+ En el modelo de cámara 
+\emph on
+pinhole
+\emph default
+, el 
+\emph on
+frustum of view
+\emph default
+ tiene la forma de una pirámide trunca, como se ilustra en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:frustum_culling"
+
+\end_inset
+
+.
+ Como se verá a continuación, esta región es determinada por los parámetros
+ intrínsecos y extrínsecos de la cámara.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/frustum_culling.png
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Representación del 
+\emph on
+frustum of view
+\emph default
+ en un modelo de cámara 
+\emph on
+pinhole
+\emph default
+.
+ La esfera verde queda fuera de la pirámide, por lo que no se verá proyectada
+ sobre el plano de la imagen.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:frustum_culling"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Frustum culling
+\emph default
+ es el proceso mediante el cual se filtra el entorno descartando aquellos
+ objetos que no se encuentran dentro del 
+\emph on
+frustum of view
+\emph default
+.
+ De esta manera, se evita desperdiciar recursos renderizando objetos que
+ no son directamente visibles por la cámara.
+\end_layout
+
+\begin_layout Standard
+En el marco de la presente tesina, el entorno es una nube de puntos y mediante
+ 
+\emph on
+frustum culling
+\emph default
+ es posible descartar aquellos puntos que no es necesario proyectar dado
+ que su proyección se encuentra fuera de los límites del plano de la imagen.
+\end_layout
+
+\begin_layout Subsubsection
+Vértices del 
+\emph on
+frustum of view 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Vértices-del-frustum"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El vértice de la pirámide es el centro focal 
+\begin_inset Formula $\cameraCenter$
+\end_inset
+
+ y su base está definida por el plano lejano 
+\begin_inset Formula $\plane_{lejano}$
+\end_inset
+
+, potencialmente infinito.
+ A su vez, la pirámide es delimitada por un plano cercano 
+\begin_inset Formula $\plane_{cercano}$
+\end_inset
+
+, que da el nombre de pirámide trunca.
+ Los planos 
+\begin_inset Formula $\plane_{cercano}$
+\end_inset
+
+ y 
+\begin_inset Formula $\plane_{lejano}$
+\end_inset
+
+ se encuentran ubicados a distancias conocidas 
+\begin_inset Formula $f_{cercano}$
+\end_inset
+
+ y 
+\begin_inset Formula $f_{lejano}$
+\end_inset
+
+ respectivamente, y son perpendiculares al rayo principal.
+\end_layout
+
+\begin_layout Standard
+El área rectangular del 
+\emph on
+frustum of view
+\emph default
+ sobre estos planos puede ser delimitada en función de las dimensiones del
+ plano focal 
+\begin_inset Formula $\plane_{cam}$
+\end_inset
+
+ y las distancias 
+\begin_inset Formula $f_{cercano}$
+\end_inset
+
+ y 
+\begin_inset Formula $f_{lejano}$
+\end_inset
+
+.
+ Como se muestra en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:frustum-of-view"
+
+\end_inset
+
+, aplicando criterio de semenjanza de triángulos pueden obtenerse facilmente
+ las coordenadas de los vértices que definen el área rectangular del 
+\emph on
+frustum of view
+\emph default
+ sobre el plano lejano 
+\begin_inset Formula $\plane_{lejano}$
+\end_inset
+
+.
+ El caso del plano cercano 
+\begin_inset Formula $\plane_{cercano}$
+\end_inset
+
+ es análogo y se omite en esta tesina por motivos de simplificación.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-ESTABLECER A QUE SE LLAMA POSE DE LA CAMARA!
+\align center
+\begin_inset Graphics
+	filename imagenes/math/frustum_far_plane_height.pdf
+	lyxscale 50
+	width 35page%
+
+\end_inset
+
+
 \end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:frustum-triagulacion"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/math/frustum_vertices.pdf
+	lyxscale 50
+	width 35page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:frustum-far-plane"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Relaciones geométricas presentes en el 
+\emph on
+frustum of view
+\emph default
+ de una cámara 
+\emph on
+pinhole
+\emph default
+.
+ En ambas figuras se omite el plano cercano por simplificación.
+ Nótese que reemplazando al plano lejano por el plano cercano, se obtienen
+ las mismas propiedades geométricas en relación al plano focal.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:frustum-of-view"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sea 
+\begin_inset Formula $\point=\begin{bmatrix}x & y & f\end{bmatrix}^{\top}$
+\end_inset
+
+ uno de los vértices del plano focal, expresado en el sistema de coordenadas
+ de la cámara como se muestra en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:frustum-triagulacion"
+
+\end_inset
+
+.
+ Por criterio de semenjanza de triángulos, pueden derivarse las coordenadas
+ del vértice 
+\begin_inset Formula $\point_{lejano}$
+\end_inset
+
+ sobre el plano lejano 
+\begin_inset Formula $\plane_{lejano}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\point_{lejano}=\begin{bmatrix}\frac{x\,f_{lejano}}{f} & \frac{y\,f_{lejano}}{f} & f_{lejano}\end{bmatrix}\label{eq:frustum-vertices}
+\end{equation}
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Utilizando la Ecuación 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:frustum-vertices"
+
+\end_inset
+
+ pueden derivarse las coordenadas de cada uno de los vértices que definen
+ el área rectangular del 
+\emph on
+frustum of view
+\emph default
+ sobre los planos 
+\begin_inset Formula $\plane_{cercano}$
+\end_inset
+
+ y 
+\begin_inset Formula $\plane_{lejano}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Extracción de los planos
+\end_layout
+
+\begin_layout Standard
+Cada plano 
+\begin_inset Formula $\plane_{i}$
+\end_inset
+
+ que determina el 
+\emph on
+frustum of view
+\emph default
+ está conformado por 3 o más vértices no alineados, cuyas coordenadas fueron
+ calculadas mediante las relaciones geométricas enunciadas en la sección
+ anterior 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Vértices-del-frustum"
+
+\end_inset
+
+.
+ Por lo tanto, es posible definir el plano 
+\begin_inset Formula $\plane_{i}$
+\end_inset
+
+ y expresar su ecuación general como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\plane_{i}=\begin{bmatrix}A_{i} & B_{i} & C_{i} & D_{i}\end{bmatrix}
+\]
+
+\end_inset
+
+tal que
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+A_{i}x+B_{i}y+C_{i}z+D_{i}w=0\quad\textrm{ para cada }\quad\homoWorldPoint=\begin{bmatrix}x & y & z & w\end{bmatrix}^{\top}\in\plane_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por convención, la dirección del vector normal 
+\begin_inset Formula $\eta_{i}=\begin{bmatrix}A_{i} & B_{i} & C_{i}\end{bmatrix}$
+\end_inset
+
+
+\begin_inset Formula $^{\top}$
+\end_inset
+
+ de cada plano 
+\begin_inset Formula $\plane_{i}$
+\end_inset
+
+ apunta hacia el interior de la pirámide.
+ Por lo tanto, un punto 3D 
+\begin_inset Formula $\homoWorldPoint=\begin{bmatrix}x & y & z & w\end{bmatrix}^{\top}$
+\end_inset
+
+ se encuentra dentro del 
+\emph on
+frustum of view 
+\emph default
+si la siguiente ecuación se satisface para cada plano 
+\begin_inset Formula $\plane_{i}$
+\end_inset
+
+ que conforma la pirámide:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\plane_{i}\,\homoWorldPoint\geq0\label{eq:frustum-main-eq}
+\end{equation}
 
 \end_inset
 
@@ -402,350 +1301,93 @@ ESTABLECER A QUE SE LLAMA POSE DE LA CAMARA!
 \end_layout
 
 \begin_layout Section
+Modelo y geometría de una cámara estéreo 
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:modelo_estereo"
+name "sec:Modelo-y-geometría-estereo"
 
 \end_inset
 
-Modelo y geometría de cámaras estéreo
+
 \end_layout
 
 \begin_layout Standard
-La geometría proyectiva entre dos cámaras es conocida como geometría epipolar
- (
-\emph on
-epipolar geometry
-\emph default
-).
- Esta es independiente de la escena observada, y depende únicamente de los
- parámetros internos y poses relativas de las cámaras involucradas.
- Esencialmente la geometría epipolar caracteriza la relación entre un par
- de cámaras como la intersección de sus planos imagen con una familia de
- planos que contengan la línea que une los centros de cámaras (línea base
- o 
-\emph on
-baseline
-\emph default
-).
- El estudio de esta relación es de interés dado que permite restringir el
- espacio de búsqueda al momento de asociar puntos entre los planos imagen.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement h
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename imagenes/epipolar_geometry.png
-	lyxscale 60
-	width 50text%
+Como se vio en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Re-proyección"
 
 \end_inset
 
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-La línea base interseca con cada plano imagen en los epipolos 
-\begin_inset Formula $\boldsymbol{e}$
-\end_inset
-
- y 
-\begin_inset Formula $\boldsymbol{e'}$
-\end_inset
-
-.
- Todo plano 
-\begin_inset Formula $\boldsymbol{\pi}$
-\end_inset
-
- que contenga la línea base es un plano epipolar, e interseca los planos
- imagen formando las líneas epipolares 
-\begin_inset Formula $\boldsymbol{l}$
-\end_inset
-
- y 
-\begin_inset Formula $\boldsymbol{l'}$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+, no es posible realizar una reconstrucción 3D del entorno utilizando una
+ única imagen, sino que se requieren al menos dos imágenes tomadas desde
+ diferentes puntos de vista.
+ En esta sección se introducen los conceptos necesarios para abordar el
+ proceso de reconstrucción 3D a partir de dos imágenes.
 \end_layout
 
 \begin_layout Subsection
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:correspondencia_estereo"
-
-\end_inset
-
-Correspondencia entre puntos
+Geometría epipolar
 \end_layout
 
 \begin_layout Standard
-Sea 
-\begin_inset Formula $X$
-\end_inset
-
- un punto en el espacio 3D observado simultáneamente por dos cámaras distintas
- 
-\begin_inset Formula $C$
-\end_inset
-
- y 
-\begin_inset Formula $C'$
-\end_inset
-
-, de manera que 
-\begin_inset Formula $x$
-\end_inset
-
- representa la proyección de 
-\begin_inset Formula $X$
-\end_inset
-
- en el plano imagen de 
-\begin_inset Formula $C$
-\end_inset
-
- y 
-\begin_inset Formula $x'$
-\end_inset
-
- la proyección de 
-\begin_inset Formula $X$
-\end_inset
-
- en el plano imagen de 
-\begin_inset Formula $C'$
-\end_inset
-
-.
- Es posible observar que los puntos imagen 
-\begin_inset Formula $x$
-\end_inset
-
- y 
-\begin_inset Formula $x'$
-\end_inset
-
-, el punto en el espacio 
-\begin_inset Formula $X$
-\end_inset
-
- y los centros de cámara son coplanares (Fig.(a) 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:epipolar_lines"
-
-\end_inset
-
-).
- Es decir, pertenecen a un mismo plano al cual denotaremos como 
-\begin_inset Formula $\pi$
-\end_inset
-
-.
- Más aún, las rectas formadas por el centro de cada cámara y los puntos
- en la imagen 
-\begin_inset Formula $x$
-\end_inset
-
- y 
-\begin_inset Formula $x'$
-\end_inset
-
- intersecan en el punto del espacio 3D 
-\begin_inset Formula $X$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Suponiendo el escenario donde se conozca solamente el punto 
-\begin_inset Formula $x$
-\end_inset
-
- perteneciente al plano imagen de la cámara 
-\begin_inset Formula $C$
-\end_inset
-
-, se puede restringir el espacio donde buscar el correspondiente punto 
-\begin_inset Formula $x'$
-\end_inset
-
- en el plano imagen de la cámara 
-\begin_inset Formula $C'$
-\end_inset
-
-.
- El plano 
-\begin_inset Formula $\pi$
-\end_inset
-
- puede ser determinado por medio de la línea base entre los centros de cámara
- y el vector dirección que une el centro de la cámara 
-\begin_inset Formula $C$
-\end_inset
-
- con el punto imagen 
-\begin_inset Formula $x$
-\end_inset
-
-.
- De esta forma, sabiendo que 
-\begin_inset Formula $x'$
-\end_inset
-
- debe pertenecer a 
-\begin_inset Formula $\pi$
-\end_inset
-
-, se asegura que 
-\begin_inset Formula $x'$
-\end_inset
-
- debe pertenecer a la recta 
-\begin_inset Formula $l'$
-\end_inset
-
- definida por la intersección entre el plano 
-\begin_inset Formula $\pi$
-\end_inset
-
- y el plano imagen de la cámara 
-\begin_inset Formula $C'$
-\end_inset
-
- (Fig.(b) 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:epipolar_lines"
-
-\end_inset
-
-).
- La recta 
-\begin_inset Formula $l'$
-\end_inset
-
- se la conoce como la línea epipolar (
+La geometría proyectiva intrínseca entre dos cámaras es conocida como 
 \emph on
-epipolar line
+geometría epipolar
 \emph default
-) de 
-\begin_inset Formula $x$
-\end_inset
-
- y es especialmente útil para acotar la búsqueda del correspondiente punto
- imagen 
-\begin_inset Formula $x'$
-\end_inset
-
- en algoritmos de asociación de características visuales.
- 
+.
+ Esta es independiente de la escena observada y depende únicamente de los
+ parámetros internos y las posiciones relativas de las cámaras involucradas.
 \end_layout
 
 \begin_layout Standard
+La 
+\emph on
+geometría epipolar 
+\emph default
+entre dos imágenes es esencialmente la geometría determinada por la intersección
+ de los planos de las imágenes con el lápiz de planos con la 
+\emph on
+línea base 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+
+\emph on
+en inglés, baseline
+\end_layout
+
+\end_inset
+
+
+\emph default
+ como eje (la línea base es la línea que une los centros focales de las
+ cámaras).
+ En la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pencil_of_planes"
+
+\end_inset
+
+ puede verse esta intersección.
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Float figure
 placement h
 wide false
 sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "49text%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/epipolar_plane.png
-	lyxscale 50
-	width 90text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-(a)
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "49col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename imagenes/epipolar_line.png
+	filename /BACKUP/tesina/tesis_doctorado/images/math/pencil_of_planes.svg
 	lyxscale 30
-	width 90text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-(b)
-\end_layout
+	scale 50
 
 \end_inset
 
@@ -756,64 +1398,19 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-(a) Los centros de cámara, el punto 3D 
-\begin_inset Formula $\boldsymbol{X}$
-\end_inset
+Lápiz de planos intersectando los planos de las imágenes.
+ Imagen adaptada de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hartley2003multiple"
 
- y los puntos imagen 
-\begin_inset Formula $\boldsymbol{x}$
-\end_inset
-
- y 
-\begin_inset Formula $\boldsymbol{x'}$
-\end_inset
-
- pertenecer a un mismo plano 
-\begin_inset Formula $\boldsymbol{\pi}$
 \end_inset
 
 .
- (b) La recta definida por el centro de cámara 
-\begin_inset Formula $\boldsymbol{C}$
-\end_inset
-
- y el punto imagen 
-\begin_inset Formula $\boldsymbol{x}$
-\end_inset
-
- es observada en el plano imagen de 
-\begin_inset Formula $\boldsymbol{C'}$
-\end_inset
-
- como la línea epipolar 
-\begin_inset Formula $\boldsymbol{l'}$
-\end_inset
-
-.
- El punto en el espacio 
-\begin_inset Formula $X$
-\end_inset
-
-, el cual es proyectado en el plano imagen de 
-\begin_inset Formula $\boldsymbol{C}$
-\end_inset
-
- como 
-\begin_inset Formula $\boldsymbol{x}$
-\end_inset
-
-, debe ser observado por la cámara 
-\begin_inset Formula $\boldsymbol{C'}$
-\end_inset
-
- sobre la línea epipolar 
-\begin_inset Formula $\boldsymbol{l'}$
-\end_inset
-
-.
+ 
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:epipolar_lines"
+name "fig:pencil_of_planes"
 
 \end_inset
 
@@ -823,6 +1420,353 @@ name "fig:epipolar_lines"
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Un punto dado 
+\begin_inset Formula $\point$
+\end_inset
+
+ en el espacio 3D es proyectado en dos imágenes diferentes, en 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ y 
+\begin_inset Formula $\imagePoint^{\prime}$
+\end_inset
+
+ sobre el primer y segundo plano de imagen respectivamente.
+ Los puntos de la imagen 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ y 
+\begin_inset Formula $\imagePoint^{\prime}$
+\end_inset
+
+, el punto del espacio 
+\begin_inset Formula $\point$
+\end_inset
+
+ y los centros focales de las cámaras son coplanares.
+ Llamaremos a este plano 
+\begin_inset Formula $\vec{\pi}$
+\end_inset
+
+.
+ De manera análoga, los rayos re-proyectados desde 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ y 
+\begin_inset Formula $\imagePoint^{\prime}$
+\end_inset
+
+ se intersectan en 
+\begin_inset Formula $\point$
+\end_inset
+
+, son coplanares y yacen sobre el mismo plano 
+\begin_inset Formula $\vec{\pi}$
+\end_inset
+
+.
+ La Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:epipolar_plane"
+
+\end_inset
+
+ ilustra el plano epipolar y las relaciones geométricas descriptas anteriormente.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /BACKUP/tesina/tesis_doctorado/images/math/epipolar_plane.svg
+	lyxscale 30
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Plano epipolar 
+\begin_inset Formula $\vec{\pi}$
+\end_inset
+
+.
+ Imagen adaptada de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hartley2003multiple"
+
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:epipolar_plane"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Búsqueda sobre la línea epipolar
+\end_layout
+
+\begin_layout Standard
+Cuando solo es conocido el punto 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+, la búsqueda del correspondiente punto 
+\begin_inset Formula $\imagePoint^{\prime}$
+\end_inset
+
+ en el segundo plano focal puede acotarse mediante la siguiente propiedad.
+\end_layout
+
+\begin_layout Standard
+Partimos del plano 
+\begin_inset Formula $\vec{\pi}$
+\end_inset
+
+ que está determinado por la línea base y el rayo definido por 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+.
+ De la explicación precedente sabemos que el rayo correspondiente al (desconocid
+o) punto 
+\begin_inset Formula $\imagePoint^{\prime}$
+\end_inset
+
+ también yace sobre el plano 
+\begin_inset Formula $\vec{\pi}$
+\end_inset
+
+.
+ Por lo tanto, el punto 
+\begin_inset Formula $\imagePoint^{\prime}$
+\end_inset
+
+ se encuentra en la línea 
+\begin_inset Formula $\vec{l}^{\prime}$
+\end_inset
+
+, definida por la intersección de 
+\begin_inset Formula $\vec{\pi}$
+\end_inset
+
+ con el plano focal de la segunda imagen.
+ Esta línea 
+\begin_inset Formula $\vec{l}^{\prime}$
+\end_inset
+
+ es la imagen del rayo re-proyectado desde 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ sobre el segundo plano de imagen y se la denomina 
+\emph on
+línea epipolar 
+\emph default
+correspondiente al punto 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Este resultado implica que para cualquier punto 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+, la búsqueda de su correspondiente punto 
+\begin_inset Formula $\imagePoint^{\prime}$
+\end_inset
+
+ no necesita cubrir el plano focal completo sino que puede restringirse
+ a la línea epipolar 
+\begin_inset Formula $\vec{l}^{\prime}$
+\end_inset
+
+.
+ La Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:epipolar_line"
+
+\end_inset
+
+ muestra la línea epipolar generada por la proyección del rayo, re-proyectado
+ desde 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+, sobre el plano focal de la segunda imagen.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /BACKUP/tesina/tesis_doctorado/images/math/epipolar_line.svg
+	lyxscale 30
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Línea epipolar 
+\begin_inset Formula $\vec{l}^{\prime}$
+\end_inset
+
+ resultante de la proyección del rayo, re-proyectado desde 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ en la primer imagen (izquierda), sobre el plano focal de la segunda imagen
+ (derecha).
+ Imagen adaptada de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hartley2003multiple"
+
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:epipolar_line"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+The fundamental matrix 
+\begin_inset Formula $\vec{F}$
+\end_inset
+
+ is the algebraic representation of epipolar geometry.
+ It is a 
+\begin_inset Formula $3\times3$
+\end_inset
+
+ matrix of rank 2, that maps a point on one image plane to its corresponding
+ epipolar line on the other image plane,
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\vec{l}^{\prime}=\vec{F}\imagePoint.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+If a point 
+\begin_inset Formula $\point$
+\end_inset
+
+ in 3D is imaged as 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ in the first image plane, and 
+\begin_inset Formula $\imagePoint^{\prime}$
+\end_inset
+
+ in the second, then these image points satisfy the relation 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\imagePoint^{\prime\top}\vec{F}\imagePoint=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+The Fundamental matrix allows us to restrict the search for stereo correspondenc
+e between two images by means of the epipolar lines.
+ However, it must be noticed that the restricted search over epipolar lines
+ does not ensure a correct matching between image points.
+ For example, in areas of images with low texture (for example a white wall),
+ it is not possible to identify which point from the first image corresponds
+ to other point in the second image using straightforward raw image information.
 \end_layout
 
 \end_inset
@@ -831,48 +1775,53 @@ name "fig:epipolar_lines"
 \end_layout
 
 \begin_layout Subsection
-Rectificación estéreo
+Rectificación estéreo 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:stereo_rectification"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-La rectificación estéreo proyecta las imágenes obtenidas por las cámaras
- a un plano imagen en común, de manera que puntos correspondientes (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:correspondencia_estereo"
-
-\end_inset
-
-) se encontrarán alineados en una misma fila (Fig.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:stereo_rectified"
-
-\end_inset
-
-).
- Esta proyección permite considerar las cámaras involucradas como paralelas,
- es decir, relacionadas por únicamente por una translación en el eje horizontal
- la cual se conoce como línea base (
+La 
 \emph on
-baseline
+rectificación estéreo 
 \emph default
-).
+consiste en proyectar el par de imágenes estéreo sobre un plano de imagen
+ común, de manera que los 
+\emph on
+puntos correspondientes
+\emph default
+ (puntos que corresponden al mismo punto 3D) se encuentren alineados en
+ la misma fila.
+ Esta proyección permite considerar las cámaras involucradas como paralelas,
+ es decir que la transformación entre ambas cámaras es únicamente una traslación
+ en el eje horizontal.
+ La Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:rectification"
+
+\end_inset
+
+ ilustra una cámara estéreo rectificada.
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
+placement tbh
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/stereo_rectification.svg
-	lyxscale 70
-	width 40text%
+	filename /BACKUP/tesina/tesis_doctorado/images/math/stereo_rectification.svg
 	clip
 
 \end_inset
@@ -884,11 +1833,18 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Par estéreo rectificado, notar que los planos imagen de las cámaras se encuentra
- alineadas 
+Rectificación estéreo.
+ Imagen adaptada de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hartley2003multiple"
+
+\end_inset
+
+.
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:stereo_rectified"
+name "fig:rectification"
 
 \end_inset
 
@@ -906,68 +1862,425 @@ name "fig:stereo_rectified"
 \end_layout
 
 \begin_layout Standard
-Luego de la rectificación, la búsqueda de correspondencias entre las imágenes
- es simplificada a una búsqueda horizontal sobre la misma fila.
- Este resultado es interesante para el cálculo de la disparidad entre caracterís
-ticas visuales, la cual permite estimar la profundidad (posición en el espacio)
- con respecto a la cámara en que se encuentran las marcas del ambiente observada
-s.
+De esta manera, luego de aplicar rectificación estéreo, la búsqueda de correspon
+dencias entre las imágenes es reducida a una búsqueda uni-dimensional, sobre
+ la misma fila.
+ La Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:images_rectification_result"
+
+\end_inset
+
+ muestra el resultado del proceso de rectificación estéreo sobre un par
+ de imágenes.
+ Este resultado es de suma importancia en el cálculo de 
+\emph on
+disparidad
+\emph default
+.
+ La disparidad se define como la distancia entre dos puntos correspondientes
+ en la imagen izquierda y derecha de un par de imágenes estereo.
+ Usando el valor de disparidad es posible calcular la posición del punto
+ 3D asociado, como se verá en la siguiente sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Triangulación-estéreo"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /BACKUP/tesina/tesis_doctorado/images/math/no_rectified_stereo_images.png
+	lyxscale 15
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /BACKUP/tesina/tesis_doctorado/images/math/rectified_stereo_images.png
+	lyxscale 15
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:images_rectification_result"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Rectificación estéreo sobre un par de imágenes del Dataset Level 7 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Murphy:etal:TAR13"
+
+\end_inset
+
+.
+ 
+\series bold
+(a)
+\series default
+ Par de imágenes estéreo original provisto por la cámara estéreo.
+ 
+\series bold
+(b)
+\series default
+ El par de imágenes estéreo luego de ser rectificadas.
+ Las líneas rojas asocian algunos puntos correspondientes entre ambas imágenes.
+ Notar que estos puntos se encuentran en la misma fila en ambas imágenes.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:images_rectification"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
+Triangulación estéreo 
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:triangulacion_estereo"
+name "subsec:Triangulación-estéreo"
 
 \end_inset
 
-Triangulación de puntos del espacio
+
 \end_layout
 
 \begin_layout Standard
-Dada una rectificación estéreo se puede realizar una reconstrucción 3D de
- los puntos presentes en las imágenes.
- La Figura (
+A partir de un par de imágenes estéreo rectificadas es posible realizar
+ una reconstrucción 3D de los puntos correspondientes en ambas imágenes.
+ La Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:triangulation"
+reference "fig:triangulation-1"
 
 \end_inset
 
-) muestra la geometría involucrada durante la triangulación de un punto
+ muestra la geometría involucrada en la triangulación estéreo de un punto
+ en el espacio.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /BACKUP/tesina/tesis_doctorado/images/math/stereo_triangulation.svg
+	width 35page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:triangulation1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /BACKUP/tesina/tesis_doctorado/images/math/stereo_triangulation2.svg
+	width 35page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:triangulation2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Triangulación estéreo.
  
-\begin_inset Formula $P$
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:triangulation-1"
+
 \end_inset
 
- del espacio.
- Siendo 
-\begin_inset Formula $P=(X,Y,Z)$
+
+\end_layout
+
 \end_inset
 
- un punto 3D del espacio, 
-\begin_inset Formula $(x^{l},y^{l})$
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sea 
+\begin_inset Formula $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$
+\end_inset
+
+ un punto 3D cuyas coordenadas son desconocidas.
+ Conociendo las proyecciones correspondientes 
+\begin_inset Formula $\imagePoint_{l}=\begin{bmatrix}u_{l} & v_{l}\end{bmatrix}$
 \end_inset
 
  y 
-\begin_inset Formula $(x^{r},y^{r})$
+\begin_inset Formula $\imagePoint_{r}=\begin{bmatrix}u_{r} & v_{r}\end{bmatrix}$
 \end_inset
 
- su proyección en la cámara izquierda y derecha respectivamente y 
-\begin_inset Formula $T$
+ sobre los planos focales de la imagen izquierda y derecha respectivamente,
+ la posición del punto 
+\begin_inset Formula $\point$
 \end_inset
 
- la línea base que une las cámaras, las coordenadas de 
-\begin_inset Formula $P$
+ puede ser derivada a través de propiedades propias de triángulos semejantes.
+\end_layout
+
+\begin_layout Standard
+Aplicando la propiedad de triángulos semejantes entre el triángulo de línea
+ negra punteada y el triángulo de línea roja en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:triangulation1"
+
 \end_inset
 
- pueden ser derivadas a través de propiedades propias de triángulos semejantes.
- Específicamente, las siguientes relaciones pueden ser derivadas:
+, la siguiente ecuación puede ser formulada:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{b}{z}=\frac{(b+u_{r})-u_{l}}{z-f},
+\]
+
+\end_inset
+
+por lo tanto:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-X=\frac{x^{l}\cdot Z}{f}\qquad Y=\frac{y^{l}\cdot Z}{f}\qquad Z=\frac{T\cdot f}{x^{l}-x^{r}}\label{eq:triangulation1}
+d=u_{l}-u_{r}=\frac{bf}{z},\label{eq:disparity}
+\end{equation}
+
+\end_inset
+
+donde 
+\begin_inset Formula $d$
+\end_inset
+
+ es la disparidad, definida como la distancia existente entre las proyecciones
+ de las diferentes cámaras.
+\end_layout
+
+\begin_layout Standard
+De la misma manera, utilizando propiedad de triángulos semejantes nuevamente
+ sobre la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:triangulation2"
+
+\end_inset
+
+, se obtienen las siguientes ecuaciones:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{x}{z}=\frac{u_{l}-c_{u}}{f}\qquad\frac{y}{z}=\frac{v_{l}-c_{v}}{f}.\label{eq:triangulation1-1}
+\end{equation}
+
+\end_inset
+
+Finalmente, de las ecuaciones 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:disparity"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:triangulation1-1"
+
+\end_inset
+
+ podemos obtener las expresiones para 
+\begin_inset Formula $x$
+\end_inset
+
+, 
+\begin_inset Formula $y$
+\end_inset
+
+ y 
+\begin_inset Formula $z$
+\end_inset
+
+, dadas por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}x= & \frac{(u_{l}-c_{u})z}{f}\\
+y= & \frac{(v_{l}-c_{v})z}{f}\\
+z= & \frac{bf}{u_{l}-u_{r}}
+\end{aligned}
+\label{eq:triangulation2}
 \end{equation}
 
 \end_inset
@@ -976,104 +2289,23 @@ X=\frac{x^{l}\cdot Z}{f}\qquad Y=\frac{y^{l}\cdot Z}{f}\qquad Z=\frac{T\cdot f}{
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename imagenes/stereo_triangulation.svg
-	lyxscale 80
-	width 40text%
-	clip
+Es interesante notar en la Ecuación 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:disparity"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Escenario de triangulación estéreo con cámaras rectificadas donde se desea
- calcular las coordenadas de 
-\begin_inset Formula $P$
-\end_inset
-
-, en especial la profundidad 
-\begin_inset Formula $Z$
-\end_inset
-
-.
- Los parámetros intrínsecos como la distancia focal 
-\begin_inset Formula $f$
-\end_inset
-
- y puntos principales 
-\begin_inset Formula $c^{left},c^{right}$
-\end_inset
-
- son conocidos, así como también los centros de cámara 
-\begin_inset Formula $O_{l},O_{r}$
-\end_inset
-
- y la línea base 
-\begin_inset Formula $T$
-\end_inset
-
-.
- 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:triangulation"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Si bien la triangulación requiere de formulas sencillas es interesante observar
- que la capacidad de observar la profundidad en que se encuentra un punto
- del espacio esta condicionada por la resolución de las cámaras.
- Se define la disparidad como la distancia existente entre las proyecciones
- de las diferentes cámaras como 
-\begin_inset Formula $d=x^{l}-x^{r}$
-\end_inset
-
- y es interesante notar que la profundidad 
-\begin_inset Formula $Z$
+ que la profundidad 
+\begin_inset Formula $z$
 \end_inset
 
  es inversamente proporcional a la disparidad 
 \begin_inset Formula $d$
 \end_inset
 
- (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:triangulation1"
-
-\end_inset
-
-).
- Puntos del ambiente cercanos presentaran mayor disparidad en las proyecciones
- que puntos distantes.
- Cuando el valor de 
+.
+ Cuando el valor de disparidad 
 \begin_inset Formula $d$
 \end_inset
 
@@ -1082,14 +2314,55 @@ reference "eq:triangulation1"
 \end_inset
 
 , pequeñas diferencias de disparidad producen un gran cambio en la profundidad
- percibida y cuando el valor de 
-\begin_inset Formula $d$
+ del punto.
+ En consecuencia, la reconstrucción 3D del ambiente mediante cámaras estéreo
+ es más precisa para puntos cercanos a la cámara.
+\end_layout
+
+\begin_layout Standard
+De manera compacta, es posible definir la matriz de re-proyección 
+\begin_inset Formula $\vec{Q}$
 \end_inset
 
- es grande, pequeñas diferencias de disparidad producen pequeños cambios
- en la profundidad.
- La consecuencia de esto es que la reconstrucción 3D del ambiente utilizando
- cámaras estéreo es más precisa para puntos cercanos a la cámara.
+ que transforma vectores de la forma 
+\begin_inset Formula $\begin{bmatrix}u_{l} & v_{l} & d & 1\end{bmatrix}^{\top}$
+\end_inset
+
+ en puntos 3D expresados en coordenadas homogeneas:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{bmatrix}x\\
+y\\
+z\\
+w
+\end{bmatrix}=\vec{Q}\begin{bmatrix}u_{l}\\
+v_{l}\\
+d\\
+1
+\end{bmatrix}
+\]
+
+\end_inset
+
+donde
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vec{Q}=\begin{bmatrix}1 & 0 & 0 & -c_{u_{l}}\\
+0 & 1 & 0 & -c_{v_{l}}\\
+0 & 0 & 0 & f\\
+0 & 0 & \frac{1}{b} & 0
+\end{bmatrix}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
