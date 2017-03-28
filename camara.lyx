@@ -201,7 +201,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /BACKUP/tesina/tesis_doctorado/images/math/pinhole_camera_model.svg
+	filename imagenes/math/pinhole_camera_model.svg
 	lyxscale 50
 	width 35page%
 
@@ -233,7 +233,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /BACKUP/tesina/tesis_doctorado/images/math/pinhole_camera_model2.svg
+	filename imagenes/math/pinhole_camera_model2.svg
 	width 35page%
 
 \end_inset
@@ -760,7 +760,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename ../tesis_doctorado/images/math/back_projection.svg
+	filename imagenes/math/back_projection.svg
 	lyxscale 50
 	width 40page%
 
@@ -1385,7 +1385,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /BACKUP/tesina/tesis_doctorado/images/math/pencil_of_planes.svg
+	filename imagenes/math/pencil_of_planes.svg
 	lyxscale 30
 	scale 50
 
@@ -1497,7 +1497,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /BACKUP/tesina/tesis_doctorado/images/math/epipolar_plane.svg
+	filename imagenes/math/epipolar_plane.svg
 	lyxscale 30
 	scale 30
 
@@ -1652,7 +1652,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /BACKUP/tesina/tesis_doctorado/images/math/epipolar_line.svg
+	filename imagenes/math/epipolar_line.svg
 	lyxscale 30
 	scale 30
 
@@ -1821,7 +1821,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /BACKUP/tesina/tesis_doctorado/images/math/stereo_rectification.svg
+	filename imagenes/math/stereo_rectification.svg
 	clip
 
 \end_inset
@@ -1910,7 +1910,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /BACKUP/tesina/tesis_doctorado/images/math/no_rectified_stereo_images.png
+	filename imagenes/math/no_rectified_stereo_images.png
 	lyxscale 15
 	width 50page%
 
@@ -1946,7 +1946,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /BACKUP/tesina/tesis_doctorado/images/math/rectified_stereo_images.png
+	filename imagenes/math/rectified_stereo_images.png
 	lyxscale 15
 	width 50page%
 
@@ -2066,7 +2066,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /BACKUP/tesina/tesis_doctorado/images/math/stereo_triangulation.svg
+	filename imagenes/math/stereo_triangulation.svg
 	width 35page%
 
 \end_inset
@@ -2107,7 +2107,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /BACKUP/tesina/tesis_doctorado/images/math/stereo_triangulation2.svg
+	filename imagenes/math/stereo_triangulation2.svg
 	width 35page%
 
 \end_inset
