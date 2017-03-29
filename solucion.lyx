@@ -175,6 +175,116 @@ Stereo Parallel Tracking and Mapping
  de SLAM estéreo considerado.
 \end_layout
 
+\begin_layout Subsection
+S-PTAM 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+esta sección va en el capítulo de método propuesto
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pire2015"
+
+\end_inset
+
+ se presenta un sistema SLAM basado en visión estéreo llamado S-PTAM (
+\emph on
+Stereo Parallel Tracking and Mapping
+\emph default
+), capaz de estimar la localización de un robot móvil en tiempo real en
+ trayectorias de gran longitud.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Sacar inspirado en PTAM???
+\end_layout
+
+\end_inset
+
+Inspirado en PTAM 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Klein:Murray:ISMAR07"
+
+\end_inset
+
+, S-PTAM divide las tareas de localización y mapeo en dos hilos de ejecución
+ diferentes, aprovechando la capacidad de cómputo de procesadorees con dos
+ o más núcleos.
+\end_layout
+
+\begin_layout Standard
+Si bien el método de reconstrucción densa propuesto en esta tesina no se
+ restringe a ser ejecutado sobre un sistema de SLAM en particular, fue diseñado
+ tomando en consideración la interfaz y el funcionamiento de S-PTAM.
+ La Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sptam_example-1"
+
+\end_inset
+
+ muestra un escenario de ejemplo, donde se utiliza S-PTAM para la estimación
+ de la trayectoria.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagenes/sptam_kitti.png
+	lyxscale 30
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Reconstrucción del ambiente (mapa) y trayectoria estimada por S-PTAM durante
+ el procesamiento de una secuencia de imágenes obtenida del recorrido de
+ un vehículo.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sptam_example-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Esquema general
 \end_layout
