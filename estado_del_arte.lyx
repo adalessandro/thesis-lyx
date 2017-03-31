@@ -231,7 +231,7 @@ key "armesto2004encoder"
  y cámaras 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "hartley2003multiple,trucco1998introductory,ma2012invitation,li2009robust"
+key "hartley2003multiple,trucco1998introductory,ma2003invitation,li2009robust"
 
 \end_inset
 
@@ -352,8 +352,8 @@ Recientemente ha habido un creciente interés en sistemas de SLAM visual,
  con otros sensores, como lásers- y su alta disponibilidad en dispositivos
  móviles.
  Además, las cámaras son sensores pasivos por lo que no interfieren con
- otros sensores y pueden utilizarse en entornos cerrados donde el uso de
- GPS puede verse imposibilitado.
+ otros sensores y pueden utilizarse en entornos interiores, donde el uso
+ de GPS puede verse imposibilitado.
  Asímismo, son menos restrictivos que los encoders, los cuales se encuentran
  limitados a robots terrestres y altamente imprecisos en terrenos irregulares.
 \end_layout
@@ -401,7 +401,7 @@ key "pire2015"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -648,8 +648,8 @@ Los algoritmos de búsqueda de correspondencias entre imágenes deben resolver
 \end_layout
 
 \begin_layout Itemize
-Oclusión: Al observar una escena desde distintas posiciones pueden existir
- oclusiones entre los objetos.
+Oclusión: Al observar una escena desde distintas posiciones posiblemente
+ existan oclusiones entre los objetos.
  Por esta razón, ciertas regiones de una imagen pueden no tener correspondencias
  en la otra imagen.
 \end_layout
@@ -741,8 +741,8 @@ Aprovechando la precisión en la trayectoria y la nube de puntos esparsa
 \emph on
 features
 \emph default
-, se han propuesto distintos métodos que procesan el mapa esparso para aumentar
- el modelo de la reconstrucción 3D.
+, se han propuesto distintos métodos que procesan el mapa esparso para modelar
+ planos y polígonos, agregando información a la reconstrucción 3D.
 \end_layout
 
 \begin_layout Standard
@@ -1132,7 +1132,7 @@ es propias de los objetos (i.e.
 placement tbh
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
