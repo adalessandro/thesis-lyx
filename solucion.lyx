@@ -125,7 +125,7 @@ status open
 \backslash
 includegraphics[width=0.7*
 \backslash
-textwidth]{imagenes/sptam_diagram.tikz}
+textwidth]{images/sptam_diagram.tikz}
 \end_layout
 
 \end_inset
@@ -250,7 +250,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/sptam_kitti.png
+	filename images/sptam_kitti.png
 	lyxscale 30
 	width 80text%
 
@@ -388,7 +388,7 @@ status open
 \backslash
 includegraphics[width=0.9*
 \backslash
-textwidth]{imagenes/sptam_dense_diagram.tikz}
+textwidth]{images/sptam_dense_diagram.tikz}
 \end_layout
 
 \end_inset
@@ -537,7 +537,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/disparity/stereobm_merge_kitti04_27.jpg
+	filename images/disparity/stereobm_merge_kitti04_27.jpg
 	lyxscale 20
 	width 12cm
 
@@ -584,7 +584,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/disparity/stereobm_merge_tsukuba_221.jpg
+	filename images/disparity/stereobm_merge_tsukuba_221.jpg
 	lyxscale 20
 	width 14cm
 
@@ -682,7 +682,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/disparity/libelas_merge_kitti04_22.jpg
+	filename images/disparity/libelas_merge_kitti04_22.jpg
 	lyxscale 20
 	width 12cm
 
@@ -729,7 +729,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/disparity/libelas_merge_tsukuba_222.jpg
+	filename images/disparity/libelas_merge_tsukuba_222.jpg
 	lyxscale 20
 	width 14cm
 
@@ -904,7 +904,7 @@ status open
 
 
 \backslash
-includegraphics[width=8cm]{imagenes/frustum_of_view.jpg}
+includegraphics[width=8cm]{images/frustum_of_view.jpg}
 \end_layout
 
 \end_inset

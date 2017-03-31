@@ -231,7 +231,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/kitti_sensors.jpg
+	filename images/kitti_sensors.jpg
 	lyxscale 50
 	width 100text%
 
@@ -275,7 +275,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/kitti01.png
+	filename images/kitti01.png
 	lyxscale 50
 	width 49text%
 
@@ -287,7 +287,7 @@ status open
 
 
 \begin_inset Graphics
-	filename imagenes/kitti02.png
+	filename images/kitti02.png
 	lyxscale 50
 	width 49text%
 
@@ -299,7 +299,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/kitti03.png
+	filename images/kitti03.png
 	lyxscale 50
 	width 49col%
 
@@ -311,7 +311,7 @@ status open
 
 
 \begin_inset Graphics
-	filename imagenes/kitti04.png
+	filename images/kitti04.png
 	lyxscale 50
 	width 49col%
 
@@ -323,7 +323,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/kitti05.png
+	filename images/kitti05.png
 	lyxscale 50
 	width 49col%
 
@@ -335,7 +335,7 @@ status open
 
 
 \begin_inset Graphics
-	filename imagenes/kitti06.png
+	filename images/kitti06.png
 	lyxscale 50
 	width 49col%
 
@@ -476,7 +476,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/tsukuba_1.png
+	filename images/tsukuba_1.png
 	lyxscale 20
 	width 8cm
 
@@ -1182,7 +1182,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/phase_time_plot.png
+	filename images/experimentacion/phase_time_plot.png
 	lyxscale 20
 	width 16cm
 
@@ -1908,7 +1908,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/cloud_points_plot.png
+	filename images/experimentacion/cloud_points_plot.png
 	lyxscale 20
 	width 16cm
 
@@ -2201,7 +2201,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti00.png
+	filename images/experimentacion/depth_map_comparison/kitti00.png
 	lyxscale 10
 	width 18cm
 	clip
@@ -2235,7 +2235,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti01.png
+	filename images/experimentacion/depth_map_comparison/kitti01.png
 	lyxscale 10
 	width 18cm
 	clip
@@ -2269,7 +2269,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti02.png
+	filename images/experimentacion/depth_map_comparison/kitti02.png
 	lyxscale 10
 	width 18cm
 	clip
@@ -2303,7 +2303,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti03.png
+	filename images/experimentacion/depth_map_comparison/kitti03.png
 	lyxscale 10
 	width 18cm
 	clip
@@ -2337,7 +2337,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti04.png
+	filename images/experimentacion/depth_map_comparison/kitti04.png
 	lyxscale 10
 	width 18cm
 	clip
@@ -2371,7 +2371,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti05.png
+	filename images/experimentacion/depth_map_comparison/kitti05.png
 	lyxscale 10
 	width 18cm
 	clip
@@ -2405,7 +2405,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti06.png
+	filename images/experimentacion/depth_map_comparison/kitti06.png
 	lyxscale 10
 	width 18cm
 	clip
@@ -2439,7 +2439,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti07.png
+	filename images/experimentacion/depth_map_comparison/kitti07.png
 	lyxscale 10
 	width 18cm
 	clip
@@ -2473,7 +2473,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti08.png
+	filename images/experimentacion/depth_map_comparison/kitti08.png
 	lyxscale 10
 	width 18cm
 	clip
@@ -2507,7 +2507,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti09.png
+	filename images/experimentacion/depth_map_comparison/kitti09.png
 	lyxscale 10
 	width 18cm
 	clip
@@ -2541,7 +2541,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename imagenes/experimentacion/depth_map_comparison/kitti10.png
+	filename images/experimentacion/depth_map_comparison/kitti10.png
 	lyxscale 10
 	width 18cm
 	clip
