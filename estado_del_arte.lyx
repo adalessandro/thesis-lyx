@@ -371,7 +371,7 @@ features
  tiempo real 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "mur2015orb,pire2015,klein2007parallel,tan2013robust"
+key "mur2015orb,pire2015,Klein:Murray:ISMAR07,tan2013robust"
 
 \end_inset
 
@@ -612,7 +612,7 @@ key "kendall2017end,luo2016efficient,mayer2016large"
  En 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "scharstein2002taxonomy,sunyoto2004jaminan,lazaros2008review"
+key "scharstein2002taxonomy,lazaros2008review"
 
 \end_inset
 
@@ -1038,7 +1038,7 @@ Los superpíxeles representan regiones de la imagen con textura homogénea,
  de acuerdo al algoritmo 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "felzenszwalb2004efficient,mori2005guiding,levinshtein2009turbopixels,vedaldi2008quick,achanta2010slic,achanta2012slic"
+key "felzenszwalb2004efficient,mori2005guiding,levinshtein2009turbopixels,vedaldi2008quick,achanta2012slic"
 
 \end_inset
 
@@ -1079,7 +1079,7 @@ Segmentación de imágenes en superpíxeles de diferente tamaño.
  Imagen recuperada de 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "achanta2010slic"
+key "achanta2012slic"
 
 \end_inset
 
@@ -1247,7 +1247,7 @@ s planares.
  En 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "concha3d"
+key "concha2014using"
 
 \end_inset
 
