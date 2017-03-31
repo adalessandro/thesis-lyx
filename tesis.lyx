@@ -315,7 +315,7 @@ filename "introduccion.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
-filename "estado_del_arte.lyx"
+filename "trabajo_relacionado.lyx"
 
 \end_inset
 
