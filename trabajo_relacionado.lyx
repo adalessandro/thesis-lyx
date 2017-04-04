@@ -498,7 +498,14 @@ Aprovechando que los métodos de SLAM visual basados en features producen
 \end_layout
 
 \begin_layout Subsubsection
-Mapas de disparidad densos
+Mapas de disparidad densos 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Mapas-de-disparidad-densos"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

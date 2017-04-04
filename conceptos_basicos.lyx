@@ -823,7 +823,14 @@ Revisar
 \end_layout
 
 \begin_layout Subsection
-Frustum culling
+Frustum culling 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Frustum-culling"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2281,13 +2288,13 @@ donde
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
+\begin{equation}
 \vec{Q}=\begin{bmatrix}1 & 0 & 0 & -c_{u_{l}}\\
 0 & 1 & 0 & -c_{v_{l}}\\
 0 & 0 & 0 & f\\
 0 & 0 & \frac{1}{b} & 0
-\end{bmatrix}
-\]
+\end{bmatrix}\label{eq:matriz-re-proyeccion}
+\end{equation}
 
 \end_inset
 

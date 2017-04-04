@@ -91,42 +91,123 @@ figs-within-sections
 \begin_body
 
 \begin_layout Chapter
-Método propuesto de mapeo denso basado en disparidad
+Método propuesto de mapeo denso basado en disparidad estéreo
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
+A continuación se expone en detalle la solución propuesta en esta tesina
+ para el problema de mapeo denso basado en disparidad estéreo.
+ A partir de pares de imágenes estéreo y la trayectoria de la cámara, el
+ método propuesto es capaz de reconstruir incrementalmente el entorno 3D
+ en tiempo real, incluso para secuencias de extensa longitud.
+\end_layout
 
-\begin_layout Plain Layout
-En la Figura 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:esq_sptam-1"
+\begin_layout Standard
+El sistema fue concebido para ejecutarse en paralelo y conjuntamente al
+ sistema S-PTAM 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pire2015"
 
 \end_inset
 
- se pueden observar los distintos componentes que constituyen S-PTAM.
+(
+\emph on
+Stereo Parallel Tracking and Mapping
+\emph default
  
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Mapeo y Localización Paralelos Estéreo
+\end_layout
+
+\end_inset
+
+), de forma que la arquitectura y las diferentes técnicas involucradas en
+ el desarrollo están motivadas por las características propias del sistema
+ de SLAM estéreo considerado.
+\end_layout
+
+\begin_layout Section
+Esquema general
+\end_layout
+
+\begin_layout Standard
+El sistema propuesto recibe como única entrada pares de imágenes estéreo
+ (
+\emph on
+keyframes
+\emph default
+) y las 
+\emph on
+poses 
+\emph default
+de las cámaras asociadas.
+ Una 
+\emph on
+pose 
+\emph default
+es definida por una matriz de rotación 
+\begin_inset Formula $\rotation$
+\end_inset
+
+ y un vector de traslación 
+\begin_inset Formula $\translation$
+\end_inset
+
+, que determinan respectivamente la orientación y posición de la cámara
+ en un momento dado.
+\end_layout
+
+\begin_layout Standard
+Procesando esta entrada, el sistema mantiene un mapa 3D global que es aumentado
+ y ajustado secuencialmente.
+ Aprovechando la capacidad de cómputo de procesadores multinúcleos, el sistema
+ de mapeo denso se divide en 3 tareas:
+\end_layout
+
+\begin_layout Itemize
+Cálculo de disparidad: procesa cada par de imágenes entrante y computa un
+ mapa denso de disparidad.
+\end_layout
+
+\begin_layout Itemize
+Mapeo 3D denso: a partir del mapa de disparidad y la 
+\emph on
+pose 
+\emph default
+correspondiente, aumenta y ajusta el mapa global, fusionando y descartando
+ puntos mediante chequeo de consistencia.
+\end_layout
+
+\begin_layout Itemize
+Refinamiento de mapa: ajusta el mapa cuando se reciben nuevas 
+\emph on
+poses 
+\emph default
+correspondientes a
+\emph on
+ keyframes
+\emph default
+ que ya fueron procesados previamente.
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Float figure
-placement H
+placement h
 wide false
 sideways false
 status collapsed
 
 \begin_layout Plain Layout
 \align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-includegraphics[width=0.7*
-\backslash
-textwidth]{images/sptam_diagram.tikz}
-\end_layout
+\begin_inset Graphics
+	filename images/metodo_propuesto/metodo-diagram.dia
+	lyxscale 30
+	width 70page%
 
 \end_inset
 
@@ -137,10 +218,12 @@ textwidth]{images/sptam_diagram.tikz}
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Esquema general de los diferentes componentes de S-PTAM
+Esquema general del sistema de mapeo denso en tiempo real, procesando la
+ salida de un sistema de SLAM esparso.
+ 
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:esq_sptam-1"
+name "fig:metodo-diagram"
 
 \end_inset
 
@@ -157,36 +240,8 @@ name "fig:esq_sptam-1"
 
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-A continuación se expone en detalle la solución propuesta para el problema
- de mapeo denso basado en disparidad.
- El método fue concebido para ejecutarse en paralelo y conjuntamente al
- sistema S-PTAM (
-\emph on
-Stereo Parallel Tracking and Mapping
-\emph default
-), de forma que la arquitectura y las diferentes técnicas involucradas en
- el desarrollo están motivadas por las características propias del sistema
- de SLAM estéreo considerado.
-\end_layout
-
-\begin_layout Subsection
+\begin_layout Section
 S-PTAM 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-esta sección va en el capítulo de método propuesto
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -197,32 +252,54 @@ key "pire2015"
 
 \end_inset
 
- se presenta un sistema SLAM basado en visión estéreo llamado S-PTAM (
+ se presenta un sistema SLAM basado en 
+\emph on
+features
+\emph default
+ llamado S-PTAM (
 \emph on
 Stereo Parallel Tracking and Mapping
 \emph default
-), capaz de estimar la localización de un robot móvil en tiempo real en
- trayectorias de gran longitud.
  
-\begin_inset Note Note
+\begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-Sacar inspirado en PTAM???
+Mapeo y Localización Paralelos Estéreo
 \end_layout
 
 \end_inset
 
-Inspirado en PTAM 
+) que utiliza una cámara estéreo como sensor principal.
+ S-PTAM construye y mantiene un mapa esparso del entorno para realizar una
+ precisa localización de la cámara.
+\end_layout
+
+\begin_layout Standard
+S-PTAM sigue el enfoque propuesto en PTAM 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Klein:Murray:ISMAR07"
 
 \end_inset
 
-, S-PTAM divide las tareas de localización y mapeo en dos hilos de ejecución
- diferentes, aprovechando la capacidad de cómputo de procesadorees con dos
- o más núcleos.
+ (
+\emph on
+Parallel Tracking and Mapping
+\emph default
+ 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Mapeo y Localización Paralelos
+\end_layout
+
+\end_inset
+
+) que divide las tareas de localización y mapeo en dos hilos de ejecución
+ diferentes, para aprovechar la capacidad de cómputo de procesadorees con
+ dos o más núcleos.
 \end_layout
 
 \begin_layout Standard
@@ -251,8 +328,8 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename images/sptam_kitti.png
-	lyxscale 30
-	width 80text%
+	lyxscale 20
+	width 70text%
 
 \end_inset
 
@@ -263,9 +340,19 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Reconstrucción del ambiente (mapa) y trayectoria estimada por S-PTAM durante
- el procesamiento de una secuencia de imágenes obtenida del recorrido de
- un vehículo.
+Reconstrucción esparsa obtenida por S-PTAM a partir de una secuencia de
+ imágenes del recorrido de un vehículo.
+ Arriba: mapa 3D del entorno (
+\emph on
+landmarks
+\emph default
+), trayectoria estimada (línea amarilla).
+ Abajo: imagen correspondiente al 
+\emph on
+keyframe 
+\emph default
+actual.
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:sptam_example-1"
@@ -286,123 +373,250 @@ name "fig:sptam_example-1"
 \end_layout
 
 \begin_layout Section
-Esquema general
-\end_layout
-
-\begin_layout Standard
-El sistema de mapeo denso se implementó como un nodo del framework ROS,
- íntegramente desacoplado de S-PTAM.
- Notar que esta generalidad en la implementación permite fácilmente re-utilizar
- el nodo de densificación con otros métodos de SLAM que presenten una interfaz
- similar.
-\end_layout
-
-\begin_layout Standard
-Los 
-\emph on
-keyframes 
-\emph default
-procesados por S-PTAM son encolados para ser tratados en el hilo de 
-\emph on
-Disparity map thread
-\emph default
- y posteriormente en el hilo de 
-\emph on
-3D projection thread 
-\emph default
-(Fig.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:sptam_lc_overview"
+Cálculo de disparidad estéreo 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:hilo-mapa-de-disparidad"
 
 \end_inset
 
-).
- 
+
 \end_layout
 
 \begin_layout Standard
+Como se analizó en las secciones 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Mapas-de-disparidad-densos"
 
-\emph on
-Disparity map thread
-\emph default
- se encarga de procesar el par de imágenes estéreo de cada 
-\emph on
-keyframe
-\noun on
- 
-\emph default
-\noun default
-de forma secuencial, computando un mapa bidimensional donde a cada píxel
- se le asignada un valor de disparidad.
- El mapa resultante es encolado para su posterior tratamiento en el hilo
- de 
-\emph on
-3D projection thread
-\emph default
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Modelo-y-geometría-estereo"
+
+\end_inset
+
+, es posible procesar un par de imágenes estéreo mediante la búsqueda de
+ correspondencias y computar una mapa denso de disparidad.
+\end_layout
+
+\begin_layout Standard
+Cada vez que un nuevo par de imágenes estéreo es recibido como entrada,
+ el hilo de disparidad utiliza una librería externa para generar el mapa
+ de disparidad.
+ En la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:implementacion-mapas-de-disparidad"
+
+\end_inset
+
+ se describen y comparan las diferentes librerías experimentadas durante
+ la presente tesina.
+\end_layout
+
+\begin_layout Standard
+Un mapa de disparidad se define como una función que mapea los píxeles en
+ el plano de la imagen a su correspondiente valor de disparidad:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{bmatrix}u\\
+v
+\end{bmatrix}\xrightarrow{\disp}d\in\mathbb{R}^{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Denominaremos 
+\begin_inset Formula $\disp_{i}$
+\end_inset
+
+ a la función que representa el mapa de disparidad generado a partir del
+ par de imágenes estéreo del keyframe 
+\begin_inset Formula $\keyframe_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Mapeo 3D denso 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:hilo-mapeo-3D-denso"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El sistema mantiene un mapa global compuesto por un conjunto de nubes de
+ puntos 3D -en el sistema de coordenadas del mundo-, cada una de las cuales
+ está asociada a un keyframe.
+ Notaremos como 
+\begin_inset Formula $\pointCloud_{i}$
+\end_inset
+
+ a la nube de puntos correspondiente al keyframe 
+\begin_inset Formula $\keyframe_{i}$
+\end_inset
+
 .
 \end_layout
 
 \begin_layout Standard
-Una vez que S-PTAM computó la pose para el keyframe en cuestión, 
-\emph on
-3D projection thread 
-\emph default
-utiliza esta estimación para ajustar y filtrar el mapa mediante un chequeo
- de consistencia y redundancia, que consiste en la proyección de la nube
- de puntos global sobre el 
-\emph on
-keyframe 
-\emph default
-actual.
- Finalmente, el mapa resultante es re-proyectado al espacio tridimensional
- y añadido al mapa global.
+Basado en el enfoque propuesto en StereoScan 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2011stereoscan"
+
+\end_inset
+
+, los puntos existentes en el mapa son proyectados sobre cada keyframe entrante
+ y comparados con sus correspondientes triangulaciones estéreo, obtenidas
+ desde el mapa de disparidad.
+ De esta manera, los puntos similares son fusionados y se remueven aquellos
+ que resultan inconsistentes, mejorando la precisión del mapa y reduciendo
+ considerablemente el número global de puntos.
 \end_layout
 
 \begin_layout Standard
-Un tercer hilo 
+Como se verá en la siguiente sección, un nuevo punto triangulado desde el
+ keyframe 
+\begin_inset Formula $\keyframe_{i}$
+\end_inset
+
+ es agregado al mapa en la nube de puntos 
+\begin_inset Formula $\pointCloud_{i}$
+\end_inset
+
+.
+ Inicialmente el punto es marcado como 
 \emph on
-Refinement thread
+hipótesis, 
 \emph default
- es ejecutado con menor prioridad para ajustar la nube de puntos a medida
- que S-PTAM publica poses refinadas.
- A su vez, este hilo se encarga de realizar un swap de nubes de puntos a
- memoria secundaria, necesario en datasets de gran escala.
+lo que significa que este puede ser removido si un chequeo de consistencia
+ posterior identifica al punto como 
+\emph on
+outlier
+\emph default
+.
+ Asímismo si el punto es validado mediante el chequeo de consistencia, el
+ mismo se marca como 
+\emph on
+confirmado, 
+\emph default
+por lo que no será eliminado del mapa.
 \end_layout
 
 \begin_layout Standard
+Cabe notar que, en un momento dado, un punto del mapa sólo puede pertenecer
+ a una única nube de puntos 
+\begin_inset Formula $\pointCloud_{i}$
+\end_inset
+
+, de manera tal que 
+\begin_inset Formula $\keyframe_{i}$
+\end_inset
+
+ sea el último keyframe que trianguló a dicho punto.
+\end_layout
+
+\begin_layout Subsection
+Fusión y consistencia de puntos 3D 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:mecanismo-mapeo-denso"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Luego que el sistema computó el mapa de disparidad y recibió la pose correspondi
+entes al keyframe 
+\begin_inset Formula $\keyframe_{i}$
+\end_inset
+
+, el hilo de mapeo denso utiliza esta información para mejorar y aumentar
+ el mapa.
+\end_layout
+
+\begin_layout Standard
+Como se vio en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Frustum-culling"
+
+\end_inset
+
+, utilizamos el 
+\emph on
+Frustum culling 
+\emph default
+para filtrar el mapa global y solamente proyectar aquellos puntos que son
+ visibles desde el keyframe actual 
+\begin_inset Formula $\keyframe_{i}$
+\end_inset
+
+.
+ Para cada punto 
+\begin_inset Formula $\homoWorldPoint$
+\end_inset
+
+ en el sistemas de coordenadas del mundo, que cae dentro del volumen del
+ 
+\emph on
+Frustum of view, 
+\emph default
+se realiza el siguiente procedimiento ilustrado en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:stereoscan_projection"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Float figure
+placement h
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-includegraphics[width=0.9*
-\backslash
-textwidth]{images/sptam_dense_diagram.tikz}
-\end_layout
+\begin_inset Graphics
+	filename images/metodo_propuesto/stereoscan_projection.svg
+	lyxscale 30
+	width 50page%
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Esquema general del sistema de densificación de mapas en tiempo real, procesando
- la salida del sistema de SLAM (e.g.
- S-PTAM).
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:sptam_lc_overview"
+name "fig:stereoscan_projection"
 
 \end_inset
 
@@ -413,6 +627,453 @@ name "fig:sptam_lc_overview"
 
 
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Calculamos el correspondiente punto 
+\begin_inset Formula $\cameraPoint$
+\end_inset
+
+ en el sistema de coordenadas de la cámara 
+\begin_inset Formula $\mathrm{c}_{i}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\cameraPoint=\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}=\proj(\seMatrix^{\mathrm{c}_{i}\mathrm{w}}\homoWorldPoint)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+y su proyección 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ sobre el plano de la imagen:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\imagePoint=\begin{bmatrix}u\\
+v
+\end{bmatrix}=\proj(\projectionMatrix\homoWorldPoint)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Luego, utilizando el mapa de disparidad y la matriz de re-proyección 
+\begin_inset Formula $\vec{Q}$
+\end_inset
+
+, definida en la Ecuación 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:matriz-re-proyeccion"
+
+\end_inset
+
+, triangulamos el punto 3D correspondiente al píxel 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{\cameraPoint}=\begin{bmatrix}\hat{x}\\
+\hat{y}\\
+\hat{z}
+\end{bmatrix}=\proj\left(\vec{Q}\begin{bmatrix}u\\
+v\\
+d\\
+1
+\end{bmatrix}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde 
+\begin_inset Formula $d=\disp_{i}(u,v)$
+\end_inset
+
+ es el valor de disparidad para el píxel 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ en el mapa de disparidad estéreo del keyframe actual 
+\begin_inset Formula $\keyframe_{i}$
+\end_inset
+
+, que fue calculado en la Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:hilo-mapa-de-disparidad"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Llegado a este punto, pueden darse tres situaciones:
+\end_layout
+
+\begin_layout Enumerate
+Los puntos 
+\begin_inset Formula $\cameraPoint$
+\end_inset
+
+ y 
+\begin_inset Formula $\hat{\cameraPoint}$
+\end_inset
+
+ coinciden, i.e.
+ se encuentran lo suficientemente cerca sobre el eje 
+\begin_inset Formula $Z$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+|z-\hat{z}|\leq\xi\quad{\displaystyle {\textstyle {\displaystyle para}}}\quad\xi\in\mathbb{R}^{+}\quad{\textstyle {\displaystyle dado}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En este caso los puntos se fusionan en su punto medio 
+\begin_inset Formula $\cameraPoint_{fusion}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\cameraPoint_{fusion}=(\cameraPoint+\hat{\cameraPoint})/2
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El punto original 
+\begin_inset Formula $\cameraPoint$
+\end_inset
+
+ es removido del mapa, mientras que el punto resultante 
+\begin_inset Formula $\cameraPoint_{fusion}$
+\end_inset
+
+ es agregado a la nube de puntos de la cámara 
+\begin_inset Formula $\mathrm{c}_{i}$
+\end_inset
+
+ como punto 
+\emph on
+confirmado
+\emph default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Los puntos 
+\begin_inset Formula $\cameraPoint$
+\end_inset
+
+ y 
+\begin_inset Formula $\hat{\cameraPoint}$
+\end_inset
+
+ no coinciden y, a su vez, el punto original 
+\begin_inset Formula $\cameraPoint$
+\end_inset
+
+ se encuentra más cerca que 
+\begin_inset Formula $\hat{\cameraPoint}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+|z-\hat{z}|>\xi\quad{\displaystyle {\textstyle ,\quad}}z<\hat{z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esto significa que el punto original 
+\begin_inset Formula $\cameraPoint$
+\end_inset
+
+, aunque visible, no ha sido observado desde la cámara 
+\begin_inset Formula $\mathrm{c}_{i}$
+\end_inset
+
+.
+ Si este era una 
+\emph on
+hipótesis 
+\emph default
+sin confirmar es removido del mapa y el nuevo punto triangulado 
+\begin_inset Formula $\hat{\cameraPoint}$
+\end_inset
+
+ es agregado como 
+\emph on
+hipótesis 
+\emph default
+a la nube de puntos de la cámara 
+\begin_inset Formula $\mathrm{c}_{i}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Por último, consideramos la situación en que los puntos 
+\begin_inset Formula $\cameraPoint$
+\end_inset
+
+ y 
+\begin_inset Formula $\hat{\cameraPoint}$
+\end_inset
+
+ no coinciden y, a su vez, el punto original 
+\begin_inset Formula $\cameraPoint$
+\end_inset
+
+ se encuentra más lejos que 
+\begin_inset Formula $\hat{\cameraPoint}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+|z-\hat{z}|>\xi\quad{\displaystyle {\textstyle ,\quad}}z>\hat{z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A diferencia del caso anterior, dado que el nuevo punto triangulado 
+\begin_inset Formula $\hat{\cameraPoint}$
+\end_inset
+
+ se encuentra a menor distancia que 
+\begin_inset Formula $\cameraPoint$
+\end_inset
+
+, consideramos que el segundo es ocluido por el primero.
+ Por este motivo, el punto 
+\begin_inset Formula $\cameraPoint$
+\end_inset
+
+ permanece sin modificaciones asociado a su nube de puntos original y el
+ nuevo punto triangulado 
+\begin_inset Formula $\hat{\cameraPoint}$
+\end_inset
+
+ es agregado como 
+\emph on
+hipótesis 
+\emph default
+a la nube de puntos de la cámara 
+\begin_inset Formula $\mathrm{c}_{i}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Triangulación de nuevos puntos
+\end_layout
+
+\begin_layout Standard
+Finalmente, el mapa es aumentado triangulando nuevos puntos en base al mapa
+ de disparidad del keyframe 
+\begin_inset Formula $\keyframe_{i}$
+\end_inset
+
+.
+ Solamente se utilizan los píxeles del mapa de disparidad que no correspondan
+ a proyecciones de puntos 3D pertenecientes al 
+\emph on
+Frustum of view, 
+\emph default
+es decir que no hayan sido empleados en la sección anterior 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:mecanismo-mapeo-denso"
+
+\end_inset
+
+.
+ Los nuevos puntos triangulados son agregados a la nube de puntos 
+\begin_inset Formula $\pointCloud_{i}$
+\end_inset
+
+ como 
+\emph on
+hipótesis.
+\end_layout
+
+\begin_layout Section
+Refinamiento de mapa 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:hilo-refinamiento-de-mapa"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El sistema propuesto debe ser capaz de actualizar el mapa denso 3D al recibir
+ actualizaciones de poses, aunque cuando los keyframes asociados ya hayan
+ sido procesados.
+ Notar que este comportamiento es esperable en sistemas de SLAM, ya que
+ el mapa esparso y la trayectoria de la cámara son refinados a lo largo
+ de toda la secuencia.
+\end_layout
+
+\begin_layout Standard
+Cabe recordar que las nubes de puntos son almacenadas en el sistema de coordenad
+as del mundo.
+ Por lo tanto, dada la nube de puntos 
+\begin_inset Formula $\pointCloud_{i}$
+\end_inset
+
+, generada desde el keyframe 
+\begin_inset Formula $\keyframe_{i}$
+\end_inset
+
+ utilizando la pose de la cámara 
+\begin_inset Formula $\mathrm{c}_{i}$
+\end_inset
+
+, notamos la transformación existente en el mundo y esta cámara como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\seMatrix^{\mathrm{c}_{i}\mathrm{w}}= & \begin{bmatrix}\rotation & \translation\\
+\vec{0} & 1
+\end{bmatrix}\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+De la misma manera, siendo 
+\begin_inset Formula $\hat{\mathrm{c}}_{i}$
+\end_inset
+
+ la pose actualizada de la cámara en cuestión, notamos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\seMatrix^{\hat{\mathrm{c}_{i}}\mathrm{w}}= & \begin{bmatrix}\hat{\rotation} & \hat{\translation}\\
+\vec{0} & 1
+\end{bmatrix}\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Luego, la actualización de la nube de puntos 
+\begin_inset Formula $\pointCloud_{i}$
+\end_inset
+
+ está dada por la siguiente matriz de transformación 
+\begin_inset Formula $\seMatrix_{ref}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{alignat*}{1}
+\seMatrix_{ref} & =\seMatrix^{\mathrm{w}\hat{\mathrm{c}_{i}}}\seMatrix^{\mathrm{c}_{i}\mathrm{w}}\\
+ & =(\seMatrix^{\hat{\mathrm{c}_{i}}\mathrm{w}})^{-1}\seMatrix^{\mathrm{c}_{i}\mathrm{w}}\\
+ & =\begin{bmatrix}\hat{\rotation} & \hat{\translation}\\
+\vec{0} & 1
+\end{bmatrix}^{-1}\begin{bmatrix}\rotation & \translation\\
+\vec{0} & 1
+\end{bmatrix}\\
+ & =\begin{bmatrix}\hat{\rotation}^{\top} & -\hat{\rotation}^{\top}\hat{\translation}\\
+\vec{0} & 1
+\end{bmatrix}\begin{bmatrix}\rotation & \translation\\
+\vec{0} & 1
+\end{bmatrix}\\
+ & =\begin{bmatrix}\hat{\rotation}^{\top}\rotation & \hat{\rotation}^{\top}(\translation-\hat{\translation})\\
+\vec{0} & 1
+\end{bmatrix}
+\end{alignat*}
 
 \end_inset
 
@@ -420,25 +1081,104 @@ name "fig:sptam_lc_overview"
 \end_layout
 
 \begin_layout Section
-Cálculo de mapas de disparidad
+Detalles de implementación
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
+El sistema de mapeo denso se implementó como un nodo del framework de código
+ abierto ROS 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Quigley:etal:ICRA09"
 
-\begin_layout Itemize
-Qué pongo acá? Ya lo moví a experimentación.
+\end_inset
+
+, con el objetivo de promover su uso dentro de la comunidad de investigación
+ en robótica.
+ El código fuente del sistema de mapeo denso propuesto en esta tesina se
+ encuentra disponible públicamente bajo licencia GPL 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+https://github.com/adalessandro/TODO
 \end_layout
 
-\begin_layout Itemize
-Disparidad en general.
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Itemize
-Problemas inherentes: oclusión, bajo gradiente (esto ya está en el marco
- teórico?).
+\begin_layout Standard
+Notar que el sistema está íntegramente desacoplado de S-PTAM, generalidad
+ que permite fácilmente re-utilizar el nodo de densificación con otros métodos
+ de SLAM esparsos que presenten una interfaz similar a S-PTAM.
+ La biblioteca libre de visión artificial 
+\emph on
+OpenCV
+\emph default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bradski2000opencv"
+
+\end_inset
+
+ fue utilizada para el manejo y codificación de imágenes y la librería de
+ código abierto 
+\emph on
+Point Cloud Library
+\emph default
+ (PCL) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rusu2011pcl"
+
+\end_inset
+
+ se empleó en el manejo de nubes de puntos.
 \end_layout
+
+\begin_layout Standard
+La implementación del sistema se constituye de dos hilos principales que
+ realizan las tareas de 
+\emph on
+Cálculo de disparidad 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:hilo-mapa-de-disparidad"
+
+\end_inset
+
+ y Mapeo 3D denso 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:hilo-mapeo-3D-denso"
+
+\end_inset
+
+.
+ 
+\emph default
+Un tercer hilo, con menor prioridad, se encarga del 
+\emph on
+Refinamiento de mapa
+\emph default
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:hilo-refinamiento-de-mapa"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Hilo de cálculo de disparidad 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:implementacion-mapas-de-disparidad"
 
 \end_inset
 
@@ -446,34 +1186,26 @@ Problemas inherentes: oclusión, bajo gradiente (esto ya está en el marco
 \end_layout
 
 \begin_layout Standard
-Para la obtención de mapas de disparidad se utlizaron dos métodos diferentes,
- que cuentan con implementaciones de código abierto disponibles públicamente.
+Para la obtención de mapas de disparidad se experimentó con dos métodos
+ diferentes, que cuentan con implementaciones de código abierto disponibles
+ públicamente.
  En ambos casos, se analizó el desempeño y los resultados obtenidos, para
  determinar la adaptación del método a los requerimientos del sistema.
+ Finalmente, se optó por el utilizar LIBELAS dado que su precisión y densidad
+ sobrepasan ampliamente a la biblioteca OpenCV.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 OpenCV 
 \end_layout
 
 \begin_layout Standard
-OpenCV es una biblioteca libre de visión artificial originalmente desarrollada
- por Intel, que provee un método de correspondencia estéreo llamado 
+La biblioteca OpenCV provee un método de correspondencia estéreo llamado
+ 
 \emph on
 Block matching (BM) algorithm
 \emph default
 .
-\end_layout
-
-\begin_layout Standard
-In digital image processing, the sum of absolute differences (SAD) is a
- measure of the similarity between image blocks.
- It is calculated by taking the absolute difference between each pixel in
- the original block and the corresponding pixel in the block being used
- for comparison.
- These differences are summed to create a simple metric of block similarity,
- the L1 norm of the difference image or Manhattan distance between two image
- blocks
 \end_layout
 
 \begin_layout Standard
@@ -510,119 +1242,25 @@ sumas de diferencia absoluta
 \begin_layout Standard
 Si bien este método es muy rápido y efectivo, solo encuentra aquellos puntos
  que presentan alta textura en ambas imágenes, por lo que puede resultar
- inadecuado para entornos complejos como puede distinguirse en las figuras
+ inadecuado para entornos complejos como puede distinguirse en las Figuras
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:stereobm_merge_kitti04_27.jpg"
+reference "fig:stereobm-kitti"
 
 \end_inset
 
  y 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:stereobm_merge_tsukuba_221.jpg"
+reference "fig:stereobm-tsukuba"
 
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/disparity/stereobm_merge_kitti04_27.jpg
-	lyxscale 20
-	width 12cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Arriba: Mapa de disparidad calculado mediante OpenCV StereoBM.
- Abajo: Imagen perteneciente al dataset KITTI secuencia 04.
- El mapa de disparidad representa los valores en el espectro comprendido
- entre el color rojo (mayor disparidad) y violeta (menor disparidad).
- 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:stereobm_merge_kitti04_27.jpg"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/disparity/stereobm_merge_tsukuba_221.jpg
-	lyxscale 20
-	width 14cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Izquierda: Mapa de disparidad calculado mediante OpenCV StereoBM.
- Derecha: Imagen perteneciente al dataset Tsukuba Daylight.
- El mapa de disparidad representa los valores en el espectro comprendido
- entre el color rojo (mayor disparidad) y violeta (menor disparidad).
- 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:stereobm_merge_tsukuba_221.jpg-1"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
+\begin_layout Subsubsection
 LIBELAS
 \end_layout
 
@@ -659,14 +1297,14 @@ key "delaunay1934sphere"
  En las figuras 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:libelas_merge_kitti04_22.jpg-1-1"
+reference "fig:libelas-kitti"
 
 \end_inset
 
  y 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:libelas_merge_tsukuba_222.jpg-1-1"
+reference "fig:libelas-tsukuba"
 
 \end_inset
 
@@ -674,17 +1312,89 @@ reference "fig:libelas_merge_tsukuba_222.jpg-1-1"
 \end_layout
 
 \begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/disparity/stereobm_merge_kitti04_27.jpg
+	lyxscale 10
+	width 32page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Método OpenCV StereoBM - Dataset KITTI 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:stereobm-kitti"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/disparity/libelas_merge_kitti04_22.jpg
-	lyxscale 20
-	width 12cm
+	lyxscale 10
+	width 32page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Método LIBELAS - Dataset KITTI 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:libelas-kitti"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -693,45 +1403,56 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Arriba: Mapa de disparidad calculado mediante LIBELAS.
- Abajo: Imagen perteneciente al dataset KITTI secuencia 04.
- El mapa de disparidad representa los valores en el espectro comprendido
- entre el color rojo (mayor disparidad) y violeta (menor disparidad).
- 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:libelas_merge_kitti04_22.jpg-1-1"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/disparity/stereobm_merge_tsukuba_221.jpg
+	lyxscale 10
+	width 32page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Método OpenCV StereoBM - Dataset Tsukuba 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:stereobm-tsukuba"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/disparity/libelas_merge_tsukuba_222.jpg
-	lyxscale 20
-	width 14cm
+	lyxscale 10
+	width 32page%
 
 \end_inset
 
@@ -739,18 +1460,42 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Izquierda: Mapa de disparidad calculado mediante LIBELAS.
- Derecha: Imagen perteneciente al dataset Tsukuba Daylight.
+Método LIBELAS - Dataset Tsukuba 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:libelas-tsukuba"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mapa disparidad y su correspondiente imagen izquierda utilizando diferentes
+ métodos y datasets.
  El mapa de disparidad representa los valores en el espectro comprendido
- entre el color rojo (mayor disparidad) y violeta (menor disparidad).
+ entre el color rojo/amarillo (mayor disparidad) y azul/violeta (menor disparida
+d).
  
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:libelas_merge_tsukuba_222.jpg-1-1"
+name "fig:stereobm_merge_kitti_tsukuba"
 
 \end_inset
 
@@ -765,316 +1510,50 @@ name "fig:libelas_merge_tsukuba_222.jpg-1-1"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Section
-Proyección al plano de la imagen
 \end_layout
 
 \begin_layout Subsection
-Frustum of view
+Hilo de mapeo 3D denso
 \end_layout
 
 \begin_layout Standard
-El view frustum es la región 3D que contiene los puntos que son potencialmente
- (pueden existir oclusiones) visibles en el plano de la imagen dada una
- determinada posición de la cámara.
- Esta región es determinada por los parámetros de la cámara y, en las cámaras
- estenopeicas (pinhole cameras), tiene la forma de una pirámide truncada.
+Dado que el número total de puntos en el mapa global crece considerablemente
+ a lo largo de la secuencia, la aplicación del 
+\emph on
+Frustum culling 
+\emph default
+al mapa completo resulta muy costosa computacionalmente.
+ Por este motivo, en la etapa de mapeo 3D denso solo se utiliza un 
+\emph on
+entorno local
+\emph default
+ -subconjunto del mapa global- que incluye un determinado número de nubes
+ de puntos asociadas a los últimos keyframes.
+\end_layout
+
+\begin_layout Subsection
+Hilo de refinamiento de mapa
 \end_layout
 
 \begin_layout Standard
-El vértice de la pirámide es la posición de la cámara y su base está definida
- por el plano lejano -far plane- potencialmente infinito.
- A su vez, la pirámide es truncada por un plano cercano -near plane- que
- da el nombre de Frustum of view.
- Todo lo que es potencialmente proyectable sobre el plano de la imagen se
- encuentra dentro de la pirámide trunca, por lo que el resto de los puntos
- pueden descartarse sin necesidad de realizar la proyección.
-\end_layout
-
-\begin_layout Standard
-Para el keyframe 
-\begin_inset Formula $K_{i}$
-\end_inset
-
-, se calcula su entorno local 
-\begin_inset Formula $V_{i}$
-\end_inset
-
- como la unión de las últimas 
-\begin_inset Formula $N$
-\end_inset
-
- nubes de puntos, donde 
-\begin_inset Formula $P_{j}$
-\end_inset
-
- es la nube de puntos generada desde el keyframe 
-\begin_inset Formula $K_{j}$
-\end_inset
-
-.
+Para poder ejecutar el sistema en secuencias de extensa longitud, este hilo
+ se encarga de mover nubes de puntos a memoria secundaria.
+ Dado que el hilo de mapeo 3D denso utiliza las nubes de puntos recientes,
+ estas se conservan en memoria RAM hasta que salen de dicho 
+\emph on
+entorno local.
  
-\begin_inset Formula 
-\[
-V_{i}=\left\{ P_{i-N},\cdots,P_{i-1}\right\} 
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-El Frustum of view es utilizado para filtrar la nube de puntos del entorno
- local 
-\begin_inset Formula $V_{i}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Sean 
-\begin_inset Formula $\pi_{i,\left[1,\ldots,6\right]}$
-\end_inset
-
- los planos correspondientes al Frustum of view del keyframe 
-\begin_inset Formula $K_{i}$
-\end_inset
-
-, expresados en su forma general como:
-\begin_inset Formula 
-\[
-\pi_{i,k}=\left(a_{i,k},b_{i,k},c_{i,k},d_{i,k}\right)\textrm{ tal que }
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-a_{i,k}.x+b_{i,k}.y+c_{i,k}.z+d_{i,k}.w=0\textrm{ para cada }(x,y,z,w)\in\pi_{i,k}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Notar que los puntos del espacio 3D se encuentran representados en sus coordenad
-as homogéneas.
- Para más detalle sobre la obtención de los planos ver [apéndice sobre frustum].
-\end_layout
-
-\begin_layout Standard
-Asumiendo que los planos tienen su vector normal apuntando hacia el interior
- de la pirámide, el entorno local filtrado 
-\begin_inset Formula $V_{i}^{'}$
-\end_inset
-
- queda determinado por:
-\begin_inset Formula 
-\[
-V_{i}^{'}=\left\{ p\in V_{i}\textrm{ tal que }p.\pi_{i,k}\geq0\textrm{ para cada }k\in\left[1,\ldots,6\right]\right\} 
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-includegraphics[width=8cm]{images/frustum_of_view.jpg}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Representación de la pirámide trunca 
-\begin_inset Quotes eld
-\end_inset
-
-Frustum of view
-\begin_inset Quotes erd
-\end_inset
-
-.
- Todo lo que se encuentra entre los planos cercano y lejano es el área de
- visión de la cámara.
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:frustum_of_view.jpg"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Paper sobre frustum culling?
-\end_layout
-
-\begin_layout Plain Layout
-Agregar cómo se calcular el Frustum of view - apéndice?
-\end_layout
-
-\begin_layout Plain Layout
-TODO: agregar imagen del global point cloud antes y después de aplicar el
- frustum culling.
- De cuántos puntos a cuántos puntos se reduce el point cloud?
-\end_layout
-
-\begin_layout Plain Layout
-Cuánto tarda?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Proyección al plano de la imagen - Obtención del depth map
-\end_layout
-
-\begin_layout Standard
-Como se vio en la sección X, dada la posición del keyframe puede obtenerse
- la matriz de proyección P para proyectar puntos en el sistema de coordenadas
- del mundo sobre el plano de la imagen.
-\end_layout
-
-\begin_layout Standard
-La nube del entorno local, filtrada mediante el Frustum of View, es proyectada
- punto por punto sobre el keyframe actual.
- Si dos puntos del espacio corresponden al mismo píxel, el más lejano es
- descartado, dado que se ve ocluído por el más cercano y por lo tanto no
- es visible desde la perspectiva de la cámara.
-\end_layout
-
-\begin_layout Standard
-La matriz resultante asigna a cada píxel un valor numérico que representa
- la profundidad en Z desde la perspectiva de la cámara.
- Esto se conoce como mapa de profundidad -depth map-.
-\end_layout
-
-\begin_layout Standard
-TODO: pseudocódigo de proyección.
-\end_layout
-
-\begin_layout Section
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:Consistencia-y-redundancia"
-
-\end_inset
-
-Consistencia y redundancia (StereoScan)
-\end_layout
-
-\begin_layout Standard
-Cada punto está asociado al keyframe original del que fueron triangulados
- y se le asigna un contador de la veces que fue triangulado desde distintos
- keyframes.
-\end_layout
-
-\begin_layout Subsection
-Heurística de detección de outliers y fusión.
-\end_layout
-
-\begin_layout Standard
-Basado en el trabajo del paper Stereoscan, se utlizan ambos mapas de profundidad
- obtenidos en las secciones (disparidad) y (proyección al plano de la imagen).
-\end_layout
-
-\begin_layout Standard
-Aquellos píxeles que poseen una profundidad válidad en ambos mapas y cuya
- diferencia es menos que un cierto threshold 
-\begin_inset Formula $\xi$
-\end_inset
-
- se fusionan.
- El punto no se agrega nuevamente al mapa denso global, sino que permanece
- asociado solamente a la nube del keyframe que lo trianguló originalmente,
- y su profundidad en Z se ajusta a la media aritmética de ambos valores.
-\end_layout
-
-\begin_layout Standard
-Si la profundidad en ambos mapas -(disparidad) y (proyección al plano de
- la imagen)- difiere en un valor mayor al threshold 
-\begin_inset Formula $\xi$
-\end_inset
-
-, un nuevo punto se triangula desde el keyframe actual con un valid_counter
- de 1.
- En consecuencia, el punto previo (triangulado en un keyframe anterior)
- disminuye su valid_counter en 1, siendo descartado cuando este se vuelve
- nulo.
-\end_layout
-
-\begin_layout Standard
-Utilizando el método descripto, aquellos puntos que presentan inconsistencias
- son rápidamente descartados, reduciendo drásticamente el número de outliers
- .
- De la misma manera, la nube es refinada constantemente, fusionando en Z
- los puntos existentes con la nueva disparidad triangulada en cada nuevo
- keyframe.
-\end_layout
-
-\begin_layout Standard
-TODO: mostrar números sobre la reducción de complejidad del mapa.
-\end_layout
-
-\begin_layout Standard
-TODO: mostrar la aceleración en la computación de cada keyframe por StereoScan.
-\end_layout
-
-\begin_layout Section
-Detalles de implementación
-\end_layout
-
-\begin_layout Itemize
-Hilos, colas, locks
-\end_layout
-
-\begin_layout Itemize
-Swap a disco
+\emph default
+Cabe destacar que los dos hilos principales son 
+\emph on
+CPU-bound 
+\emph default
+(requieren uso intensivo de CPU) y, en cambio, el hilo de Refinamiento de
+ mapa es 
+\emph on
+I/O-bound
+\emph default
+ (limitado por operaciones de entrada-salida).
 \end_layout
 
 \end_body
