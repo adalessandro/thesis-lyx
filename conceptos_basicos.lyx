@@ -196,7 +196,7 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -228,7 +228,7 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -629,11 +629,7 @@ De esta manera, es posible proyectar cualquier punto 3D
 status collapsed
 
 \begin_layout Plain Layout
-camera distortion?
-\end_layout
-
-\begin_layout Plain Layout
-backprojection?
+Debería agregar una sección sobre camera undistortion?
 \end_layout
 
 \end_inset
@@ -814,7 +810,11 @@ reference "sec:Modelo-y-geometría-estereo"
 status collapsed
 
 \begin_layout Plain Layout
-Revisar
+Es necesario esta sección sobre re-proyección?
+\end_layout
+
+\begin_layout Plain Layout
+Revisar ecuación del rayo y su explicación.
 \end_layout
 
 \end_inset
@@ -1043,12 +1043,12 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/frustum_far_plane_height.pdf
+	filename images/math/frustum_far_plane_height.svg
 	lyxscale 50
 	width 35page%
 
@@ -1081,12 +1081,12 @@ name "fig:frustum-triagulacion"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/frustum_vertices.pdf
+	filename images/math/frustum_vertices.svg
 	lyxscale 50
 	width 35page%
 
@@ -1841,7 +1841,7 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1877,7 +1877,7 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1997,7 +1997,7 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -2038,7 +2038,7 @@ name "fig:triangulation1"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
