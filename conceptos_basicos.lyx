@@ -312,7 +312,7 @@ Considerando que el centro focal se encuentra en el origen de coordenadas
 \begin_inset Formula $Z=f$
 \end_inset
 
-, por criterio de semenjanza de triángulos puede verse facilmente que el
+, por criterio de semejanza de triángulos puede verse facilmente que el
  punto 3D 
 \begin_inset Formula $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$
 \end_inset
@@ -543,6 +543,19 @@ z\\
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+explicar algo de cuerpo rígido
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 En particular, 
 \begin_inset Formula $\seMatrix^{\mathrm{c}\mathrm{w}}$
 \end_inset
@@ -572,7 +585,12 @@ key "varadarajan1984lie"
 \end_inset
 
  un vector de traslación.
- Utilizando la matriz de calibración intrínseca 
+ Un cuerpo rígido 3D hace referencia a un conjunto de puntos en el espacio
+ que se mueven de tal manera que no se alteran las distancias entre ellos.
+\end_layout
+
+\begin_layout Standard
+Utilizando la matriz de calibración intrínseca 
 \begin_inset Formula $\intrinsicMatrix$
 \end_inset
 
@@ -626,7 +644,7 @@ De esta manera, es posible proyectar cualquier punto 3D
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Debería agregar una sección sobre camera undistortion?
@@ -751,14 +769,14 @@ reference "fig:back_projection"
 placement h
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/math/back_projection.svg
 	lyxscale 50
-	width 40page%
+	width 30page%
 
 \end_inset
 
@@ -807,7 +825,7 @@ reference "sec:Modelo-y-geometría-estereo"
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Es necesario esta sección sobre re-proyección?
@@ -1013,7 +1031,7 @@ reference "fig:frustum-of-view"
 
 \end_inset
 
-, aplicando criterio de semenjanza de triángulos pueden obtenerse facilmente
+, aplicando criterio de semejanza de triángulos pueden obtenerse facilmente
  las coordenadas de los vértices que definen el área rectangular del 
 \emph on
 frustum of view
@@ -1168,7 +1186,7 @@ reference "fig:frustum-triagulacion"
 \end_inset
 
 .
- Por criterio de semenjanza de triángulos, pueden derivarse las coordenadas
+ Por criterio de semejanza de triángulos, pueden derivarse las coordenadas
  del vértice 
 \begin_inset Formula $\point_{lejano}$
 \end_inset
@@ -1353,7 +1371,8 @@ La
 geometría epipolar 
 \emph default
 entre dos imágenes es esencialmente la geometría determinada por la intersección
- de los planos de las imágenes con el lápiz de planos con la 
+ de los planos de las imágenes con la familia de planos que contengan la
+ 
 \emph on
 línea base 
 \begin_inset Foot
@@ -1405,7 +1424,8 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Lápiz de planos intersectando los planos de las imágenes.
+Planos de las imágenes en intersección con la familia de planos que contiene
+ a la línea base como eje.
  Imagen adaptada de 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1816,7 +1836,7 @@ disparidad
 \emph default
 .
  La disparidad se define como la distancia entre dos puntos correspondientes
- en la imagen izquierda y derecha de un par de imágenes estereo.
+ en la imagen izquierda y derecha de un par de imágenes estéreo.
  Usando el valor de disparidad es posible calcular la posición del punto
  3D asociado, como se verá en la siguiente sección 
 \begin_inset CommandInset ref

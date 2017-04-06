@@ -333,7 +333,7 @@ key "durrant2006simultaneous,bailey2006simultaneous"
 .
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 V-SLAM - Localización y mapeo simultáneo visual 
 \begin_inset CommandInset label
 LatexCommand label
@@ -355,6 +355,34 @@ Recientemente ha habido un creciente interés en sistemas de SLAM visual,
  de GPS puede verse imposibilitado.
  Asímismo, son menos restrictivos que los encoders, los cuales se encuentran
  limitados a robots terrestres y altamente imprecisos en terrenos irregulares.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Poner algo de mono y estéreo.
+ Mirar journal, rodri puso algo para sacar referencias.
+\end_layout
+
+\begin_layout Plain Layout
+There exists two main approaches for camera-based SLAM, namely monocular
+ and stereo [5].
+\end_layout
+
+\begin_layout Plain Layout
+Stereo based SLAM provides pixel depth information using 20 a single observation
+ [6, 7, 8].
+\end_layout
+
+\begin_layout Plain Layout
+This requires more computations in the monocular case [9, 10].
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -456,6 +484,133 @@ name "fig:vslam-sparse-map"
 
 \end_layout
 
+\begin_layout Subsection
+Características visuales
+\end_layout
+
+\begin_layout Standard
+Los enfoques de SLAM visual basados en características dependen de la calidad
+ y cantidad de características visuales locales (
+\emph on
+features
+\emph default
+) presentes en la imagen.
+ Estos puntos salientes -o puntos claves- deben ser descriptos unívocamente
+ para poder establecer correspondencias entre diferentes imágenes.
+ En la literatura existe una gran variedad de extractores de features, siendo
+ los más usados: SIFT 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lowe::IJCV04"
+
+\end_inset
+
+, SURF 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bay:etal:ECCV06"
+
+\end_inset
+
+, ORB 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Rublee:etal:ICCV11"
+
+\end_inset
+
+ y KAZE 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Alcantarilla:etal:ECCV12"
+
+\end_inset
+
+.
+ En la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:orb_features"
+
+\end_inset
+
+ se muestran los puntos detectados y asociados por el método ORB en un par
+ de imágenes de ejemplo.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/trabajo-relacionado/orb_features.jpg
+	lyxscale 20
+	width 90text%
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Asociación de características extraídas por el método ORB.
+ Notar la robustez del método ante la rotación de la imagen.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:orb_features"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para que los 
+\emph on
+features 
+\emph default
+resulten útiles en la búsqueda de correspondencias en sucesivas imágenes,
+ su descriptor debe poseer importantes propiedades:
+\end_layout
+
+\begin_layout Itemize
+Independencia en la posición: si el mismo punto clave es extraído de diferentes
+ posiciones en la imagen, el descriptor debe ser el mismo.
+\end_layout
+
+\begin_layout Itemize
+Robustez frente a transformaciones en la imagen: reconocer el mismo feature
+ frente a cambios de contraste (e.g.
+ efecto del sol en entornos exteriores) o perspectiva (observación del mismo
+ objeto desde distintas posiciones).
+\end_layout
+
+\begin_layout Itemize
+Invariante a la escala: el mismo descriptor debe ser asignado independiente
+ de cambios en la escala de la imagen.
+\end_layout
+
 \begin_layout Section
 V-SLAM denso
 \end_layout
@@ -508,7 +663,22 @@ name "subsec:Mapas-de-disparidad-densos"
 
 \begin_layout Standard
 Un mapa de disparidad denso es aquel donde a cada píxel de una imagen se
- le asigna un valor de disparidad y, por ende, su profundidad es conocida.
+ le asigna un valor de 
+\emph on
+disparidad
+\emph default
+ 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+la disparidad se define como la distancia entre dos puntos correspondientes
+ en la imagen izquierda y derecha de un par de imágenes estéreo
+\end_layout
+
+\end_inset
+
+ y, por ende, su profundidad es conocida.
  Las definiciones y relaciones geométricas involucradas en la búsqueda de
  correspondencias entre un par de imágenes y el cálculo de disparidad se
  describen con detalle en la sección 
@@ -702,7 +872,7 @@ key "geiger2011stereoscan"
 features
 \emph default
  obteniendo un mapa esparso.
- Luego, los pares de imágenes provenientes de una cámara estereo son procesados
+ Luego, los pares de imágenes provenientes de una cámara estéreo son procesados
  para generar mapas de disparidad densos mediante LIBELAS 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1169,7 +1339,7 @@ nte segmentación en superpíxeles (abajo).
 \begin_inset Formula $s_{1}$
 \end_inset
 
- es segmentado con precisión en abmas imágenes (
+ es segmentado con precisión en ambas imágenes (
 \begin_inset Formula $s_{1}^{1}$
 \end_inset
 
@@ -1291,7 +1461,7 @@ Métodos semánticos
 \end_layout
 
 \begin_layout Standard
-En SLAM visual se ha comenzado a utilizar características visuales de alto
+En SLAM visual se han comenzado a utilizar características visuales de alto
  nivel, que permiten reconocer y mapear objetos presentes en el entorno.
  Este área de investigación se encuentra relacionada a tópicos de aprendizaje
  automatizado e inteligencia artificial.
@@ -1425,8 +1595,12 @@ key "stuhmer2010real,graber2011online,newcombe2011dtam"
 
 \end_inset
 
- que, en vez utilizar puntos clave, operan directamente sobre las intensidades
- de la imagen para realizar la localización y mapeo.
+ que, en vez utilizar puntos clave (
+\emph on
+features
+\emph default
+), operan directamente sobre las intensidades de la imagen para realizar
+ la localización y mapeo.
  A su vez, estos métodos aprovechan mayor parte de la información disponible
  en las imágenes -todos los píxeles de alto contraste, incluyendo vértices,
  aristas y áreas de alta textura- obteniendo mapas 3D de mayor densidad
@@ -1506,7 +1680,7 @@ name "fig:lsdslam"
 \begin_layout Standard
 Sin embargo, el nivel de desarrollo de SLAM directo aún es bajo en comparación
  con los métodos basados en características visuales, resultando ser menos
- flexibles para la eliminación de outliers y precisos 
+ flexibles y precisos para la eliminación de outliers 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mur2015probabilistic"

@@ -14,7 +14,7 @@
    height="252.9189"
    id="svg4102"
    version="1.1"
-   inkscape:version="0.92.1 unknown"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="stereo_rectification.svg">
   <sodipodi:namedview
      id="base"
@@ -23,9 +23,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="-32.858834"
-     inkscape:cy="64.211069"
+     inkscape:zoom="1.2807693"
+     inkscape:cx="148.86325"
+     inkscape:cy="159.70802"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -33,10 +33,10 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1920"
-     inkscape:window-height="1056"
-     inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-width="1366"
+     inkscape:window-height="743"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
      inkscape:window-maximized="1" />
   <defs
      id="defs4104">
@@ -231,7 +231,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -893,5 +893,47 @@
          id="path5131"
          d="m 230.23,710.26 v 0 0 0 0 0.01 0 0 0 0 0.01 h 0.01 v 0 0.01 0 0.01 0 0.01 0 l 0.01,0.01 v 0.01 0 0.01 0 0.01 0 0 0.01 h 0.01 v 0 0 0 0.01 0 0 0 0 0 0 0 0 c 0,0.04 -0.03,0.1 -0.11,0.1 -0.14,0 -0.72,-0.06 -0.9,-0.07 -0.05,-0.01 -0.14,-0.01 -0.14,-0.16 0,-0.1 0.09,-0.1 0.17,-0.1 0.34,0 0.34,-0.05 0.34,-0.1 0,-0.05 -0.02,-0.09 -0.03,-0.16 l -0.87,-3.44 c -0.02,-0.07 -0.02,-0.15 -0.02,-0.22 0,-0.44 0.39,-0.66 0.73,-0.66 0.16,0 0.37,0.06 0.56,0.37 0.14,0.26 0.24,0.67 0.24,0.7 0,0.09 -0.09,0.09 -0.11,0.09 -0.1,0 -0.11,-0.04 -0.14,-0.17 -0.09,-0.35 -0.22,-0.79 -0.52,-0.79 -0.19,0 -0.24,0.17 -0.24,0.34 0,0.07 0.02,0.21 0.04,0.28 z"
          inkscape:connector-curvature="0"
-         style="fill:#000000;stroke-width:0" /></g>  </g>
+         style="fill:#000000;stroke-width:0" /></g>    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="rect3996"
+       width="75.747185"
+       height="11.31328"
+       x="-254.31516"
+       y="703.41119"
+       transform="matrix(0.50359553,-0.86393955,0.87903144,0.4767638,0,0)" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="rect3996-9"
+       width="75.747185"
+       height="11.31328"
+       x="-300.5668"
+       y="543.54834"
+       transform="matrix(0.50359553,-0.86393955,0.87903144,0.4767638,0,0)" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3134"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:OpenSymbol;-inkscape-font-specification:OpenSymbol"
+       transform="matrix(0.50568942,-0.8627156,0.8627156,0.50568942,295.81155,592.33428)"><flowRegion
+         id="flowRegion3136"><rect
+           id="rect3138"
+           width="214.65741"
+           height="121.72338"
+           x="69.19545"
+           y="-13.256294"
+           style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:OpenSymbol;-inkscape-font-specification:OpenSymbol" /></flowRegion><flowPara
+         id="flowPara3140"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter">rayo principal</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3134-9"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:OpenSymbol;-inkscape-font-specification:OpenSymbol"
+       transform="matrix(0.50568942,-0.8627156,0.8627156,0.50568942,468.08967,613.53936)"><flowRegion
+         id="flowRegion3136-4"><rect
+           id="rect3138-5"
+           width="214.65741"
+           height="121.72338"
+           x="69.19545"
+           y="-13.256294"
+           style="font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:OpenSymbol;-inkscape-font-specification:OpenSymbol" /></flowRegion><flowPara
+         id="flowPara3140-1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter">rayo principal</flowPara></flowRoot>  </g>
 </svg>
