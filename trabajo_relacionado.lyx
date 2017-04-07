@@ -260,6 +260,7 @@ landmarks
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
 placement H
 wide false
@@ -269,9 +270,10 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/trabajo-relacionado/slam-problem-no-variables.svg
+	filename images/trabajo-relacionado/slam-problem-no-variables.pdf
 	lyxscale 30
 	width 60text%
+	rotateAngle 270
 
 \end_inset
 
@@ -424,6 +426,7 @@ key "pire2015"
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
 placement H
 wide false
@@ -433,9 +436,10 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/trabajo-relacionado/level7_lc.svg
+	filename images/trabajo-relacionado/level7_lc.pdf
 	lyxscale 30
 	width 80text%
+	rotateAngle 270
 
 \end_inset
 
@@ -544,7 +548,7 @@ reference "fig:orb_features"
 placement h
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -700,6 +704,7 @@ reference "fig:liberal-disp-urban"
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
 placement tbh
 wide false
@@ -1009,6 +1014,7 @@ key "pan2009proforma"
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
 placement tbh
 wide false
@@ -1228,6 +1234,7 @@ reference "fig:superpixel_slic"
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
 placement tbh
 wide false
@@ -1303,6 +1310,7 @@ es propias de los objetos (i.e.
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
 placement tbh
 wide false
@@ -1530,6 +1538,7 @@ reference "fig:semantic_segmentation"
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
 placement tbh
 wide false
@@ -1539,9 +1548,10 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/trabajo-relacionado/semantic_categories.svg
+	filename images/trabajo-relacionado/semantic_categories.pdf
 	lyxscale 50
 	scale 50
+	rotateAngle 270
 
 \end_inset
 
@@ -1615,6 +1625,7 @@ reference "fig:lsdslam"
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Float figure
 placement tbh
 wide false
