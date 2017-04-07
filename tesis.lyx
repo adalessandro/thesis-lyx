@@ -11,7 +11,7 @@
 \usepackage{a4wide}
 \usepackage[graf, intHoriz, sinLU, showDirectores, showCoDirectores]{caratula}
 \usepackage{hyperref}
-\usepackage[figurename=Fig.]{caption}
+\usepackage[figurename=Figura]{caption}
 \usepackage{graphics}
 \usepackage{placeins}
 
