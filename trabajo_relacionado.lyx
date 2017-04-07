@@ -677,7 +677,7 @@ Aprovechando que los métodos de SLAM visual basados en features producen
  agregar información densa al mapa esparso obtenido.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsubsection*
 Mapas de disparidad densos 
 \begin_inset CommandInset label
 LatexCommand label
@@ -936,7 +936,7 @@ Filtro de Kallman Extendido
  mediante información de disparidad densa.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsubsection*
 Reconstrucción de planos y polígonos
 \end_layout
 

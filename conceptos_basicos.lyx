@@ -85,7 +85,7 @@ figs-within-sections
 \begin_body
 
 \begin_layout Chapter
-Conceptos básicos
+Cámaras como sensores
 \end_layout
 
 \begin_layout Standard
@@ -113,7 +113,7 @@ Una cámara es definida matemáticamente como un mapeo entre el mundo 3D y
  Existen diferentes modelos para representar una cámara, siendo el modelo
  de cámara 
 \emph on
-pinhole 
+pinhole
 \begin_inset Foot
 status collapsed
 
@@ -145,7 +145,7 @@ el punto de la imagen
 
 es determinado como la intersección entre el 
 \emph on
-plano de la imagen 
+plano de la imagen
 \begin_inset Foot
 status collapsed
 
@@ -171,7 +171,7 @@ centro focal
 \begin_inset Formula $\cameraCenter$
 \end_inset
 
-.
+ de la cámara.
  En la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -186,7 +186,7 @@ reference "fig:pinhole"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement h
+placement tbh
 wide false
 sideways false
 status collapsed
@@ -196,14 +196,15 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/pinhole_camera_model.svg
+	filename images/math/pinhole_camera_model.pdf
 	lyxscale 50
 	width 35page%
+	rotateAngle 270
 
 \end_inset
 
@@ -228,13 +229,14 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/pinhole_camera_model2.svg
+	filename images/math/pinhole_camera_model2.pdf
 	width 35page%
+	rotateAngle 270
 
 \end_inset
 
@@ -312,8 +314,8 @@ Considerando que el centro focal se encuentra en el origen de coordenadas
 \begin_inset Formula $Z=f$
 \end_inset
 
-, por criterio de semejanza de triángulos puede verse facilmente que el
- punto 3D 
+, utilizando la propiedad de semejanza de triángulos puede verse facilmente
+ que el punto 3D 
 \begin_inset Formula $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$
 \end_inset
 
@@ -333,7 +335,7 @@ y\\
 z
 \end{bmatrix}\longmapsto\begin{bmatrix}fx/z\\
 fy/z
-\end{bmatrix}\label{eq:central_mapping}
+\end{bmatrix}.\label{eq:central_mapping}
 \end{equation}
 
 \end_inset
@@ -341,7 +343,7 @@ fy/z
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsubsection*
 Matriz de calibración intrínseca 
 \begin_inset Formula $\intrinsicMatrix$
 \end_inset
@@ -352,7 +354,7 @@ Matriz de calibración intrínseca
 \begin_layout Standard
 El mapeo de la ecuación 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:central_mapping"
 
 \end_inset
@@ -371,7 +373,7 @@ y\\
 z
 \end{bmatrix}\longmapsto\begin{bmatrix}fx/z+c_{u}\\
 fy/z+c_{v}
-\end{bmatrix}^{\top}\label{eq:central_mapping-2}
+\end{bmatrix}^{\top},\label{eq:central_mapping-2}
 \end{equation}
 
 \end_inset
@@ -380,6 +382,7 @@ fy/z+c_{v}
 \end_layout
 
 \begin_layout Standard
+\noindent
 siendo 
 \begin_inset Formula $\begin{bmatrix}c_{u} & c_{v}\end{bmatrix}^{\top}$
 \end_inset
@@ -403,7 +406,7 @@ pinhole
 \emph default
 de la ecuación 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:central_mapping-2"
 
 \end_inset
@@ -428,7 +431,7 @@ z
 y\\
 z\\
 1
-\end{bmatrix}\label{eq:central_projection}
+\end{bmatrix}.\label{eq:central_projection}
 \end{equation}
 
 \end_inset
@@ -454,7 +457,7 @@ matriz de calibración intrínseca
 \intrinsicMatrix=\begin{bmatrix}f & 0 & c_{u}\\
 0 & f & c_{v}\\
 0 & 0 & 1
-\end{bmatrix}\label{eq:intrinsic_matrix}
+\end{bmatrix},\label{eq:intrinsic_matrix}
 \end{equation}
 
 \end_inset
@@ -463,9 +466,10 @@ matriz de calibración intrínseca
 \end_layout
 
 \begin_layout Standard
+\noindent
 la ecuación 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:central_projection"
 
 \end_inset
@@ -476,7 +480,7 @@ reference "eq:central_projection"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\homo{\imagePoint}=\intrinsicMatrix\begin{bmatrix}\vec{{I}} & \vec{{0}}\end{bmatrix}\homo{\point}
+\homo{\imagePoint}=\intrinsicMatrix\begin{bmatrix}\vec{{I}} & \vec{{0}}\end{bmatrix}\homo{\point}\;.
 \]
 
 \end_inset
@@ -484,7 +488,7 @@ reference "eq:central_projection"
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsubsection*
 Matriz de proyección 
 \series medium
 
@@ -502,9 +506,70 @@ mundo
 \emph default
 .
  Dado que la cámara no se encuentra necesariamente ubicada en el centro
- de este sistema, las ecuaciones previamente definidas deben extenderse
- agregando la transformación existente entre los sistemas de coordenadas
- de la cámara y el mundo.
+ de este sistema, como se ilustra en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:camera_coord_system"
+
+\end_inset
+
+, las ecuaciones previamente definidas deben extenderse agregando la transformac
+ión existente entre los sistemas de coordenadas de la cámara y el mundo.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/math/camera_coord_system.pdf
+	lyxscale 50
+	width 35page%
+	rotateAngle 270
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+En general, el sistema de coordenadas de la cámara se encuentra relacionado
+ con el sistema de coordenadas del mundo mediante una rotación 
+\begin_inset Formula $\rotation$
+\end_inset
+
+ y una traslación 
+\begin_inset Formula $\translation$
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:camera_coord_system"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -517,8 +582,8 @@ Sea
 \begin_inset Formula $\homoCameraPoint$
 \end_inset
 
- el mismo punto expresado en referencia a la cámara, es posible definir
- una transformación 
+ el mismo punto expresado en el sistema de coordenadas de la cámara, es
+ posible definir una transformación 
 \begin_inset Formula $\seMatrix^{\mathrm{c}\mathrm{w}}$
 \end_inset
 
@@ -534,7 +599,7 @@ Sea
 y\\
 z\\
 1
-\end{bmatrix}=\seMatrix^{\mathrm{c}\mathrm{w}}\homoWorldPoint
+\end{bmatrix}=\seMatrix^{\mathrm{c}\mathrm{w}}\homoWorldPoint\;.
 \]
 
 \end_inset
@@ -543,19 +608,7 @@ z\\
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-explicar algo de cuerpo rígido
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
+\noindent
 En particular, 
 \begin_inset Formula $\seMatrix^{\mathrm{c}\mathrm{w}}$
 \end_inset
@@ -596,7 +649,7 @@ Utilizando la matriz de calibración intrínseca
 
  definida en 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:intrinsic_matrix"
 
 \end_inset
@@ -611,7 +664,7 @@ reference "eq:intrinsic_matrix"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\projectionMatrix=\intrinsicMatrix\begin{bmatrix}\rotation & \translation\end{bmatrix}\label{eq:projection_matrix}
+\projectionMatrix=\intrinsicMatrix\begin{bmatrix}\rotation & \translation\end{bmatrix}.\label{eq:projection_matrix}
 \end{equation}
 
 \end_inset
@@ -620,6 +673,7 @@ reference "eq:intrinsic_matrix"
 \end_layout
 
 \begin_layout Standard
+\noindent
 De esta manera, es posible proyectar cualquier punto 3D 
 \begin_inset Formula $\homoWorldPoint$
 \end_inset
@@ -634,21 +688,8 @@ De esta manera, es posible proyectar cualquier punto 3D
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\homo{\imagePoint}=\projectionMatrix\homoWorldPoint\label{eq:projection_equation}
+\homo{\imagePoint}=\projectionMatrix\homoWorldPoint\;.\label{eq:projection_equation}
 \end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Debería agregar una sección sobre camera undistortion?
-\end_layout
 
 \end_inset
 
@@ -670,7 +711,7 @@ Dado un punto
 \begin_inset Formula $\imagePoint$
 \end_inset
 
- en la imagen, es posible determinar el conjunto de puntos en el espacio
+ en la imagen, es posible determinar el conjunto de puntos 3D en el espacio
  que son proyectados sobre este punto.
  El conjunto de puntos conforma un rayo en el espacio que pasa por el centro
  focal y el punto de la imagen 
@@ -688,7 +729,7 @@ Dado un punto
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\vec{x}(\lambda)=\projectionMatrix^{+}\imagePoint+\lambda\cameraCenter
+\vec{x}(\lambda)=\projectionMatrix^{+}\imagePoint+\lambda\cameraCenter\;,
 \]
 
 \end_inset
@@ -697,13 +738,14 @@ Dado un punto
 \end_layout
 
 \begin_layout Standard
+\noindent
 donde 
 \begin_inset Formula $\projectionMatrix^{+}$
 \end_inset
 
  es la matriz 
 \emph on
-pseudo-inversa 
+pseudo-inversa
 \begin_inset Foot
 status collapsed
 
@@ -712,7 +754,7 @@ La matriz pseudo-inversa
 \begin_inset Formula $\projectionMatrix^{+}$
 \end_inset
 
- es definida como 
+ está definida como 
 \begin_inset Formula $\projectionMatrix^{+}=\projectionMatrix^{\top}\left(\projectionMatrix\projectionMatrix^{\top}\right)^{-1}$
 \end_inset
 
@@ -766,17 +808,18 @@ reference "fig:back_projection"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement h
+placement tbh
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/back_projection.svg
+	filename images/math/back_projection.pdf
 	lyxscale 50
-	width 30page%
+	width 40page%
+	rotateAngle 270
 
 \end_inset
 
@@ -852,21 +895,14 @@ name "subsec:Frustum-culling"
 \end_layout
 
 \begin_layout Standard
-El 
-\emph on
-frustum of view
-\emph default
- es la región 3D que contiene todos los puntos que son potencialmente visibles
- en el plano de la imagen.
+El campo visual de la cámara es la región 3D que contiene todos los puntos
+ que son potencialmente visibles en el plano de la imagen.
  En el modelo de cámara 
 \emph on
 pinhole
 \emph default
-, el 
-\emph on
-frustum of view
-\emph default
- tiene la forma de una pirámide trunca, como se ilustra en la Figura 
+, el campo visual tiene la forma de una pirámide trunca, como se ilustra
+ en la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:frustum_culling"
@@ -881,7 +917,7 @@ reference "fig:frustum_culling"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement h
+placement tbh
 wide false
 sideways false
 status collapsed
@@ -889,9 +925,10 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/frustum_culling.png
+	filename images/math/frustum_culling.pdf
 	lyxscale 50
 	scale 50
+	rotateAngle 270
 
 \end_inset
 
@@ -902,17 +939,13 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Representación del 
-\emph on
-frustum of view
-\emph default
- en un modelo de cámara 
+Representación del campo visual en un modelo de cámara 
 \emph on
 pinhole
 \emph default
 .
- La esfera verde queda fuera de la pirámide, por lo que no se verá proyectada
- sobre el plano de la imagen.
+ La esfera verde queda fuera de la pirámide trunca, por lo que no se verá
+ proyectada sobre el plano de la imagen.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -939,11 +972,7 @@ name "fig:frustum_culling"
 Frustum culling
 \emph default
  es el proceso mediante el cual se filtra el entorno descartando aquellos
- objetos que no se encuentran dentro del 
-\emph on
-frustum of view
-\emph default
-.
+ objetos que no se encuentran dentro del campo visual.
  De esta manera, se evita desperdiciar recursos renderizando objetos que
  no son directamente visibles por la cámara.
 \end_layout
@@ -958,10 +987,10 @@ frustum culling
  que su proyección se encuentra fuera de los límites del plano de la imagen.
 \end_layout
 
-\begin_layout Subsubsection
-Vértices del 
+\begin_layout Subsubsection*
+Vértices del campo visual de la cámara
 \emph on
-frustum of view 
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:Vértices-del-frustum"
@@ -1006,12 +1035,21 @@ El vértice de la pirámide es el centro focal
 \end_layout
 
 \begin_layout Standard
-El área rectangular del 
-\emph on
-frustum of view
-\emph default
- sobre estos planos puede ser delimitada en función de las dimensiones del
- plano focal 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+el fcercano es la distancia focal f?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El área rectangular del campo visual sobre estos planos puede ser delimitada
+ en función de las dimensiones del plano focal 
 \begin_inset Formula $\plane_{cam}$
 \end_inset
 
@@ -1031,12 +1069,9 @@ reference "fig:frustum-of-view"
 
 \end_inset
 
-, aplicando criterio de semejanza de triángulos pueden obtenerse facilmente
- las coordenadas de los vértices que definen el área rectangular del 
-\emph on
-frustum of view
-\emph default
- sobre el plano lejano 
+, aplicando la propiedad de triángulos semejantes pueden obtenerse facilmente
+ las coordenadas de los vértices que definen el área rectangular del campo
+ visual sobre el plano lejano 
 \begin_inset Formula $\plane_{lejano}$
 \end_inset
 
@@ -1045,13 +1080,13 @@ frustum of view
 \begin_inset Formula $\plane_{cercano}$
 \end_inset
 
- es análogo y se omite en esta tesina por motivos de simplificación.
+ es análogo.
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement H
+placement tbh
 wide false
 sideways false
 status collapsed
@@ -1061,14 +1096,14 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/frustum_far_plane_height.svg
+	filename images/math/frustum_far_plane_height.pdf
 	lyxscale 50
-	width 35page%
+	width 30page%
 
 \end_inset
 
@@ -1099,14 +1134,14 @@ name "fig:frustum-triagulacion"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/frustum_vertices.svg
+	filename images/math/frustum_vertices.pdf
 	lyxscale 50
-	width 35page%
+	width 30page%
 
 \end_inset
 
@@ -1140,11 +1175,7 @@ name "fig:frustum-far-plane"
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Relaciones geométricas presentes en el 
-\emph on
-frustum of view
-\emph default
- de una cámara 
+Relaciones geométricas presentes en el campo visual de una cámara 
 \emph on
 pinhole
 \emph default
@@ -1186,7 +1217,7 @@ reference "fig:frustum-triagulacion"
 \end_inset
 
 .
- Por criterio de semejanza de triángulos, pueden derivarse las coordenadas
+ Por propiedad de triángulos semejantes, pueden derivarse las coordenadas
  del vértice 
 \begin_inset Formula $\point_{lejano}$
 \end_inset
@@ -1201,7 +1232,7 @@ reference "fig:frustum-triagulacion"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\point_{lejano}=\begin{bmatrix}\frac{x\,f_{lejano}}{f} & \frac{y\,f_{lejano}}{f} & f_{lejano}\end{bmatrix}\label{eq:frustum-vertices}
+\point_{lejano}=\begin{bmatrix}\frac{x\,f_{lejano}}{f} & \frac{y\,f_{lejano}}{f} & f_{lejano}\end{bmatrix}.\label{eq:frustum-vertices}
 \end{equation}
 
 \end_inset
@@ -1210,19 +1241,16 @@ reference "fig:frustum-triagulacion"
 \end_layout
 
 \begin_layout Standard
+\noindent
 Utilizando la Ecuación 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:frustum-vertices"
 
 \end_inset
 
  pueden derivarse las coordenadas de cada uno de los vértices que definen
- el área rectangular del 
-\emph on
-frustum of view
-\emph default
- sobre los planos 
+ el área rectangular del campo visual de la cámara sobre los planos 
 \begin_inset Formula $\plane_{cercano}$
 \end_inset
 
@@ -1233,7 +1261,7 @@ frustum of view
 .
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsubsection*
 Extracción de los planos
 \end_layout
 
@@ -1242,13 +1270,9 @@ Cada plano
 \begin_inset Formula $\plane_{i}$
 \end_inset
 
- que determina el 
-\emph on
-frustum of view
-\emph default
- está conformado por 3 o más vértices no alineados, cuyas coordenadas fueron
- calculadas mediante las relaciones geométricas enunciadas en la sección
- anterior 
+ que determina el campo visual de la cámara está conformado por 3 o más
+ vértices no alineados, cuyas coordenadas fueron calculadas mediante las
+ relaciones geométricas enunciadas en la sección anterior 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:Vértices-del-frustum"
@@ -1266,7 +1290,7 @@ reference "subsec:Vértices-del-frustum"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\plane_{i}=\begin{bmatrix}A_{i} & B_{i} & C_{i} & D_{i}\end{bmatrix}
+\plane_{i}=\begin{bmatrix}A_{i} & B_{i} & C_{i} & D_{i}\end{bmatrix},
 \]
 
 \end_inset
@@ -1277,7 +1301,7 @@ tal que
 \begin_layout Standard
 \begin_inset Formula 
 \[
-A_{i}x+B_{i}y+C_{i}z+D_{i}w=0\quad\textrm{ para cada }\quad\homoWorldPoint=\begin{bmatrix}x & y & z & w\end{bmatrix}^{\top}\in\plane_{i}
+A_{i}x+B_{i}y+C_{i}z+D_{i}w=0\quad\textrm{ para cada }\quad\homoWorldPoint=\begin{bmatrix}x & y & z & w\end{bmatrix}^{\top}\in\plane_{i}\;.
 \]
 
 \end_inset
@@ -1286,6 +1310,7 @@ A_{i}x+B_{i}y+C_{i}z+D_{i}w=0\quad\textrm{ para cada }\quad\homoWorldPoint=\begi
 \end_layout
 
 \begin_layout Standard
+\noindent
 Por convención, la dirección del vector normal 
 \begin_inset Formula $\eta_{i}=\begin{bmatrix}A_{i} & B_{i} & C_{i}\end{bmatrix}$
 \end_inset
@@ -1303,11 +1328,8 @@ Por convención, la dirección del vector normal
 \begin_inset Formula $\homoWorldPoint=\begin{bmatrix}x & y & z & w\end{bmatrix}^{\top}$
 \end_inset
 
- se encuentra dentro del 
-\emph on
-frustum of view 
-\emph default
-si la siguiente ecuación se satisface para cada plano 
+ se encuentra dentro del campo visual de la cámara si la siguiente ecuación
+ se satisface para cada plano 
 \begin_inset Formula $\plane_{i}$
 \end_inset
 
@@ -1317,7 +1339,7 @@ si la siguiente ecuación se satisface para cada plano
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\plane_{i}\,\homoWorldPoint\geq0\label{eq:frustum-main-eq}
+\plane_{i}\,\homoWorldPoint\geq0\;.\label{eq:frustum-main-eq}
 \end{equation}
 
 \end_inset
@@ -1363,10 +1385,7 @@ geometría epipolar
 .
  Esta es independiente de la escena observada y depende únicamente de los
  parámetros internos y las posiciones relativas de las cámaras involucradas.
-\end_layout
-
-\begin_layout Standard
-La 
+ La 
 \emph on
 geometría epipolar 
 \emph default
@@ -1374,46 +1393,86 @@ entre dos imágenes es esencialmente la geometría determinada por la intersecci
  de los planos de las imágenes con la familia de planos que contengan la
  
 \emph on
-línea base 
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-
-\emph on
-en inglés, baseline
-\end_layout
-
-\end_inset
-
-
+línea base
 \emph default
- como eje (la línea base es la línea que une los centros focales de las
- cámaras).
- En la Figura 
+ como eje, como puede observarse en la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:pencil_of_planes"
 
 \end_inset
 
- puede verse esta intersección.
+.
+ La línea base es la línea que une los centros focales de las cámaras.
+\end_layout
+
+\begin_layout Standard
+Como se ilustra en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:epipolar_plane"
+
+\end_inset
+
+, cualquier punto 3D 
+\begin_inset Formula $\point$
+\end_inset
+
+ en el espacio, sus proyecciones 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ y 
+\begin_inset Formula $\imagePoint^{\prime}$
+\end_inset
+
+ en los planos de las imágenes y los centros focales de las cámaras, pertenecen
+ a un mismo plano 
+\begin_inset Formula $\vec{\pi}$
+\end_inset
+
+.
+ De manera análoga, los rayos re-proyectados desde 
+\begin_inset Formula $\imagePoint$
+\end_inset
+
+ y 
+\begin_inset Formula $\imagePoint^{\prime}$
+\end_inset
+
+ se intersectan en 
+\begin_inset Formula $\point$
+\end_inset
+
+, son coplanares y yacen sobre 
+\begin_inset Formula $\vec{\pi}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement h
+placement tbh
 wide false
 sideways false
 status collapsed
 
 \begin_layout Plain Layout
 \align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
-	filename images/math/pencil_of_planes.svg
+	filename images/math/pencil_of_planes.pdf
 	lyxscale 30
-	scale 50
+	width 40page%
+	rotateAngle 270
 
 \end_inset
 
@@ -1424,17 +1483,6 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Planos de las imágenes en intersección con la familia de planos que contiene
- a la línea base como eje.
- Imagen adaptada de 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "hartley2003multiple"
-
-\end_inset
-
-.
- 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:pencil_of_planes"
@@ -1452,81 +1500,18 @@ name "fig:pencil_of_planes"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Un punto dado 
-\begin_inset Formula $\point$
-\end_inset
-
- en el espacio 3D es proyectado en dos imágenes diferentes, en 
-\begin_inset Formula $\imagePoint$
-\end_inset
-
- y 
-\begin_inset Formula $\imagePoint^{\prime}$
-\end_inset
-
- sobre el primer y segundo plano de imagen respectivamente.
- Los puntos de la imagen 
-\begin_inset Formula $\imagePoint$
-\end_inset
-
- y 
-\begin_inset Formula $\imagePoint^{\prime}$
-\end_inset
-
-, el punto del espacio 
-\begin_inset Formula $\point$
-\end_inset
-
- y los centros focales de las cámaras son coplanares.
- Llamaremos a este plano 
-\begin_inset Formula $\vec{\pi}$
-\end_inset
-
-.
- De manera análoga, los rayos re-proyectados desde 
-\begin_inset Formula $\imagePoint$
-\end_inset
-
- y 
-\begin_inset Formula $\imagePoint^{\prime}$
-\end_inset
-
- se intersectan en 
-\begin_inset Formula $\point$
-\end_inset
-
-, son coplanares y yacen sobre el mismo plano 
-\begin_inset Formula $\vec{\pi}$
-\end_inset
-
-.
- La Figura 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:epipolar_plane"
-
-\end_inset
-
- ilustra el plano epipolar y las relaciones geométricas descriptas anteriormente.
-\end_layout
-
-\begin_layout Standard
-\align center
 \begin_inset Float figure
-placement h
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/epipolar_plane.svg
-	lyxscale 30
-	scale 30
+	filename images/math/epipolar_plane.pdf
+	lyxscale 20
+	width 27page%
+	rotateAngle 270
 
 \end_inset
 
@@ -1537,20 +1522,6 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Plano epipolar 
-\begin_inset Formula $\vec{\pi}$
-\end_inset
-
-.
- Imagen adaptada de 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "hartley2003multiple"
-
-\end_inset
-
-.
- 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:epipolar_plane"
@@ -1570,8 +1541,45 @@ name "fig:epipolar_plane"
 
 \end_layout
 
-\begin_layout Subsubsection
-Búsqueda sobre la línea epipolar
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Relaciones presentes en la geometría epipolar de una cámara 
+\emph on
+pinhole
+\emph default
+.
+ Imágenes adaptadas de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hartley2003multiple"
+
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:epipolar-geometry-pinhole"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Búsqueda de correspondencias sobre la línea epipolar
 \end_layout
 
 \begin_layout Standard
@@ -1671,7 +1679,7 @@ reference "fig:epipolar_line"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement h
+placement tbh
 wide false
 sideways false
 status collapsed
@@ -1679,9 +1687,10 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/epipolar_line.svg
+	filename images/math/epipolar_line.pdf
 	lyxscale 30
-	scale 30
+	scale 40
+	rotateAngle 270
 
 \end_inset
 
@@ -1777,8 +1786,9 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/stereo_rectification.svg
+	filename images/math/stereo_rectification.pdf
 	clip
+	rotateAngle 270
 
 \end_inset
 
@@ -1838,14 +1848,7 @@ disparidad
  La disparidad se define como la distancia entre dos puntos correspondientes
  en la imagen izquierda y derecha de un par de imágenes estéreo.
  Usando el valor de disparidad es posible calcular la posición del punto
- 3D asociado, como se verá en la siguiente sección 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Triangulación-estéreo"
-
-\end_inset
-
-.
+ 3D asociado, como se verá a continuación.
 \end_layout
 
 \begin_layout Standard
@@ -1861,7 +1864,7 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1897,7 +1900,7 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -2022,8 +2025,9 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/stereo_triangulation.svg
+	filename images/math/stereo_triangulation.pdf
 	width 35page%
+	rotateAngle 270
 
 \end_inset
 
@@ -2063,8 +2067,9 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/math/stereo_triangulation2.svg
+	filename images/math/stereo_triangulation2.pdf
 	width 35page%
+	rotateAngle 270
 
 \end_inset
 
@@ -2138,11 +2143,8 @@ Sea
 \begin_inset Formula $\point$
 \end_inset
 
- puede ser derivada a través de propiedades propias de triángulos semejantes.
-\end_layout
-
-\begin_layout Standard
-Aplicando la propiedad de triángulos semejantes entre el triángulo de línea
+ puede ser derivada.
+ Aplicando la propiedad de triángulos semejantes entre el triángulo de línea
  negra punteada y el triángulo de línea roja en la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2156,7 +2158,7 @@ reference "fig:triangulation1"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{b}{z}=\frac{(b+u_{r})-u_{l}}{z-f},
+\frac{b}{z}=\frac{(b+u_{r})-u_{l}}{z-f}\;,
 \]
 
 \end_inset
@@ -2167,7 +2169,7 @@ por lo tanto:
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-d=u_{l}-u_{r}=\frac{bf}{z},\label{eq:disparity}
+d=u_{l}-u_{r}=\frac{bf}{z}\;,\label{eq:disparity}
 \end{equation}
 
 \end_inset
@@ -2195,7 +2197,7 @@ reference "fig:triangulation2"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\frac{x}{z}=\frac{u_{l}-c_{u}}{f}\qquad\frac{y}{z}=\frac{v_{l}-c_{v}}{f}.\label{eq:triangulation1-1}
+\frac{x}{z}=\frac{u_{l}-c_{u}}{f}\qquad\frac{y}{z}=\frac{v_{l}-c_{v}}{f}\;.\label{eq:triangulation1-1}
 \end{equation}
 
 \end_inset
@@ -2232,9 +2234,9 @@ reference "eq:triangulation1-1"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}x= & \frac{(u_{l}-c_{u})z}{f}\\
-y= & \frac{(v_{l}-c_{v})z}{f}\\
-z= & \frac{bf}{u_{l}-u_{r}}
+\begin{aligned}x= & \frac{(u_{l}-c_{u})z}{f}\;,\\
+y= & \frac{(v_{l}-c_{v})z}{f}\;,\\
+z= & \frac{bf}{u_{l}-u_{r}}\;.
 \end{aligned}
 \label{eq:triangulation2}
 \end{equation}
@@ -2247,7 +2249,7 @@ z= & \frac{bf}{u_{l}-u_{r}}
 \begin_layout Standard
 Es interesante notar en la Ecuación 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:disparity"
 
 \end_inset
@@ -2298,7 +2300,7 @@ w
 v_{l}\\
 d\\
 1
-\end{bmatrix}
+\end{bmatrix},
 \]
 
 \end_inset
@@ -2313,7 +2315,7 @@ donde
 0 & 1 & 0 & -c_{v_{l}}\\
 0 & 0 & 0 & f\\
 0 & 0 & \frac{1}{b} & 0
-\end{bmatrix}\label{eq:matriz-re-proyeccion}
+\end{bmatrix}.\label{eq:matriz-re-proyeccion}
 \end{equation}
 
 \end_inset
