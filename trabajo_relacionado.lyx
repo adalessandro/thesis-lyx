@@ -116,17 +116,12 @@ Reconstrucción 3D
 La reconstrucción 3D se define como el proceso mediante el cual se captura
  y representa la forma y apariencia de entornos u objetos presentes en la
  realidad.
- 
-\end_layout
-
-\begin_layout Standard
-Ha sido un tópico central en visión computarizada durante décadas, siendo
+ Ha sido un tópico central en visión artificial durante décadas, siendo
  también una línea de investigación activa en diversos campos como el diseño
- asistido por computadora, imágenes médicas, realidad virtual y extendida,
+ asistido por computadora, imágenes médicas, realidad virtual y aumentada,
  robótica movil, entre otros.
- Numerosos métodos han sido propuestos para abordar las variantes de este
- problema de diferente naturaleza, según el área de interés y los sensores
- utilizados para obtener información del ambiente.
+ Dependiendo del área de interés y los sensores utilizados, se han propuesto
+ numerosos métodos para abordar las variantes de este problema.
 \end_layout
 
 \begin_layout Standard
@@ -165,8 +160,8 @@ te, usar este mapa para determinar su posición y orientación en el mismo.
 \begin_layout Standard
 El interés sobre el problema de SLAM ha crecido en gran medida debido a
  que su solución resulta útil en la navegación autónoma de robots.
- En las últimas décadas, el problema de SLAM ha sido extensivamente estudiado
- utilizando diferentes sensores: IMUs (inertial measurement units 
+ Recientemente, el problema de SLAM ha sido extensivamente estudiado utilizando
+ diferentes sensores: IMUs (inertial measurement units
 \begin_inset Foot
 status collapsed
 
@@ -183,14 +178,14 @@ key "nutzi2011fusion"
 
 \end_inset
 
-, sensores de tipo SONAR 
+, SONAR 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "kleeman2003advanced"
 
 \end_inset
 
-, sensores infrarrojos 
+, infrarrojos 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "abrate2007experimental"
@@ -204,7 +199,7 @@ key "cole2006using"
 
 \end_inset
 
-, GPS (global positioning system 
+, GPS (global positioning system
 \begin_inset Foot
 status collapsed
 
@@ -252,8 +247,8 @@ reference "fig:slam-problem"
 \emph on
 landmarks
 \emph default
-), los sistemas de SLAM pueden estimar tanto la posición del robot como
- la ubicación de estas marcas en el entorno.
+), los sistemas de SLAM pueden estimar tanto la pose del robot como la ubicación
+ de estas marcas en el entorno.
  El mapa es construído incrementalmente con las posiciones estimadas de
  dichas marcas, las cuales son ajustadas a lo largo de la trayectoria a
  medida que son observadas.
@@ -291,12 +286,12 @@ Representación del problema de SLAM.
 landmarks
 \emph default
  desde cada posición a medida que se desplaza.
- Simultáneamente, las posiciones del robot y 
+ Simultáneamente, las posiciones del robot y de las 
 \emph on
 landmarks
 \emph default
  son estimadas en base a estas observaciones.
- Imagen recuperada de 
+ Imagen adaptada de 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "durrant2006simultaneous"
@@ -328,7 +323,7 @@ Una introducción a SLAM, descripción del problema y soluciones al mismo
  pueden encontrarse en 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "durrant2006simultaneous,bailey2006simultaneous"
+key "durrant2006simultaneous,bailey2006simultaneous,cadena2016pastpresentfutureslam"
 
 \end_inset
 
@@ -348,10 +343,11 @@ name "subsec:slam-vslam"
 
 \begin_layout Standard
 Recientemente ha habido un creciente interés en sistemas de SLAM visual,
- que utilizan cámaras como sensor principal, debido a las importantes ventajas
- que estas presentan: bajo costo, menor consumo energético -en comparación
- con otros sensores, como lásers- y su alta disponibilidad en dispositivos
- móviles.
+ que utilizan cámaras como sensor principal.
+ Las cámaras proveen una rica información de la escena observada y presentan
+ importantes ventajas: bajo costo, menor consumo energético -en comparación
+ con otros sensores, como lásers-, portabilidad y alta disponibilidad en
+ dispositivos móviles.
  Además, las cámaras son sensores pasivos por lo que no interfieren con
  otros sensores y pueden utilizarse en entornos interiores, donde el uso
  de GPS puede verse imposibilitado.
@@ -464,7 +460,7 @@ key "Murphy:etal:TAR13"
 
 \end_inset
 
-.
+ en un entorno de oficinas.
  En la imagen se observan el mapa de puntos (features) esparso y la trayectoria
  del robot (línea verde).
  Sobre el fondo se proyecta el contorno de la habitación para referencia.
@@ -502,7 +498,14 @@ features
  Estos puntos salientes -o puntos claves- deben ser descriptos unívocamente
  para poder establecer correspondencias entre diferentes imágenes.
  En la literatura existe una gran variedad de extractores de features, siendo
- los más usados: SIFT 
+ los más usados: Shi–Tomasi 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Shi:Tomasi:CVPR94"
+
+\end_inset
+
+, SIFT 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Lowe::IJCV04"
@@ -513,6 +516,13 @@ key "Lowe::IJCV04"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Bay:etal:ECCV06"
+
+\end_inset
+
+, FAST 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Rosten:Drummond:ECCV06"
 
 \end_inset
 
@@ -590,22 +600,22 @@ name "fig:orb_features"
 \end_layout
 
 \begin_layout Standard
-Para que los 
+Para que las características visuales
 \emph on
-features 
+ 
 \emph default
 resulten útiles en la búsqueda de correspondencias en sucesivas imágenes,
  su descriptor debe poseer importantes propiedades:
 \end_layout
 
 \begin_layout Itemize
-Independencia en la posición: si el mismo punto clave es extraído de diferentes
- posiciones en la imagen, el descriptor debe ser el mismo.
+Independencia en la posición: si el mismo punto clave es extraído en diferentes
+ posiciones de la imagen, el descriptor debe ser el mismo.
 \end_layout
 
 \begin_layout Itemize
 Robustez frente a transformaciones en la imagen: reconocer el mismo feature
- frente a cambios de contraste (e.g.
+ frente a cambios de iluminación (e.g.
  efecto del sol en entornos exteriores) o perspectiva (observación del mismo
  objeto desde distintas posiciones).
 \end_layout
@@ -637,6 +647,19 @@ reference "subsec:slam-vslam"
  para la obtención de mapas densos, que analizaremos a continuación.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+es importante que sea denso para que el robot pueda navegar de manera segura
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Densificación de métodos esparsos 
 \begin_inset CommandInset label
@@ -650,8 +673,8 @@ name "subsec:Densificación-de-métodos"
 
 \begin_layout Standard
 Aprovechando que los métodos de SLAM visual basados en features producen
- resultados precisos, es posible agregar información densa al mapa esparso
- obtenido.
+ resultados precisos con respecto a la localización del robot, es posible
+ agregar información densa al mapa esparso obtenido.
 \end_layout
 
 \begin_layout Subsubsection
@@ -671,7 +694,7 @@ Un mapa de disparidad denso es aquel donde a cada píxel de una imagen se
 \emph on
 disparidad
 \emph default
- 
+
 \begin_inset Foot
 status collapsed
 
@@ -802,8 +825,8 @@ encias entre pares de imágenes.
 
 \begin_layout Standard
 Particularmente, el interés en los mapas de disparidad ha crecido con la
- introducción de cámaras estéreo ya que la línea base y las posiciones relativas
- entre las cámaras son fijas.
+ introducción de cámaras estéreo ya que la línea base (distancia entre ambas
+ cámaras) y las posiciones relativas entre las cámaras son fijas.
  Esto simplifica la búsqueda de correspondencias y el cálculo de disparidad,
  como se verá en las secciones 
 \begin_inset CommandInset ref
@@ -836,8 +859,9 @@ Oclusión: Al observar una escena desde distintas posiciones posiblemente
 
 \begin_layout Itemize
 Especularidad: La percepción de los objetos puede variar a medida que la
- cámara se desplaza debido a la especularidad de estos, dificultando la
- asociación basada en la apariencia.
+ cámara se desplaza debido a la especularidad de estos (i.e.
+ variaciones en el brillo debido a la reflectancia de la superficie), dificultan
+do la asociación basada en la apariencia.
 \end_layout
 
 \begin_layout Itemize
@@ -848,7 +872,8 @@ Muro blanco
 : Bajo este nombre se denomina al problema de encontrar correspondencias
  en regiones con poca textura -bajo gradiente en la función de intensidad-.
  Los píxeles que se encuentran en el interior de estas regiones no presentan
- suficiente información para ser distinguidos y asociados.
+ suficiente información para ser distinguidos y asociados, e.g.
+ una pared completamente blanca.
 \end_layout
 
 \begin_layout Standard
@@ -897,7 +922,7 @@ key "jung2003high,paalanen2008towards"
 \emph on
 Extended Kallman Filter
 \emph default
- 
+
 \begin_inset Foot
 status collapsed
 
@@ -980,13 +1005,14 @@ key "newcombe2010live,teixeira2016real,pan2009proforma"
 \emph on
 malla
 \emph default
- 
+
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
 en inglés, 
 \size normal
+\emph on
 mesh
 \end_layout
 
@@ -1008,9 +1034,9 @@ key "pan2009proforma"
 \end_inset
 
 .
- Estos métodos aprovechan la buena precisión de la nube de puntos para generar
- una buena aproximación inicial de la superficie, que luego puede ser refinada
- mediante consistencia en las diferentes imágenes.
+ Estos métodos aprovechan la precisión de la nube de puntos para generar
+ una buena aproximación inicial de la superficie que componen, que luego
+ puede ser refinada mediante consistencia en las diferentes imágenes.
 \end_layout
 
 \begin_layout Standard
@@ -1157,7 +1183,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Etapas del método de reconstrucción 3D 
+Etapas del método de reconstrucción 3D propuesto en 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pan2009proforma"
@@ -1303,10 +1329,6 @@ reference "fig:superpixel_monocularslam"
  La baja repetibilidad significa que una misma región, observada desde distintas
  posiciones de la cámara, puede dar lugar a diferentes segmentaciones dificultan
 do la asociación de superpíxeles a lo largo de una secuencia de imágenes.
- Asímismo, la repetibilidad de los superpíxeles se ve afectada las especularidad
-es propias de los objetos (i.e.
- variaciones en el brillo debido a la reflectancia de la superficie) debido
- a que esto puede modificar la textura de la región observada.
 \end_layout
 
 \begin_layout Standard
@@ -1319,10 +1341,18 @@ status collapsed
 
 \begin_layout Plain Layout
 \align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
-	filename images/superpixel_monocularslam.png
-	lyxscale 10
-	width 50page%
+	filename images/trabajo-relacionado/superpixel_monocularslam_1.pdf
+	lyxscale 20
+	width 25page%
+	rotateAngle 270
 
 \end_inset
 
@@ -1333,16 +1363,128 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Imagen adaptada de 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "concha2014using"
+
+\end_layout
 
 \end_inset
 
-.
- Par de imágenes pertenecientes a una misma secuencia (arriba) y su correspondie
-nte segmentación en superpíxeles (abajo).
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/trabajo-relacionado/superpixel_monocularslam_2.pdf
+	lyxscale 20
+	width 25page%
+	rotateAngle 270
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/trabajo-relacionado/superpixel_monocularslam_3.pdf
+	lyxscale 20
+	width 25page%
+	rotateAngle 270
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/trabajo-relacionado/superpixel_monocularslam_4.pdf
+	lyxscale 20
+	width 25page%
+	rotateAngle 270
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+(a)(b) Par de imágenes pertenecientes a una misma secuencia.
+ (c)(d) Segmentación en superpíxeles correspondiente al par de imágenes.
  El superpíxel 
 \begin_inset Formula $s_{1}$
 \end_inset
@@ -1368,8 +1510,7 @@ nte segmentación en superpíxeles (abajo).
 \begin_inset Formula $s_{2}^{2}$
 \end_inset
 
-), presenta baja repetibilidad: notar que, en el recuadro rojo de la imagen
- inferior izquierda, 
+), presenta baja repetibilidad: notar que, en el recuadro rojo en (c), 
 \begin_inset Formula $s_{2}^{1}$
 \end_inset
 
@@ -1378,13 +1519,20 @@ nte segmentación en superpíxeles (abajo).
 \end_inset
 
 .
- Además, como se observa en el recuadro rojo de la imagen inferior derecha,
- el superpíxel 
+ Además, como se observa en el recuadro rojo en (d), el superpíxel 
 \begin_inset Formula $s_{2}$
 \end_inset
 
  es segmentado de diferentes formas debido a que la oclusión varía según
  la posición de la cámara.
+ Imagen adaptada de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "concha2014using"
+
+\end_inset
+
+.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -1518,7 +1666,7 @@ key "yingze2013dense"
 
  se utiliza conocimiento previo sobre la forma de distintas categorías de
  objetos para clasificarlos y refinar su reconstrucción 3D.
- Recientemente, apuntando a reconstrucciones incrementales de larga escala,
+ Recientemente, apuntando a reconstrucciones incrementales de gran escala,
  se publicó el trabajo 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1597,24 +1745,24 @@ Métodos directos
 \end_layout
 
 \begin_layout Standard
-Recientemente, los métodos directos propiciaron una nueva línea de investigación
- 
+En los últimos años, los métodos directos propiciaron una nueva línea de
+ investigación 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "stuhmer2010real,graber2011online,newcombe2011dtam"
 
 \end_inset
 
- que, en vez utilizar puntos clave (
+ que, en vez utilizar características visuales (
 \emph on
 features
 \emph default
 ), operan directamente sobre las intensidades de la imagen para realizar
- la localización y mapeo.
+ la localización y mapeo, reduciendo el error fotométrico.
  A su vez, estos métodos aprovechan mayor parte de la información disponible
- en las imágenes -todos los píxeles de alto contraste, incluyendo vértices,
- aristas y áreas de alta textura- obteniendo mapas 3D de mayor densidad
- denominados semi-densos, como puede observarse en la Figura 
+ en las imágenes -píxeles de alto gradiente, incluyendo vértices, aristas
+ y áreas de alta textura- obteniendo mapas 3D de mayor densidad denominados
+ semi-densos, como puede observarse en la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:lsdslam"
@@ -1702,7 +1850,7 @@ key "mur2015probabilistic"
 \end_layout
 
 \begin_layout Standard
-Uno de los trabajos más emblemáticos es LSD-SLAM 
+Uno de los trabajos más importantes es LSD-SLAM 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "engel2014lsd"
@@ -1714,7 +1862,7 @@ key "engel2014lsd"
 Large Scale Direct SLAM
 \emph default
 ) que implementa una solución para secuencias de larga escala en tiempo
- real en CPU (sin GPU) utilizando una cámara monocular.
+ real en CPU (sin necesidad de utilizar GPU) utilizando una cámara monocular.
  Posteriormente, este sistema se extiende para cámaras estéreo 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1733,7 +1881,20 @@ key "caruso2015large"
 \end_layout
 
 \begin_layout Standard
-Recientemente, en 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+falta paper DSO direct sparse odometry
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente, en 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "concha2016visual"
