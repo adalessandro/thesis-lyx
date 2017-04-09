@@ -257,7 +257,7 @@ landmarks
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement H
+placement tbh
 wide false
 sideways false
 status collapsed
@@ -356,31 +356,31 @@ Recientemente ha habido un creciente interés en sistemas de SLAM visual,
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-Poner algo de mono y estéreo.
- Mirar journal, rodri puso algo para sacar referencias.
-\end_layout
-
-\begin_layout Plain Layout
-There exists two main approaches for camera-based SLAM, namely monocular
- and stereo [5].
-\end_layout
-
-\begin_layout Plain Layout
-Stereo based SLAM provides pixel depth information using 20 a single observation
- [6, 7, 8].
-\end_layout
-
-\begin_layout Plain Layout
-This requires more computations in the monocular case [9, 10].
-\end_layout
+Existen dos enfoques predominantes en los sistemas de SLAM basados en cámaras,
+ denominados monocular y estéreo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lemaire2007"
 
 \end_inset
 
+.
+ Los sistemas de SLAM visual estéreo proveen información sobre la profundidad
+ de los píxeles mediante una única observación 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tomono2009,LinWang2010,pire2015"
 
+\end_inset
+
+, lo cual requiere mayor número de cómputos en el caso monocular 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mouragnon2006,Hwang2011"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -401,10 +401,7 @@ key "mur2015orb,pire2015,Klein:Murray:ISMAR07,tan2013robust"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-En la Figura 
+ En la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:vslam-sparse-map"
@@ -424,7 +421,7 @@ key "pire2015"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement H
+placement tbh
 wide false
 sideways false
 status collapsed
@@ -555,7 +552,7 @@ reference "fig:orb_features"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement h
+placement tbh
 wide false
 sideways false
 status collapsed
@@ -638,26 +635,13 @@ reference "subsec:slam-vslam"
 \end_inset
 
 , los métodos V-SLAM son capaces de generar un mapa esparso del entorno
- de manera precisa.
- Sin embargo, el mapa reconstruido contiene solamente una pequeña porción
- de los puntos 3D de la escena y una reconstrucción 3D completa debe ser
- lo suficientemente densa para poder modelar la geometría y apariencia del
- entorno.
+ de manera precisa, aunque este contiene solamente una pequeña porción de
+ los puntos 3D de la escena.
+ Una reconstrucción 3D completa debe ser lo suficientemente densa para poder
+ modelar la geometría y apariencia del entorno, lo que resulta clave para
+ que el robot pueda navegar de manera segura.
  Por esto, dentro del área de V-SLAM se han desarrollado distintos enfoques
  para la obtención de mapas densos, que analizaremos a continuación.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-es importante que sea denso para que el robot pueda navegar de manera segura
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -1882,7 +1866,7 @@ key "caruso2015large"
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 falta paper DSO direct sparse odometry
