@@ -247,7 +247,6 @@ status collapsed
 	filename images/metodo_propuesto/metodo-diagram.pdf
 	lyxscale 30
 	width 70page%
-	rotateAngle 270
 
 \end_inset
 
@@ -675,7 +674,6 @@ status collapsed
 	filename images/metodo_propuesto/stereoscan_projection.pdf
 	lyxscale 40
 	width 50page%
-	rotateAngle 270
 
 \end_inset
 
