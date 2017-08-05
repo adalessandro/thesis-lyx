@@ -136,6 +136,13 @@ Stereo Parallel Tracking and Mapping
 ), de forma que la arquitectura y las diferentes técnicas involucradas en
  el desarrollo están motivadas por las características propias del sistema
  de SLAM estéreo considerado.
+ De todas maneras, el método propuesto puede ejecutarse 
+\end_layout
+
+\begin_layout Standard
+Si bien el método de reconstrucción densa propuesto en este trabajo no se
+ restringe a ser ejecutado sobre un sistema de SLAM en particular, fue diseñado
+ tomando en consideración la interfaz y el funcionamiento de S-PTAM.
 \end_layout
 
 \begin_layout Standard
@@ -193,19 +200,6 @@ Procesando esta entrada, el sistema mantiene un mapa 3D global que es extendido
  de mapeo denso se divide en 3 tareas:
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-?? ver correccion
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Itemize
 Cálculo de disparidad: procesa cada par de imágenes entrante y computa un
  mapa denso de disparidad.
@@ -239,7 +233,7 @@ correspondientes a
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -334,7 +328,7 @@ Localización y Mapeo Paralelos
 \end_inset
 
 ) que divide las tareas de localización y mapeo en dos hilos de ejecución
- diferentes, para aprovechar la capacidad de cómputo de procesadorees con
+ diferentes, para aprovechar la capacidad de cómputo de procesadores con
  dos o más núcleos.
 \end_layout
 
@@ -359,7 +353,7 @@ reference "fig:sptam_example-1"
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -666,7 +660,7 @@ reference "fig:stereoscan_projection"
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center

@@ -100,6 +100,128 @@ name "chap:Introducción"
 Introducción
 \end_layout
 
+\begin_layout Standard
+Uno de los principales problemas presentes en aplicaciones relativas a robots
+ autónomos móviles consiste en el planeamiento de una trayectoria segura
+ hacia determinados objetivos, mientras el robot se desplaza a través de
+ un entorno potencialmente desconocido.
+ Para esto, resulta necesario contar con una representación del ambiente
+ que se está transitando (mapa) y la ubicación del robot dentro del mismo.
+ El mapa debe ser suficientemente detallado (denso) para que el robot pueda
+ realizar un planeamiento seguro, evitando posibles obstáculos.
+\end_layout
+
+\begin_layout Standard
+El problema de construir incrementalmente un mapa del entorno mientras,
+ simultáneamente, la ubicación del robot es estimada es conocido como SLAM
+ (
+\emph on
+Simultaneous Localisation and Mapping
+\emph default
+) [1, 2, 3].
+\end_layout
+
+\begin_layout Standard
+En la última década, ha habido un creciente interés en sistemas de SLAM
+ visual, que utilizan cámaras como sensor principal.
+ Las cámaras proveen una rica información de la escena observada y presentan
+ importantes ventajas: bajo costo, menor consumo energético -en comparación
+ con otros sensores, como lásers-, portabilidad y alta disponibilidad en
+ dispositivos móviles.
+ Además, las cámaras son sensores pasivos por lo que no interfieren con
+ otros sensores y pueden utilizarse en entornos interiores, donde el uso
+ de GPS puede verse imposibilitado.
+ Asímismo, son menos restrictivos que los encoders, los cuales se encuentran
+ limitados a robots terrestres y son altamente imprecisos en terrenos irregulare
+s.
+\end_layout
+
+\begin_layout Standard
+Existen dos enfoques predominantes en los sistemas de SLAM basados en cámaras,
+ denominados monocular y estéreo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lemaire2007"
+
+\end_inset
+
+.
+ Los sistemas de SLAM visual estéreo proveen información sobre la profundidad
+ de los píxeles mediante una única observación 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tomono2009,LinWang2010,pire2015"
+
+\end_inset
+
+, lo cual requiere mayor número de cómputos en el caso monocular 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mouragnon2006,Hwang2011"
+
+\end_inset
+
+.
+ Adicionalmente, las reconstrucciones estéreo preservan la escala del mundo
+ real en el mapa.
+\end_layout
+
+\begin_layout Standard
+Las reconstrucciones densas del entorno resultan claves para el planeamiento
+ seguro de trayectorias para un robot.
+ Recientemente, métodos directos [11, 12, 13] han sido capaces de reconstruir
+ solamente representaciones semi-densas del entorno.
+ Sin embargo, las reconstrucciones semi-densas pueden ocultar detalles important
+es para la navegación.
+ Enforques completamente densos han aparecido recientemente en la literatura[13,
+ 14], aunque estas soluciones no logran correr en tiempo real para entornos
+ de gran escala.
+\end_layout
+
+\begin_layout Standard
+El presente trabajo se centra en reconstrucciones densas en tiempo real
+ para entornos de gran escala, utilizando cámaras estéreo como único sensor.
+ En [8], se obtiene un mapa esparso del entorno mediante la extracción de
+ features en imágenes provenientes de una cámara estéreo.
+ Nuestro trabajo se implementó sobre este sistema, sin embargo puede ser
+ empleado sobre otras implementaciones de SLAM.
+\end_layout
+
+\begin_layout Standard
+La solución propuesta se compone de tres hilos de ejecución paralelos: -generaci
+ón y reproyección de mapas de disparidad, transformación y fusión de nubes
+ de puntos, y refinamiento de mapa global-.
+\end_layout
+
+\begin_layout Standard
+Utilizamos la librería LIBELAS [15] para el cómputo de mapas de disparidad,
+ que a su vez son reproyectados para generar una nube tridimiensional de
+ puntos local.
+ Transformamos la nube de puntos local usando la posición global proveniente
+ del sistema de SLAM subyacente, refinando continuamente las nubes de puntos
+ locales a lo largo de todo el proceso.
+ Cada nube de puntos local es filtrada previamente -e.g.
+ fusión de puntos redundantes, detección de outliers- empleando un método
+ similar a [16].
+ Finalmente, la solución propuesta se integró al framework ROS (
+\emph on
+Robot Operating System
+\emph default
+) para ser ejecutado en paralelo y conjuntamente con el sistema S-PTAM para
+ la obtención de las poses globales.
+\end_layout
+
+\begin_layout Standard
+Los experimentos realizados con 
+\emph on
+datasets
+\emph default
+ de dominio público muestran que el sistema es apto para generar en tiempo
+ real una reconstrucción densa, en entornos de grandes dimensiones, sin
+ requerir el uso de GPUs, con precisión similar a otros métodos presentes
+ en el estado del arte.
+\end_layout
+
 \begin_layout Section
 Motivación y definición del problema
 \end_layout
