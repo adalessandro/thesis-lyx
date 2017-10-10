@@ -1,9 +1,7 @@
 #LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+\lyxformat 474
 \begin_document
 \begin_header
-\save_transient_properties true
-\origin unavailable
 \textclass book
 \begin_preamble
 \usepackage[utf8]{inputenc}
@@ -30,16 +28,16 @@ figs-within-sections
 \language_package default
 \inputencoding utf8
 \fontencoding global
-\font_roman "default" "default"
-\font_sans "default" "default"
-\font_typewriter "default" "default"
-\font_math "auto" "auto"
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100 100
-\font_tt_scale 100 100
+\font_sf_scale 100
+\font_tt_scale 100
 \graphics pdftex
 \default_output_format default
 \output_sync 0
@@ -333,7 +331,7 @@ key "durrant2006simultaneous,bailey2006simultaneous,cadena2016pastpresentfutures
 V-SLAM - Localización y mapeo simultáneo visual 
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:slam-vslam"
+name "sub:slam-vslam"
 
 \end_inset
 
@@ -628,7 +626,7 @@ V-SLAM denso
 Como se analizó en la sección 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:slam-vslam"
+reference "sub:slam-vslam"
 
 \end_inset
 
@@ -646,7 +644,7 @@ reference "subsec:slam-vslam"
 Densificación de métodos esparsos 
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:Densificación-de-métodos"
+name "sub:Densificación-de-métodos"
 
 \end_inset
 
@@ -813,7 +811,7 @@ reference "sec:stereo_rectification"
  y 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:Triangulación-estéreo"
+reference "sub:Triangulación-estéreo"
 
 \end_inset
 
@@ -852,8 +850,15 @@ Muro blanco
 \end_layout
 
 \begin_layout Standard
-\begin_inset Separator plain
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\end_layout
+
 \end_inset
+
 
 
 \end_layout
@@ -1198,7 +1203,7 @@ Métodos basados en superpíxeles
 En la sección anterior 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:Densificación-de-métodos"
+reference "sub:Densificación-de-métodos"
 
 \end_inset
 

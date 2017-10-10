@@ -1,9 +1,7 @@
 #LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+\lyxformat 474
 \begin_document
 \begin_header
-\save_transient_properties true
-\origin unavailable
 \textclass book
 \begin_preamble
 \usepackage[utf8]{inputenc}
@@ -24,16 +22,16 @@ figs-within-sections
 \language_package default
 \inputencoding utf8
 \fontencoding global
-\font_roman "default" "default"
-\font_sans "default" "default"
-\font_typewriter "default" "default"
-\font_math "auto" "auto"
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100 100
-\font_tt_scale 100 100
+\font_sf_scale 100
+\font_tt_scale 100
 \graphics pdftex
 \default_output_format default
 \output_sync 0
@@ -696,7 +694,7 @@ De esta manera, es posible proyectar cualquier punto 3D
 \begin_layout Subsection
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:Re-proyección"
+name "sub:Re-proyección"
 
 \end_inset
 
@@ -883,7 +881,7 @@ Revisar ecuación del rayo y su explicación.
 Frustum culling 
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:Frustum-culling"
+name "sub:Frustum-culling"
 
 \end_inset
 
@@ -988,7 +986,7 @@ Vértices del campo visual de la cámara
  
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:Vértices-del-frustum"
+name "sub:Vértices-del-frustum"
 
 \end_inset
 
@@ -1270,7 +1268,7 @@ Cada plano
  relaciones geométricas enunciadas en la sección anterior 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:Vértices-del-frustum"
+reference "sub:Vértices-del-frustum"
 
 \end_inset
 
@@ -1357,7 +1355,7 @@ name "sec:Modelo-y-geometría-estereo"
 Como se vio en la sección 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:Re-proyección"
+reference "sub:Re-proyección"
 
 \end_inset
 
@@ -1977,7 +1975,7 @@ name "fig:images_rectification"
 Triangulación estéreo 
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:Triangulación-estéreo"
+name "sub:Triangulación-estéreo"
 
 \end_inset
 
