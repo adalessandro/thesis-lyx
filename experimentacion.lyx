@@ -1,7 +1,9 @@
 #LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass book
 \begin_preamble
 \usepackage[utf8]{inputenc}
@@ -28,16 +30,16 @@ figs-within-sections
 \language_package default
 \inputencoding utf8
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics pdftex
 \default_output_format default
 \output_sync 0
@@ -98,7 +100,7 @@ En este capítulo se presentan los experimentos diseñados para evaluar el
 ón densa basada en disparidad.
  En todos los casos, el hardware utilizado para el procesamiento de los
  experimentos corresponde a una computadora estándar de escritorio con procesado
-r Intel(R) Core(TM) i7-4600M de 2.90GHz y 8GiB de memoria RAM.
+r Intel(R) Core(TM) i7-6700HQ de 2.60GHz y 8GiB de memoria RAM.
 \end_layout
 
 \begin_layout Standard
@@ -106,8 +108,8 @@ Los experimentos se llevan a cabo sobre el entorno de desarrollo ROS (
 \emph on
 Robot Operating System
 \emph default
-), el cual provee las herramientas necesarias para comprobar el desempeño
- del sistema en distintos tipos de escenarios.
+) Kinetic, el cual provee las herramientas necesarias para comprobar el
+ desempeño del sistema en distintos tipos de escenarios.
  El método propuesto se implementó como un nodo ROS que es ejecutado en
  simultáneo al nodo ROS correspondiente al sistema S-PTAM.
 \end_layout
@@ -131,6 +133,25 @@ s mediante diferentes sensores a lo largo de un trayecto realizado por robots
 datasets
 \emph default
 , permitiendo evaluar el desempeño del sistema en diferentes condiciones.
+\end_layout
+
+\begin_layout Standard
+Evaluamos nuestro sistema S-PTAM Denso sobre los datasets públicos KITTI
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2013vision"
+
+\end_inset
+
+ y Tsukuba 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "peris2012towards"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -194,14 +215,18 @@ dataset
 \emph on
 ground truth
 \emph default
-, permitiendo conocer la localización precisa del vehículo en cada momento
- y reconstruir el entorno 3D en base a mediciones tomadas con un láser Velodyne.
+, con la localización precisa del vehículo en cada momento y nubes de puntos
+ 3D tomadas con un láser Velodyne.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement th
+placement tbh
 wide false
 sideways false
 status collapsed
@@ -219,6 +244,11 @@ width "33.33text%"
 special "none"
 height "1in"
 height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
@@ -258,6 +288,11 @@ width "50text%"
 special "none"
 height "1in"
 height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
@@ -378,19 +413,6 @@ name "fig:kitti_sensors"
 \end_inset
 
 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-FloatBarrier
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -405,7 +427,7 @@ Tsukuba Stereo
 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "martull2012realistic"
+key "peris2012towards"
 
 \end_inset
 
@@ -433,8 +455,7 @@ Al tratarse de una dataset artificial, provee información exacta del
 \emph on
 ground truth
 \emph default
-: posición 3D y orientación de la cámara y mapas de profundidad en cada
- 
+: posición 3D y orientación de la cámara y mapas de disparidad en cada 
 \emph on
 frame
 \emph default
@@ -446,17 +467,22 @@ frame
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:kitti_sensors"
+reference "fig:tsukuba_1"
 
 \end_inset
 
  se muestran algunas imágenes de ejemplo seleccionadas del dataset, con
- sus respectivos mapas de profundidad.
+ sus respectivos mapas de disparidad.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
+placement tbh
 wide false
 sideways false
 status collapsed
@@ -479,7 +505,7 @@ status collapsed
 
 \begin_layout Plain Layout
 Imágenes pertenecientes al dataset Tsukuba con sus respectivos mapas de
- disparidad (blanco: más cercano, negro: más lejano).
+ disparidad (blanco: mayor disparidad, negro: menor disparidad).
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -498,1458 +524,9 @@ name "fig:tsukuba_1"
 \end_inset
 
 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-FloatBarrier
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Desempeño del método de mapeo denso sobre S-PTAM
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-Agregar conclusiones sobre los datos? e.g.:
-\end_layout
-
-\begin_layout Plain Layout
-* el cálculo de disparidad suele ser 3 veces el tiempo de la proyección.
-\end_layout
-
-\begin_layout Plain Layout
-* O poner que se encuentra entre X% e Y%
-\end_layout
-
-\begin_layout Plain Layout
-* el tiempo de refinamiento es despreciable?
-\end_layout
-
-\begin_layout Plain Layout
-* sumar tiempos de las 2 etapas? el tiempo desde que llega el keyframe hasta
- que se obtiene la nube de puntos
-\end_layout
-
-\begin_layout Plain Layout
-* esto está dando un rate < 10Hz, pedir a Taihú que lo corra en i7quadcore
- o poner que se near-real-time?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Durante la ejecución del método se calculó y almacenó el tiempo de procesamiento
- requerido en cada etapa o hilo de ejecución:
-\end_layout
-
-\begin_layout Itemize
-Cálculo mapa de disparidad
-\end_layout
-
-\begin_layout Itemize
-Fusión (consistencia y redundancia) y proyección 3D
-\end_layout
-
-\begin_layout Itemize
-Refinamiento de posición
-\end_layout
-
-\begin_layout Standard
-El tiempo promedio de cada etapa para cada secuencia del 
-\emph on
-dataset KITTI 
-\emph default
-se detalla en la tabla 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:tiempo_por_etapa_kitti"
-
-\end_inset
-
-.
- Estos mismos datos son representados en el gráfico 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:tiempo_por_etapa_kitti_grafico"
-
-\end_inset
-
- para facilitar su visualización y comparación.
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Float table
-placement h
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-resizebox{
-\backslash
-textwidth}{!}{%
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="13" columns="4">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Secuencia
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Tiempo promedio por etapa (ms)
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell multirow="4" alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Cálculo mapa de disparidad
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Fusión (consistencia y redundancia) y proyección 3D
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Refinamiento de posición
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI00
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-182.973
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-75.296
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.854
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI01
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-198.877
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-66.333
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.866
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI02
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-203.827
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-78.749
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.196
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI03
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-177.368
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-57.480
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.165
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI04
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-187.058
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-58.253
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.427
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI05
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-198.032
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-73.024
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.966
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI06
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-175.363
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-57.659
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.183
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI07
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-169.038
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-66.125
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.243
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI08
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-176.469
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-65.791
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.067
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI09
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-177.639
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-66.107
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.497
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI10
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-171.348
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-70.559
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.657
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "tab:tiempo_por_etapa_kitti"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-placement h
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/phase_time_plot.png
-	lyxscale 20
-	width 16cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:tiempo_por_etapa_kitti_grafico"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-FloatBarrier
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Para cada secuencia, se registró el tamaño de la nube de puntos obtenida
- mediante la ejecución del método propuesto en la Tabla 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:numero_puntos_kitti"
-
-\end_inset
-
-.
- En este cuadro también se incluyen el número de puntos fusionados y descartados
- en la etapa de 
-\emph on
-Fusión (consistencia y redundancia) y proyección 3D 
-\emph default
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Consistencia-y-redundancia"
-
-\end_inset
-
- y el total de 
-\emph on
-keyframes 
-\emph default
-procesados.
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Float table
-placement h
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-resizebox{
-\backslash
-textwidth}{!}{%
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="12" columns="5">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell multirow="3" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Secuencia
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-#keyframes
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-#total de puntos
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-#puntos fusionados
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-#puntos descartados
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI00
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3362
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-312364860
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-417456754
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-178842199
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI01
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-650
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-62326865
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-25609042
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-16598632
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI02
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4303
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-416882968
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-544811606
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-169222060
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI03
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-431
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-32458357
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-40085724
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-15867089
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI04
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-256
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-20359902
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-19007203
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8661135
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI05
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1916
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-169359821
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-222875300
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-86339248
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI06
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-973
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-76589756
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-90162619
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-35269139
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI07
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-677
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-58978284
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-83929963
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-35022408
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI08
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3108
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-248366690
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-352192785
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-147149858
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI09
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1354
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-118222233
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-141410385
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-57486058
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-KITTI10
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-853
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-79559358
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-108375069
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-37514186
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
- 
-\begin_inset CommandInset label
-LatexCommand label
-name "tab:numero_puntos_kitti"
-
-\end_inset
-
- Resultados de procesamiento realizado en una ejecución del método propuesto
- sobre cada secuencia del dataset KITTI.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-placement h
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/cloud_points_plot.png
-	lyxscale 20
-	width 16cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:numero_puntos_kitti_grafico"
-
-\end_inset
-
-Gráfico de barras sobre los datos detallados en la tabla 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:numero_puntos_kitti"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-FloatBarrier
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Evaluación
 \end_layout
 
@@ -1982,168 +559,311 @@ keyframe
 son comparados píxel a píxel, calculando el error absoluto existente en
  la profundidad, omitiendo aquellos píxeles que no posean un profundidad
  válida.
-\end_layout
-
-\begin_layout Subsubsection
-Evaluación sobre el dataset KITTI
-\end_layout
-
-\begin_layout Standard
-El dataset KITTI provee información de la trayectoria real de la cámara,
- por lo que en cada 
-\emph on
-frame
-\emph default
- es posible conocer la posición y orientación 3D dentro del sistema de coordenad
-as global
-\emph on
-.
-
-\emph default
- A su vez, el dataset KITTI incluye mediciones tomadas mediante un láser
- Velodyne, brindando las coordenadas 3D de cada punto en el sistema de coordenad
-as del láser Velodyne.
- La transformación entre los sistemas de coordenadas del láser Velodyne
- y la cámara es fija durante cada secuencia y es proporcionada por el dataset:
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $R_{velo}^{cam}\in\mathbb{R}^{3x3}$
-\end_inset
-
-: matriz de rotación: velodyne 
-\begin_inset Formula $\rightarrow$
-\end_inset
-
- cámara
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $t_{velo}^{cam}\in\mathbb{R}^{1x3}$
-\end_inset
-
-: vector de traslación: velodyne 
-\begin_inset Formula $\rightarrow$
-\end_inset
-
- cámara
+ En el dataset Tsukuba, los autores proveen los mapas de disparidad del
+ ground truth para cada par de imágenes estéreo, desde los que extrajimos
+ los mapas de profundidad.
+ Para el caso del dataset KITTI, generamos los mapas de profundidad del
+ ground truth para cada par de imágenes proyectando las nubes de puntos
+ del láser Velodyne en cada plano de imagen, utilizando las correspondientes
+ poses del ground truth.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-T_{velo}^{cam}=\begin{pmatrix}R_{velo}^{cam} & t_{velo}^{cam}\\
-0 & 1
-\end{pmatrix}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-En el 
-\emph on
-
-\begin_inset Formula $frame_{i}$
-\end_inset
-
-,
-\emph default
- un punto 3D 
-\begin_inset Formula $X_{i}$
-\end_inset
-
- es sensado por el láser Velodyne dentro de su sistema de coordenadas.
- Luego, la proyección de este punto 3D corresponde al píxel 
-\begin_inset Formula $Y_{j}$
-\end_inset
-
- en el plano de la imagen del 
-\emph on
-
-\begin_inset Formula $frame_{j}$
-\end_inset
-
-
-\emph default
- según la siguiente ecuación:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-Y_{j}=P_{j}\;T_{i}^{j}\;T_{velo}^{cam}\;X_{i}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-donde: 
-\begin_inset Formula $T_{i}^{j}$
-\end_inset
-
- corresponde a la transformación entre el 
-\emph on
-
-\begin_inset Formula $frame_{i}$
-\end_inset
-
-
-\emph default
- y 
-\emph on
-
-\begin_inset Formula $frame_{j}$
-\end_inset
-
-;
-\emph default
+Por otro lado, utilizamos los mapas de profundidad extraídos mediante LIBELAS
  
-\begin_inset Formula $P_{j}$
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2010efficient"
+
 \end_inset
 
- es la matriz de proyección del 
-\emph on
+ desde pares de imágenes estéreo para mostrar los beneficios de nuestro
+ algoritmo de fusión.
+\end_layout
 
-\begin_inset Formula $frame_{j}$
+\begin_layout Section
+Resultados
+\end_layout
+
+\begin_layout Standard
+Las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti_reconstructions"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tsukuba_reconstructions-1"
+
+\end_inset
+
+ muestran distintas reconstrucciones tridimensionales producidas por S-PTAM
+ Denso en ambos datasets, en donde puede notarse el alta precisión del método.
+ Los resultados pueden ser mejor apreciados en los videos que se encuentran
+ en las notas de pie de página.
+ El primer video 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+https://youtu.be/ZLMHx_MU-2k
+\end_layout
+
+\end_inset
+
+ muestra al sistema corriendo en tiempo real una de las secuencias del dataset
+ KITTI.
+ El segundo video 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+https://youtu.be/ayp6yk1UnWM
+\end_layout
+
+\end_inset
+
+ muestra una vista detallada de las nubes de puntos densas locales obtenidas
+ por el método propuesto y registradas utilizando la pose estimada por S-PTAM.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_3d_1.png
+	lyxscale 10
+	width 30col%
+
 \end_inset
 
 
-\emph default
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/experimentacion/kitti_3d_2.png
+	lyxscale 10
+	width 30col%
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename images/experimentacion/kitti_3d_3.png
+	lyxscale 10
+	width 30col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Distintas reconstrucciones 3D generadas mediante nuestro algoritmo en el
+ dataset KITTI (secuencia 06).
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_reconstructions"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_3d_1.png
+	lyxscale 10
+	width 30col%
+	height 3.5cm
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_3d_2.png
+	lyxscale 10
+	width 30col%
+	height 3.5cm
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_3d_3.png
+	lyxscale 10
+	width 30col%
+	height 3.5cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Distintas reconstrucciones 3D generadas mediante nuestro algoritmo en el
+ dataset Tsukuba.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_reconstructions-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame612"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame777"
+
+\end_inset
+
+ muestran una comparación entre los mapas de profundidad estimados por LIBELAS,
+ a partir de un par de imágenes estéreo, y el mapa de profundidad calculado
+ por nuestro algoritmo.
+ Asímismo mostramos los errores en la reconstrucción.
+\end_layout
+
+\begin_layout Standard
+Obsérvese que, para la secuencia KITTI, la profundidad obtenida por S-PTAM
+ Denso 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame612_dense"
+
+\end_inset
+
+ se aproxima mejor al ground truth 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame612_gt"
+
+\end_inset
+
+ que el obtenido por LIBELAS 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame612_libelas_depth"
+
+\end_inset
+
 .
-\end_layout
+ Esto también puede ser apreciado en las figuras de error 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame612_libelas_error"
 
-\begin_layout Standard
-En la Figura pueden verse diferentes mapas de disparidad generados por el
- método propuesto y en base al ground truth.
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame612_error"
+
+\end_inset
+
+.
+ Esta notable mejora en la precisión es principalmente el resultado de la
+ fusión desde diferentes puntos de vista.
+ La imágenes del dataset KITTI contienen áreas distantes, que resultan en
+ un mayor error estéreo.
+ Para tales áreas el error puede ser reducido si la profundidad estéreo
+ es fusionada con una observación más cercana.
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement h
+placement tbh
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti00.png
+	filename images/experimentacion/kitti06_frame612_rgb.png
 	lyxscale 10
-	width 80page%
+	width 30page%
 
 \end_inset
 
@@ -2154,26 +874,10 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
+Imagen izquierda 
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:evaluacion-kitti-kitti00"
+name "fig:kitti06_frame612_rgb"
 
 \end_inset
 
@@ -2188,47 +892,7 @@ name "fig:evaluacion-kitti-kitti00"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Float figure
-placement h
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti00.png
-	lyxscale 10
-	width 40page%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
+\begin_inset space \enskip{}
 \end_inset
 
 
@@ -2240,9 +904,9 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti02.png
+	filename images/experimentacion/kitti06_frame612_gt_high50.png
 	lyxscale 10
-	width 40page%
+	width 30page%
 
 \end_inset
 
@@ -2253,298 +917,10 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti03.png
-	lyxscale 10
-	width 40page%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti04.png
-	lyxscale 10
-	width 40page%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti05.png
-	lyxscale 10
-	width 40page%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti06.png
-	lyxscale 10
-	width 40page%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti07.png
-	lyxscale 10
-	width 40page%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti08.png
-	lyxscale 10
-	width 40page%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti09.png
-	lyxscale 10
-	width 40page%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/experimentacion/depth_map_comparison/kitti10.png
-	lyxscale 10
-	width 40page%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
+Ground-Truth 
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:evaluacion-kitti-all"
+name "fig:kitti06_frame612_gt"
 
 \end_inset
 
@@ -2561,37 +937,236 @@ name "fig:evaluacion-kitti-all"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
+\align center
 \begin_inset Float figure
 wide false
 sideways false
 status collapsed
 
 \begin_layout Plain Layout
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_frame612_libelas_depth_high50.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
 
 \begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mapa de profundidad LIBELAS 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame612_libelas_depth"
+
+\end_inset
+
 
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_frame612_libelas_error_high50.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Mapas de disparidad
+Error mapa de profundidad LIBELAS 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame612_libelas_error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_frame612_dense_high50.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mapa de profundidad S-PTAM Denso 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame612_dense"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_frame612_error_high50.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error mapa de profundidad S-PTAM Denso 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame612_error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/high50_bar.pdf
+	lyxscale 10
+	width 35page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Métrica de color 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame612_bar"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparación entre mapas de profundidad obtenidos mediante LIBELAS y S-PTAM
+ en relación al ground truth, para una imagen de la secuencia 06 del Dataset
+ KITTI.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame612"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2605,14 +1180,2671 @@ Mapas de disparidad
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_frame777_rgb.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Imagen izquierda 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame777_rgb"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_frame777_gt_high50.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ground-Truth 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame777_gt"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_frame777_libelas_depth_high50.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mapa de profundidad LIBELAS 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame777_libelas_depth"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_frame777_libelas_error_high50.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error mapa de profundidad LIBELAS 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame777_libelas_error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_frame777_dense_high50.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mapa de profundidad S-PTAM Denso 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame777_dense"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_frame777_error_high50.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error mapa de profundidad S-PTAM Denso 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame777_error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/high50_bar.pdf
+	lyxscale 10
+	width 35page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Métrica de color 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame777_bar"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparación entre mapas de profundidad obtenidos mediante LIBELAS y S-PTAM
+ en relación al ground truth, para una imagen de la secuencia 06 del Dataset
+ KITTI.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_frame777"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tsukuba_frame807"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tsukuba_frame1314"
+
+\end_inset
+
+ puede observarse que los errores de LIBELAS y S-PTAM Denso son similares
+ en el dataset Tsukuba.
+ La razón es que la escena de interior, renderizada por el dataset Tsukuba,
+ no contiene áreas distantes.
+ La profundidad desde un par de imágenes estéreo es entonces altamente precisa,
+ y la mejora obtenida por el algoritmo de fusión desde diferentes puntos
+ de vista no resulta tan evidente.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame807_rgb.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Imagen izquierda 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame807_rgb"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame807_gt_high6.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ground-Truth 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame807_gt"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame807_libelas_depth_high6.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mapa de profundidad LIBELAS 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame807_libelas_depth"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame807_libelas_error_high6.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error mapa de profundidad LIBELAS 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame807_libelas_error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame807_dense_high6.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mapa de profundidad S-PTAM Denso 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame807_dense"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame807_error_high6.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error mapa de profundidad S-PTAM Denso 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame807_error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/high6_bar.pdf
+	lyxscale 10
+	width 35page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Métrica de color 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame807_bar"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparación entre mapas de profundidad obtenidos mediante LIBELAS y S-PTAM
+ en relación al ground truth, para una imagen del Dataset Tsukuba.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame807"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame1314_rgb.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Imagen izquierda 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame1314_rgb"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame1314_gt_high6.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ground-Truth 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame1314_gt"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame1314_libelas_depth_high6.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mapa de profundidad LIBELAS 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame1314_libelas_depth"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame1314_libelas_error_high6.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error mapa de profundidad LIBELAS 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame1314_libelas_error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame1314_dense_high6.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mapa de profundidad S-PTAM Denso 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame1314_dense"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_frame1314_error_high6.png
+	lyxscale 10
+	width 25page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error mapa de profundidad S-PTAM Denso 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame1314_error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/high6_bar.pdf
+	lyxscale 10
+	width 35page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Métrica de color 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame1314_bar"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparación entre mapas de profundidad obtenidos mediante LIBELAS y S-PTAM
+ en relación al ground truth, para una imagen del Dataset Tsukuba.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_frame1314"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Análisis del error
+\end_layout
+
+\begin_layout Standard
+Para un análisis cuantitativo de nuestro algoritmo, también evaluamos el
+ error de la profundidad a lo largo de toda la secuencia 06 del dataset
+ KITTI.
+ Las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_libelas_boxplot"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_dense_boxplot"
+
+\end_inset
+
+ muestran los errores de la reconstrucción a distintas distancias de la
+ cámara, en la secuencia 06 del dataset KITTI, empleando los mapas de profundida
+s de LIBELAS y S-PTAM Denso.
+ Los errores se muestran a partir de los 5 metros de distancia, ya que esta
+ es la mínima distancia del sensor Velodyne que utilizamos como ground truth.
+\end_layout
+
+\begin_layout Standard
+La Figura muestra que S-PTAM Denso obtiene errores menores que la estimación
+ realizada por LIBELAS.
+ Para una mejor evaluación, la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:median_comparison_kitti"
+
+\end_inset
+
+ compara el error medio para cada profundidad tanto en S-PTAM Denso como
+ en LIBELAS.
+ Nótese que los errores son muy similares para pequeñas profundidades.
+ Dado que el 
+\emph on
+parallax 
+\emph default
+es grande, la profundidad estimada es lo suficientemente precisa, por lo
+ tanto las triangulaciones estéreo adicionales no agregan demasiado información.
+ La ganancia obtenida mediante la fusión estéreo es apreciada a grande profundid
+ades, donde una sola triangulación estéreo produce resultados ruidosos y
+ la fusión de múltiples vistas es capaz de reducir el error.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_libelas_boxplot.png
+	lyxscale 10
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error en LIBELAS (profundidad vs.
+ error) en la secuencia 06 del Dataset KITTI.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_libelas_boxplot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti06_dense_boxplot.png
+	lyxscale 10
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error en S-PTAM Denso (profundidad vs.
+ error) en la secuencia 06 del Dataset KITTI.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti06_dense_boxplot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/medians_comparison_kitti.png
+	lyxscale 10
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparación de mediana de error entre LIBELAS y S-PTAM Denso (profundidad
+ vs.
+ error) en la secuencia 06 del Dataset KITTI.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:median_comparison_kitti"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tsukuba_libelas_boxplot"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tsukuba_dense_boxplot"
+
+\end_inset
+
+ se grafica el error en la profundidad de LIBELAS y S-PTAM Denso, respectivament
+e, para la secuencia del dataset Tsukuba.
+ Al igual que en el Dataset KITTI, mostramos el error medio en la profundidad
+ para ambos métodos 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:median_comparison_tsukuba"
+
+\end_inset
+
+.
+ En contraste con los resultados del Dataset KITTI, en este caso la precisión
+ de S-PTAM Denso resulta en una mejora mínima frente a la obtenida por LIBELAS.
+\end_layout
+
+\begin_layout Standard
+El motivo subyacente ya fue detallado anteriormente.
+ Las profundidades del escenario de interior generado en el dataset Tsukuba
+ son pequeñas (en comparación con las calles en exterior del dataset KITTI).
+ El baseline de la cámara estéreo es lo suficientemente grande para producir
+ estimaciones precisas de la profundidad, y por lo tanto las sucesivas fusiones
+ no implican una mejora significativa.
+\end_layout
+
+\begin_layout Standard
+Como conclusión, las triangulaciones desde múltiple pares de imágenes estéreo
+ mejoran sustancialmente la precisión de la reconstrucción cuando el cociente
+ de relación profundidad-baseline es alto.
+ En caso contrario, la ganancia en el método se ve muy limitada.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_libelas_boxplot.png
+	lyxscale 10
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error en LIBELAS (profundidad vs.
+ error) en el Dataset Tsukuba.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_libelas_boxplot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/tsukuba_dense_boxplot.png
+	lyxscale 10
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Error en S-PTAM Denso (profundidad vs.
+ error) en el Dataset Tsukuba.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tsukuba_dense_boxplot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/medians_comparison_tsukuba.png
+	lyxscale 10
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparación de mediana de error entre LIBELAS y S-PTAM Denso (profundidad
+ vs.
+ error) en el Dataset Tsukuba.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:median_comparison_tsukuba"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por completitud, en las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti_medians_all"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti_medians_all-1"
+
+\end_inset
+
+ se expone un análisis comparativo de las medianas de error correspondientes
+ a las restantes secuencias del dataset KITTI.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_medians/00.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
 
 
-\backslash
-FloatBarrier
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Secuencia 00 del Dataset KITTI.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_00_median"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_medians/01.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Secuencia 01 del Dataset KITTI.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_01_median"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_medians/02.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Secuencia 02 del Dataset KITTI.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_02_median"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_medians/03.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Secuencia 03 del Dataset KITTI.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_03_median"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_medians/04.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Secuencia 04 del Dataset KITTI.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_04_median"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_medians/05.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Secuencia 05 del Dataset KITTI.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_05_median"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparación de mediana de error entre LIBELAS y S-PTAM Denso para el dataset
+ KITTI (profundidad vs.
+ error).
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_medians_all"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_medians/07.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Secuencia 07 del Dataset KITTI.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_07_median-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_medians/08.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Secuencia 08 del Dataset KITTI.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_08_median-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_medians/09.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Secuencia 09 del Dataset KITTI.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_09_median-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \enskip{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/kitti_medians/10.png
+	lyxscale 10
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Secuencia 10 del Dataset KITTI.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_10_median-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparación de mediana de error entre LIBELAS y S-PTAM Denso para el dataset
+ KITTI (profundidad vs.
+ error).
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:kitti_medians_all-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Costo computacional
+\end_layout
+
+\begin_layout Standard
+Por último, como puede observarse en las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:points_kitti"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:points_tsukuba"
+
+\end_inset
+
+ muestran el número de puntos que el método generó y fusionó en cada secuencia.
+ Denotamos como 
+\emph on
+hipótesis 
+\emph default
+a los puntos nuevos creados, que se convierten en puntos 
+\emph on
+validados 
+\emph default
+cuando nuestro método fusiona la profundidad desde otra triangulación estéreo.
+\end_layout
+
+\begin_layout Standard
+Las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:points_kitti"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:points_tsukuba"
+
+\end_inset
+
+ dividen el número total de puntos al final de cada secuencia entre dos
+ clases: aquellos que fueron vistos una única vez -
+\emph on
+hipótesis
+\emph default
+-, o en múltiples ocasiones -
+\emph on
+validados
+\emph default
+-.
+ Finalmente, se detalla el número total de fusiones de profundidad realizadas.
+ Estos valores muestran cómo el método propuesto reduce considerablemente
+ el tamaño del mapa comparado con un enfoque 
+\emph on
+naive
+\emph default
+ donde simplemente se concatenan las distintas nubes de puntos estéreo generadas.
+\end_layout
+
+\begin_layout Standard
+Nótese en las figuras que el número de puntos es mayor en las secuencias
+ del dataset KITTI, ya que la cámara recorre una distancia mucho mayor que
+ en la secuencia Tsukuba.
+ Por otro lado, el total de fusiones resulta mayor en la secuencia Tsukuba
+ dado que mismas regiones de la escena son vistas en múltiples ocasiones,
+ a diferencia de la puramente exploratoria trayectoria en el dataset KITTI.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/points_kitti06.png
+	lyxscale 10
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Cantidad total de puntos a lo largo de una ejecución de S-PTAM Denso (creados,
+ descartados, presentes en la reconstrucción final -hipótesis (vistos una
+ única vez) y validados (fusionados múltiples veces)-, y el número total
+ de fusiones) en la secuencia 06 del dataset KITTI.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:points_kitti"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/experimentacion/points_tsukuba.png
+	lyxscale 10
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Cantidad total de puntos a lo largo de una ejecución de S-PTAM Denso (creados,
+ descartados, presentes en la reconstrucción final -hipótesis (vistos una
+ única vez) y validados (fusionados múltiples veces)-, y el número total
+ de fusiones) en la secuencia del dataset Tsukuba.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:points_tsukuba"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En esta sección se muestran los tiempos de cómputo empleados en cada fase
+ del proceso de densificación.
+ La Tabla 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:table_times"
+
+\end_inset
+
+ contiene los pasos más relevantes de nuestro algoritmo -cómputo de disparidad,
+ fusión de mapa y refinamiento de mapa- y el tiempo promedio por keyframe.
+\end_layout
+
+\begin_layout Standard
+La Tabla muestra que el método de S-PTAM Denso resulta apto para la navegación
+ de robots móviles, dado que puede correr en tiempo real a 5 fps en las
+ secuencias del dataset KITTI y a 6 fps en el caso de Tsukuba.
+\end_layout
+
+\begin_layout Standard
+De todas maneras, cabe destacar que el tiempo computacional empleado en
+ la fusión y expansión de mapa es prácticamente el mismo en ambos casos.
+ El tiempo consumido por el Refinamiento de mapa es despreciable en comparación
+ con las restantes tareas.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="13" columns="4">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Secuencia
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Disparidad (ms)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Expansión y fusión (ms)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Refinamiento (ms)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tsukuba
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+118.20
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+132.72
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.80
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+156.92
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+115.40
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.53
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 01
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+156.10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+69.12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.21
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+160.63
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+108.13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.58
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 03
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+153.66
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+83.01
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.83
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 04
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+149.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+72.99
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.00
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 05
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+165.31
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+108.97
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.97
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+154.89
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+83.21
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.84
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 07
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+155.74
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+113.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 08
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+152.10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+101.01
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.22
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 09
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+159.84
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+101.20
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.76
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KITTI 10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+158.81
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+117.42
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.35
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Tiempo de computación promedio (en ms) para cada fase de nuestro algoritmo.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:table_times"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset

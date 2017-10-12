@@ -1,7 +1,9 @@
 #LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass book
 \begin_preamble
 \usepackage[utf8]{inputenc}
@@ -28,16 +30,16 @@ figs-within-sections
 \language_package default
 \inputencoding utf8
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics pdftex
 \default_output_format default
 \output_sync 0
@@ -112,11 +114,14 @@ Uno de los principales problemas presentes en aplicaciones relativas a robots
 \begin_layout Standard
 El problema de construir incrementalmente un mapa del entorno mientras,
  simultáneamente, la ubicación del robot es estimada es conocido como SLAM
- (
-\emph on
-Simultaneous Localisation and Mapping
-\emph default
-) [1, 2, 3].
+ (Simultaneous Localization and Mapping) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "durrant2006simultaneous,bailey2006simultaneous"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -144,15 +149,16 @@ key "Lemaire2007"
 \end_inset
 
 .
- Los sistemas de SLAM visual estéreo proveen información sobre la profundidad
- de los píxeles mediante una única observación 
+ Los sistemas de SLAM visual estéreo permiten realizar una reconstrucción
+ de la escena mediante una única observación 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Tomono2009,LinWang2010,pire2015"
 
 \end_inset
 
-, lo cual requiere mayor número de cómputos en el caso monocular 
+, mientras que un sistema monocular necesita al menos dos mediciones de
+ la cámara para realizar la misma tarea 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mouragnon2006,Hwang2011"
@@ -160,76 +166,115 @@ key "Mouragnon2006,Hwang2011"
 \end_inset
 
 .
- Adicionalmente, las reconstrucciones estéreo preservan la escala del mundo
- real en el mapa.
+ Además, la reconstrucción que se puede estimar con un sistema monocular
+ se encuentra perturbada por un factor de escala, mientras que la reconstrucción
+ obtenida por un sistema estéreo se encuentra a escala real (debido a que
+ se conoce el desplazamiento que existe entre ambas cámaras).
 \end_layout
 
 \begin_layout Standard
-Las reconstrucciones densas del entorno resultan claves para el planeamiento
- seguro de trayectorias para un robot.
- Recientemente, métodos directos [11, 12, 13] han sido capaces de reconstruir
- solamente representaciones semi-densas del entorno.
- Sin embargo, las reconstrucciones semi-densas pueden ocultar detalles important
-es para la navegación.
- Enforques completamente densos han aparecido recientemente en la literatura[13,
- 14], aunque estas soluciones no logran correr en tiempo real para entornos
- de gran escala.
+Determinados enfoques 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "stuhmer2010real,graber2011online,newcombe2011dtam"
+
+\end_inset
+
+ han sido capaces de reconstruir representaciones semi-densas del entorno.
+ Sin embargo, estas reconstrucciones pueden ocultar detalles importantes
+ para la navegación, por lo que las reconstrucciones densas resultan claves
+ para el planeamiento seguro de trayectorias para un robot.
+ Enfoques completamente densos han aparecido recientemente en la literatura
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "newcombe2011dtam,yingze2013dense"
+
+\end_inset
+
+, sin embargo, estas soluciones no resultan prácticas en tiempo real, o
+ requieren hardware dedicado (por ejemplo GPU).
 \end_layout
 
 \begin_layout Standard
-El presente trabajo se centra en reconstrucciones densas en tiempo real
- para entornos de gran escala, utilizando cámaras estéreo como único sensor.
- En [8], se obtiene un mapa esparso del entorno mediante la extracción de
- features en imágenes provenientes de una cámara estéreo.
- Nuestro trabajo se implementó sobre este sistema, sin embargo puede ser
- empleado sobre otras implementaciones de SLAM.
+El presente trabajo se centra en dotar a un robot móvil con la capacidad
+ de realizar una reconstrucción densa del entorno, al mismo tiempo que se
+ estima su pose, utilizando como único sensor una cámara estéreo.
+ Para esto se trabajó sobre el sistema de SLAM estéreo S-PTAM 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pire2015"
+
+\end_inset
+
+ que mantiene un mapa disperso del entorno para obtener una estimación precisa
+ de la cámara en tiempo real.
+ Dada la localización del robot estimada por S-PTAM, una reconstrucción
+ 3D completa es computada paralelamente por el módulo de densificación.
+ Si bien nuestro trabajo se implementó sobre este sistema, puede ser empleado
+ sobre otras implementaciones de SLAM.
 \end_layout
 
 \begin_layout Standard
-La solución propuesta se compone de tres hilos de ejecución paralelos: -generaci
-ón y reproyección de mapas de disparidad, transformación y fusión de nubes
- de puntos, y refinamiento de mapa global-.
-\end_layout
+La solución propuesta se compone de tres hilos de ejecución paralelos: generació
+n y reproyección de mapas de disparidad, transformación y fusión de nubes
+ de puntos, y refinamiento del mapa global.
+ Utilizamos la librerı́a LIBELAS 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2010efficient"
 
-\begin_layout Standard
-Utilizamos la librería LIBELAS [15] para el cómputo de mapas de disparidad,
- que a su vez son reproyectados para generar una nube tridimiensional de
- puntos local.
+\end_inset
+
+ para el cómputo de mapas de disparidad, cuyos pı́xeles a su vez son reproyectad
+os para generar una nube de puntos tridimensional local.
  Transformamos la nube de puntos local usando la posición global proveniente
  del sistema de SLAM subyacente, refinando continuamente las nubes de puntos
  locales a lo largo de todo el proceso.
- Cada nube de puntos local es filtrada previamente -e.g.
- fusión de puntos redundantes, detección de outliers- empleando un método
- similar a [16].
- Finalmente, la solución propuesta se integró al framework ROS (
-\emph on
-Robot Operating System
-\emph default
-) para ser ejecutado en paralelo y conjuntamente con el sistema S-PTAM para
- la obtención de las poses globales.
+ Cada nube de puntos local es filtrada previamente -por medio de fusión
+ de puntos redundantes y detección de outliers- empleando un método similar
+ al propuesto en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2011stereoscan"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-Los experimentos realizados con 
+Finalmente, el método desarrollado se integró al framework ROS (Robot Operating
+ System) para ser ejecutado en paralelo y conjuntamente con el sistema S-PTAM,
+ del que se obtienen las poses globales.
+ Haremos referencia al sistema propuesto en esta tesina como 
 \emph on
-datasets
+S-PTAM Denso
 \emph default
- de dominio público muestran que el sistema es apto para generar en tiempo
- real una reconstrucción densa, en entornos de grandes dimensiones, sin
- requerir el uso de GPUs, con precisión similar a otros métodos presentes
- en el estado del arte.
-\end_layout
-
-\begin_layout Section
-Motivación y definición del problema
-\end_layout
-
-\begin_layout Section
-Objetivos
+.
+ Los experimentos realizados sobre datasets de dominio público muestran
+ que el sistema es apto para generar en tiempo real una reconstrucción densa,
+ sin requerir el uso de GPUs, con precisión similar a otros métodos de densifica
+ción presentes en el estado del arte.
+ 
 \end_layout
 
 \begin_layout Section
 Organización del trabajo
+\end_layout
+
+\begin_layout Standard
+El capítulo 2 presenta el estado del arte en sistemas SLAM densos.
+ En el mismo se comentan los distintos paradigmas para abordar la reconstrucción
+ 3D o mapeo denso en sistemas (SLAM), y se analizan los métodos más relevantes
+ de la literatura.
+ En el capítulo 3 se presentan los fundamentos básicos utilizados a lo largo
+ de toda la tesina.
+ En el capítulo 4 se detalla el método de SLAM denso desarrollado.
+ En el capítulo 5 se evalúa el método en datasets de dominio público y discuten
+ los resultados experimentales.
+ Por último, en el capítulo 6 se presentan las conclusiones y trabajo futuro
+ que se derivan del presente trabajo de tesina.
 \end_layout
 
 \end_body

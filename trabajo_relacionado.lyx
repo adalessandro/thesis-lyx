@@ -1,7 +1,9 @@
 #LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass book
 \begin_preamble
 \usepackage[utf8]{inputenc}
@@ -28,16 +30,16 @@ figs-within-sections
 \language_package default
 \inputencoding utf8
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics pdftex
 \default_output_format default
 \output_sync 0
@@ -250,20 +252,24 @@ landmarks
  El mapa es construído incrementalmente con las posiciones estimadas de
  dichas marcas, las cuales son ajustadas a lo largo de la trayectoria a
  medida que son observadas.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/trabajo-relacionado/slam-problem-no-variables.pdf
+	filename images/trabajo-relacionado/slam-landmarks.pdf
 	lyxscale 30
 	width 60text%
 
@@ -331,7 +337,7 @@ key "durrant2006simultaneous,bailey2006simultaneous,cadena2016pastpresentfutures
 V-SLAM - Localización y mapeo simultáneo visual 
 \begin_inset CommandInset label
 LatexCommand label
-name "sub:slam-vslam"
+name "subsec:slam-vslam"
 
 \end_inset
 
@@ -389,8 +395,8 @@ features
 ) es posible detectar y realizar un seguimiento de marcas naturales del
  ambiente a lo largo de la secuencia.
  De esta manera, los métodos de SLAM visual son capaces de estimar con precisión
- el desplazamiento de la cámara y computar un mapa esparso del entorno en
- tiempo real 
+ el desplazamiento de la cámara y computar un mapa disperso del entorno
+ en tiempo real 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mur2015orb,pire2015,Klein:Murray:ISMAR07,tan2013robust"
@@ -405,7 +411,7 @@ reference "fig:vslam-sparse-map"
 
 \end_inset
 
- puede observarse un mapa esparso generado por el sistema S-PTAM 
+ puede observarse un mapa disperso generado por el sistema S-PTAM 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pire2015"
@@ -413,22 +419,26 @@ key "pire2015"
 \end_inset
 
 .
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/level7_lc.pdf
 	lyxscale 30
-	width 80text%
+	width 70text%
 
 \end_inset
 
@@ -439,7 +449,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Mapa esparso generado por el sistema S-PTAM 
+Mapa disperso generado por el sistema S-PTAM 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pire2015"
@@ -454,7 +464,7 @@ key "Murphy:etal:TAR13"
 \end_inset
 
  en un entorno de oficinas.
- En la imagen se observan el mapa de puntos (features) esparso y la trayectoria
+ En la imagen se observan el mapa de puntos (features) disperso y la trayectoria
  del robot (línea verde).
  Sobre el fondo se proyecta el contorno de la habitación para referencia.
  
@@ -543,22 +553,26 @@ reference "fig:orb_features"
 
  se muestran los puntos detectados y asociados por el método ORB en un par
  de imágenes de ejemplo.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/orb_features.jpg
 	lyxscale 20
-	width 90text%
+	width 70text%
 	clip
 
 \end_inset
@@ -626,11 +640,11 @@ V-SLAM denso
 Como se analizó en la sección 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sub:slam-vslam"
+reference "subsec:slam-vslam"
 
 \end_inset
 
-, los métodos V-SLAM son capaces de generar un mapa esparso del entorno
+, los métodos V-SLAM son capaces de generar un mapa disperso del entorno
  de manera precisa, aunque este contiene solamente una pequeña porción de
  los puntos 3D de la escena.
  Una reconstrucción 3D completa debe ser lo suficientemente densa para poder
@@ -641,10 +655,10 @@ reference "sub:slam-vslam"
 \end_layout
 
 \begin_layout Subsection
-Densificación de métodos esparsos 
+Densificación de métodos dispersos 
 \begin_inset CommandInset label
 LatexCommand label
-name "sub:Densificación-de-métodos"
+name "subsec:Densificación-de-métodos"
 
 \end_inset
 
@@ -654,7 +668,7 @@ name "sub:Densificación-de-métodos"
 \begin_layout Standard
 Aprovechando que los métodos de SLAM visual basados en features producen
  resultados precisos con respecto a la localización del robot, es posible
- agregar información densa al mapa esparso obtenido.
+ agregar información densa al mapa disperso obtenido.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -697,22 +711,26 @@ reference "fig:liberal-disp-urban"
 \end_inset
 
  muestra un mapa de disparidad denso obtenido desde un par de imágenes estéreo.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/libelas-disparity-urban.jpg
 	lyxscale 50
-	width 60page%
+	width 70page%
 
 \end_inset
 
@@ -811,7 +829,7 @@ reference "sec:stereo_rectification"
  y 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sub:Triangulación-estéreo"
+reference "subsec:Triangulación-estéreo"
 
 \end_inset
 
@@ -850,22 +868,8 @@ Muro blanco
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-%
-\end_layout
-
-\end_inset
-
-
-
-\end_layout
-
-\begin_layout Standard
 Distintos trabajos han aprovechado los mapas de disparidad densos para densifica
-r la reconstrucción 3D de métodos esparsos
+r la reconstrucción 3D de métodos dispersos
 \emph on
 .
 
@@ -881,7 +885,7 @@ key "geiger2011stereoscan"
 \emph on
 features
 \emph default
- obteniendo un mapa esparso.
+ obteniendo un mapa disperso.
  Luego, los pares de imágenes provenientes de una cámara estéreo son procesados
  para generar mapas de disparidad densos mediante LIBELAS 
 \begin_inset CommandInset citation
@@ -921,13 +925,13 @@ Reconstrucción de planos y polígonos
 \end_layout
 
 \begin_layout Standard
-Aprovechando la precisión en la trayectoria y la nube de puntos esparsa
+Aprovechando la precisión en la trayectoria y la nube de puntos dispersa
  generadas por sistemas SLAM basados en 
 \emph on
 features
 \emph default
-, se han propuesto distintos métodos que procesan el mapa esparso para modelar
- planos y polígonos, agregando información a la reconstrucción 3D.
+, se han propuesto distintos métodos que procesan el mapa disperso para
+ modelar planos y polígonos, agregando información a la reconstrucción 3D.
 \end_layout
 
 \begin_layout Standard
@@ -980,8 +984,8 @@ key "newcombe2010live,teixeira2016real,pan2009proforma"
 
 \end_inset
 
- los puntos del mapa esparso son utilizados como vértices para obtener una
- 
+ los puntos del mapa disperso son utilizados como vértices para obtener
+ una 
 \emph on
 malla
 \emph default
@@ -1017,29 +1021,33 @@ key "pan2009proforma"
  Estos métodos aprovechan la precisión de la nube de puntos para generar
  una buena aproximación inicial de la superficie que componen, que luego
  puede ser refinada mediante consistencia en las diferentes imágenes.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/proforma-mesh-a.pdf
 	lyxscale 20
-	width 12page%
+	width 15page%
 
 \end_inset
 
@@ -1064,14 +1072,14 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/proforma-mesh-b.pdf
 	lyxscale 20
-	width 12page%
+	width 15page%
 
 \end_inset
 
@@ -1096,14 +1104,14 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/proforma-mesh-c.pdf
 	lyxscale 20
-	width 12page%
+	width 15page%
 
 \end_inset
 
@@ -1128,14 +1136,14 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/proforma-mesh-d.pdf
 	lyxscale 20
-	width 12page%
+	width 15page%
 
 \end_inset
 
@@ -1172,7 +1180,7 @@ key "pan2009proforma"
 
 .
  (a) imagen del objeto.
- (b) nube de puntos esparsa.
+ (b) nube de puntos dispersa.
  (c) modelo de superficie mediante malla de triángulos.
  (d) modelo 3D final con textura añadida.
  
@@ -1203,7 +1211,7 @@ Métodos basados en superpíxeles
 En la sección anterior 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sub:Densificación-de-métodos"
+reference "subsec:Densificación-de-métodos"
 
 \end_inset
 
@@ -1237,22 +1245,26 @@ reference "fig:superpixel_slic"
 \end_inset
 
 .
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/superpixel_slic.png
 	lyxscale 10
-	width 50page%
+	width 70page%
 
 \end_inset
 
@@ -1309,29 +1321,33 @@ reference "fig:superpixel_monocularslam"
  La baja repetibilidad significa que una misma región, observada desde distintas
  posiciones de la cámara, puede dar lugar a diferentes segmentaciones dificultan
 do la asociación de superpíxeles a lo largo de una secuencia de imágenes.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/superpixel_monocularslam_1.pdf
 	lyxscale 20
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1356,14 +1372,14 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/superpixel_monocularslam_2.pdf
 	lyxscale 20
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1392,14 +1408,14 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/superpixel_monocularslam_3.pdf
 	lyxscale 20
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1424,14 +1440,14 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/superpixel_monocularslam_4.pdf
 	lyxscale 20
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1659,22 +1675,26 @@ reference "fig:semantic_segmentation"
 \end_inset
 
 .
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/semantic_categories.pdf
-	lyxscale 50
-	scale 50
+	lyxscale 30
+	width 70col%
 
 \end_inset
 
@@ -1745,22 +1765,26 @@ reference "fig:lsdslam"
 \end_inset
 
 .
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/trabajo-relacionado/lsdslam_semidense.png
-	lyxscale 50
-	width 14cm
+	lyxscale 20
+	width 70col%
 
 \end_inset
 
@@ -1853,19 +1877,6 @@ key "caruso2015large"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-falta paper DSO direct sparse odometry
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard

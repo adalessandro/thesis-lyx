@@ -1,7 +1,9 @@
 #LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass book
 \begin_preamble
 \usepackage[utf8]{inputenc}
@@ -59,16 +61,16 @@ figs-within-sections
 \language_package default
 \inputencoding utf8
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics pdftex
 \default_output_format default
 \output_sync 0
@@ -200,81 +202,43 @@ Reconstrucción densa en tiempo real sobre sistemas SLAM basados en visión
 \end_layout
 
 \begin_layout Standard
-Uno de los principales problemas presentes en aplicaciones relativas a robots
- autónomos móviles consiste en el planeamiento de una trayectoria segura
- hacia un objetivo (u objetivos) que el robot debe alcanzar.
- Para esto, resulta necesario contar con una representación del ambiente
- que se está transitando (mapa) a medida que el robot se desplaza.
-\end_layout
-
-\begin_layout Standard
-Dentro de este requerimiento pueden distinguirse dos cuestiones a resolver:
-\end_layout
-
-\begin_layout Enumerate
-El mapa debe ser extendido y actualizado en tiempo real para que el robot
- pueda refinar su trayectoria a medida que explora el ambiente.
-\end_layout
-
-\begin_layout Enumerate
-El mapa debe ser suficientemente detallado (denso) para que el robot pueda
- realizar un planeamiento seguro, evitando posibles obstáculos.
-\end_layout
-
-\begin_layout Standard
-El primer problema es conocido como
+Para poder navegar de manera segura en un entorno desconocido, un robot
+ autónomo móvil debe poder construir una representación del ambiente (mapeo)
+ en el cual se mueve, al mismo tiempo que estima su posición (localización).
+ Este problema es conocido en la robótica móvil como SLAM por el acrónimo
+ en inglés de 
 \emph on
- SLAM 
+Simultaneous Localization and Mapping
 \emph default
-(Simultaneous Localization And Mapping).
- Dentro del estado del arte actual pueden encontrarse diversas soluciones
- propuestas, e.g.
- S-PTAM, que estiman una localización fiable del robot aunque el mapa generado
- es esparso, resultando no apto para planificación de trayectorias y detección
- de obstáculos.
+.
 \end_layout
 
 \begin_layout Standard
-El presente trabajo aborda el problema de reconstrucción densa en sistemas
- de SLAM que utilizan cámaras estéreo como sensor principal.
- La solución propuesta puede dividirse en dos etapas capaces de ser ejecutadas
- en paralelo: generación y reproyección 3D de mapas de disparidad; transformació
-n y fusión global de nube de puntos.
+Un mayor nivel de detalle del entorno (mapa) resultará en una posible mejora
+ en los algoritmos de navegación del robot, permitiéndole esquivar obstáculos
+ con una precisión mayor, obteniendo trayectorias más seguras para la integridad
+ del robot y del entorno.
 \end_layout
 
 \begin_layout Standard
-Para generar los mapas de disparidad se utiliza la librería de código abierto
- LIBELAS, disponible públicamente, que provee un método eficiente con interpolac
-ión de áreas de bajo gradiente.
- Estos mapas de disparidad son reproyectados para obtener una nube de puntos
- 3D local.
+En este trabajo se propone un sistema de SLAM denso basado en visión estéreo
+ que resulta de la inclusión de un módulo de densificación al sistema de
+ SLAM S-PTAM del estado del arte.
+ El sistema de SLAM resultante es capaz de generar un mapa denso del entorno
+ al mismo tiempo que estima la localización de la cámara.
+ Los experimentos preliminares muestran que el método realiza una densificación
+ local precisa del mapa en tiempo real.
+ 
 \end_layout
 
 \begin_layout Standard
-Utilizando la pose estimada por el sistema SLAM, la nube de puntos es transforma
-da y continuamente refinada sobre el sistema de coordenadas global (mapa).
- Previamente, haciendo uso de un mecanismo similar al propuesto en StereoScan,
- se fusionan puntos redundantes y descartan outliers para reducir la complejidad
- de la nube de puntos y afinar la representación del entorno.
-\end_layout
-
-\begin_layout Standard
-La solución propuesta se implementó como un nodo del framework ROS (
+El sistema se implementó utilizando el framework ROS (
 \emph on
-Robot Operating System
+Robot Operating 
 \emph default
-) para ser ejecutado en paralelo y conjuntamente con el sistema S-PTAM (
-\emph on
-Stereo Parallel Tracking And Mapping
-\emph default
-) de código abierto.
- Los experimentos realizados con 
-\emph on
-datasets
-\emph default
- de dominio público muestran que el sistema es apto para generar en tiempo
- real un mapeo denso, en entornos de grandes dimensiones, sin requerir el
- uso de GPUs.
+System).
+ El código ha sido liberado bajo licencia GPLv3, con el objetivo de facilitar
+ el uso y modificación del sistema por parte de la comunidad robótica.
 \end_layout
 
 \begin_layout Standard

@@ -1,7 +1,9 @@
 #LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass book
 \begin_preamble
 \usepackage[utf8]{inputenc}
@@ -28,16 +30,16 @@ figs-within-sections
 \language_package default
 \inputencoding utf8
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics pdftex
 \default_output_format default
 \output_sync 0
@@ -92,12 +94,68 @@ figs-within-sections
 Conclusiones
 \end_layout
 
+\begin_layout Standard
+En el presente trabajo se propuso un método de SLAM basado en visión estéreo
+ capaz de obtener un reconstrucción densa del entorno en tiempo real.
+ En particular, implementamos el método como un nodo ROS, para funcionar
+ conjuntamente y de manera desacoplada con el sistema de SLAM estéreo S-PTAM,
+ propuesto en 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pire2015"
+
+\end_inset
+
+.
+ Evaluamos nuestro método en un entorno real (KITTI) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2013vision"
+
+\end_inset
+
+ y sintético (Tsukuba) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "peris2012towards"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Los resultados experimentales muestran que la precisión del mapa denso y
+ el rendimiento en la reconstrucción (alcanzando una frecuencia de cómputo
+ de cinco veces por segundo), hacen que el método sea apto para la navegación
+ de robots autónomos, tanto en entornos de interior y exterior como en secuencia
+s de extensa longitud.
+\end_layout
+
 \begin_layout Section
 Trabajo futuro
 \end_layout
 
 \begin_layout Standard
+Como trabajo a futuro, se planea implementar y correr el método sobre un
+ robot móvil en tiempo real, mejorando sus capacidades de navegación.
+ Por otro lado, planeamos simplificar las nubes de puntos simplificando
+ regiones en planos, reduciendo el uso de CPU y memoria.
+\end_layout
 
+\begin_layout Standard
+La precisión del método puede incrementarse incluyendo información de apariencia
+ en la heurística de fusión.
+ Con el mismo objetivo, se plantea el uso de técnicas de Loop Closure para
+ reducir el error de desvío acumulado a lo largo de la secuencia.
+\end_layout
+
+\begin_layout Standard
+El sistema implementado puede ser fácilmente configurado y extendido para
+ correr sobre un mayor número de datasets, en diferentes escenarios.
+ Asímismo, puede resultar de interés la ejecución del nodo ROS acoplado
+ a otros sistema de SLAM disperso con el objetivo de analizar su desempeño
+ y precisión.
 \end_layout
 
 \end_body
