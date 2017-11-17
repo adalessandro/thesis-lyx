@@ -114,7 +114,11 @@ Uno de los principales problemas presentes en aplicaciones relativas a robots
 \begin_layout Standard
 El problema de construir incrementalmente un mapa del entorno mientras,
  simultáneamente, la ubicación del robot es estimada es conocido como SLAM
- (Simultaneous Localization and Mapping) 
+ (
+\emph on
+Simultaneous Localization and Mapping
+\emph default
+) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "durrant2006simultaneous,bailey2006simultaneous"
@@ -128,12 +132,12 @@ key "durrant2006simultaneous,bailey2006simultaneous"
 En la última década, ha habido un creciente interés en sistemas de SLAM
  visual, que utilizan cámaras como sensor principal.
  Las cámaras proveen una rica información de la escena observada y presentan
- importantes ventajas: bajo costo, menor consumo energético -en comparación
- con otros sensores, como lásers-, portabilidad y alta disponibilidad en
+ importantes ventajas: bajo costo, menor consumo energético –-en comparación
+ con otros sensores, como lásers—, portabilidad y alta disponibilidad en
  dispositivos móviles.
  Además, las cámaras son sensores pasivos por lo que no interfieren con
  otros sensores y pueden utilizarse en entornos interiores, donde el uso
- de GPS puede verse imposibilitado.
+ de GPS no es posible.
  Asímismo, son menos restrictivos que los encoders, los cuales se encuentran
  limitados a robots terrestres y son altamente imprecisos en terrenos irregulare
 s.
@@ -166,10 +170,21 @@ key "Mouragnon2006,Hwang2011"
 \end_inset
 
 .
- Además, la reconstrucción que se puede estimar con un sistema monocular
- se encuentra perturbada por un factor de escala, mientras que la reconstrucción
- obtenida por un sistema estéreo se encuentra a escala real (debido a que
- se conoce el desplazamiento que existe entre ambas cámaras).
+ Además, la reconstrucción 3D que se puede estimar con un sistema monocular
+ se encuentra perturbada
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Otra palabra que no sea perturbada.
+ Ej: La reconstrucción está a un factor de escala.
+\end_layout
+
+\end_inset
+
+ por un factor de escala, mientras que la reconstrucción obtenida por un
+ sistema estéreo se encuentra a escala real (debido a que se conoce el desplazam
+iento que existe entre ambas cámaras).
 \end_layout
 
 \begin_layout Standard
@@ -193,7 +208,7 @@ key "newcombe2011dtam,yingze2013dense"
 \end_inset
 
 , sin embargo, estas soluciones no resultan prácticas en tiempo real, o
- requieren hardware dedicado (por ejemplo GPU).
+ requieren hardware dedicado (por ejemplo, GPU).
 \end_layout
 
 \begin_layout Standard
@@ -208,11 +223,21 @@ key "pire2015"
 \end_inset
 
  que mantiene un mapa disperso del entorno para obtener una estimación precisa
- de la cámara en tiempo real.
+ de la pose de la cámara en tiempo real.
  Dada la localización del robot estimada por S-PTAM, una reconstrucción
  3D completa es computada paralelamente por el módulo de densificación.
  Si bien nuestro trabajo se implementó sobre este sistema, puede ser empleado
- sobre otras implementaciones de SLAM.
+ sobre otras implementaciones de SLAM 
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+que sean keyfram-based y que funcionen con camara estéreo
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -231,9 +256,19 @@ os para generar una nube de puntos tridimensional local.
  Transformamos la nube de puntos local usando la posición global proveniente
  del sistema de SLAM subyacente, refinando continuamente las nubes de puntos
  locales a lo largo de todo el proceso.
- Cada nube de puntos local es filtrada previamente -por medio de fusión
- de puntos redundantes y detección de outliers- empleando un método similar
- al propuesto en 
+ Cada nube de puntos local es filtrada previamente —
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+se tienen que poner 3 guiones para que se ve el guion largo adecuado en
+ el pdf.
+\end_layout
+
+\end_inset
+
+por medio de fusión de puntos redundantes y detección de outliers— empleando
+ un método similar al propuesto en 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "geiger2011stereoscan"
@@ -244,8 +279,21 @@ key "geiger2011stereoscan"
 \end_layout
 
 \begin_layout Standard
-Finalmente, el método desarrollado se integró al framework ROS (Robot Operating
- System) para ser ejecutado en paralelo y conjuntamente con el sistema S-PTAM,
+Finalmente, el método desarrollado se integró
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Se programó bajo el framework de ROS
+\end_layout
+
+\end_inset
+
+ al framework ROS (
+\emph on
+Robot Operating System
+\emph default
+) para ser ejecutado en paralelo y conjuntamente con el sistema S-PTAM,
  del que se obtienen las poses globales.
  Haremos referencia al sistema propuesto en esta tesina como 
 \emph on
@@ -268,11 +316,20 @@ El capítulo 2 presenta el estado del arte en sistemas SLAM densos.
  En el mismo se comentan los distintos paradigmas para abordar la reconstrucción
  3D o mapeo denso en sistemas (SLAM), y se analizan los métodos más relevantes
  de la literatura.
- En el capítulo 3 se presentan los fundamentos básicos utilizados a lo largo
- de toda la tesina.
+ En el capítulo 3 se presentan los fundamentos básicos 
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+fundamentos de visión y robótica?
+\end_layout
+
+\end_inset
+
+utilizados a lo largo de toda la tesina.
  En el capítulo 4 se detalla el método de SLAM denso desarrollado.
- En el capítulo 5 se evalúa el método en datasets de dominio público y discuten
- los resultados experimentales.
+ En el capítulo 5 se evalúa S-PTAM Denso en datasets de dominio público
+ y se discuten los resultados obtenidos.
  Por último, en el capítulo 6 se presentan las conclusiones y trabajo futuro
  que se derivan del presente trabajo de tesina.
 \end_layout
