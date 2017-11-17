@@ -103,9 +103,20 @@ Trabajo relacionado
 \begin_layout Standard
 La presente tesina investiga y propone un método de reconstrucción 3D o
  mapeo denso en tiempo real sobre sistemas de localización y mapeo simultáneo
- (SLAM) basados en visión estéreo.
+ (SLAM) basado en visión estéreo.
  En este capítulo, se exponen brevemente los trabajos relacionados al problema
  de mapeo denso en SLAM, describiendo la naturaleza del problema que abordan.
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+esta última frase después de la coma no me convence.
+ qué queres decir?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -120,7 +131,7 @@ La reconstrucción 3D se define como el proceso mediante el cual se captura
  también una línea de investigación activa en diversos campos como el diseño
  asistido por computadora, imágenes médicas, realidad virtual y aumentada,
  robótica movil, entre otros.
- Dependiendo del área de interés y los sensores utilizados, se han propuesto
+ Dependiendo del campo de aplicación y los sensores utilizados, se han propuesto
  numerosos métodos para abordar las variantes de este problema.
 \end_layout
 
@@ -134,6 +145,16 @@ Dado el enfoque de la presente tesina, resultan de interés principalmente
 \begin_inset CommandInset citation
 LatexCommand cite
 key "seitz2006comparison,koch1998multi,pollefeys2004visual,fitzgibbon1998automatic"
+
+\end_inset
+
+
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+estas citas son bastante viejas, poner citas mas actuales.
+\end_layout
 
 \end_inset
 
@@ -153,15 +174,15 @@ Simultaneous Localisation and Mapping
 \emph default
 ).
  SLAM es el proceso mediante el cual un robot móvil es capaz de construir
- incrementalmente un mapa consistente de un entorno desconocido y, simultaneamen
-te, usar este mapa para determinar su posición y orientación en el mismo.
+ incrementalmente un mapa del entorno que se encuentra transitando y, simultanea
+mente, usar este mapa para determinar su posición y orientación en el mismo.
 \end_layout
 
 \begin_layout Standard
 El interés sobre el problema de SLAM ha crecido en gran medida debido a
  que su solución resulta útil en la navegación autónoma de robots.
  Recientemente, el problema de SLAM ha sido extensivamente estudiado utilizando
- diferentes sensores: IMUs (inertial measurement units
+ diferentes sensores: IMUs (Inertial Measurement Units
 \begin_inset Foot
 status collapsed
 
@@ -199,7 +220,11 @@ key "cole2006using"
 
 \end_inset
 
-, GPS (global positioning system
+, GPS (
+\emph on
+Global Positioning System
+\emph default
+
 \begin_inset Foot
 status collapsed
 
@@ -241,7 +266,7 @@ reference "fig:slam-problem"
 
 \end_inset
 
- se ilustra el problema esencial de SLAM.
+ se ilustra el problema de SLAM.
  A partir de la detección y seguimiento de marcas naturales del ambiente
  (
 \emph on
@@ -301,7 +326,7 @@ key "durrant2006simultaneous"
 
 \end_inset
 
- 
+.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:slam-problem"
@@ -322,8 +347,8 @@ name "fig:slam-problem"
 \end_layout
 
 \begin_layout Standard
-Una introducción a SLAM, descripción del problema y soluciones al mismo
- pueden encontrarse en 
+Una completa introducción a SLAM, descripción del problema y soluciones
+ al mismo pueden encontrarse en 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "durrant2006simultaneous,bailey2006simultaneous,cadena2016pastpresentfutureslam"

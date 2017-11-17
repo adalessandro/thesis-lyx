@@ -137,7 +137,11 @@ En la última década, ha habido un creciente interés en sistemas de SLAM
  dispositivos móviles.
  Además, las cámaras son sensores pasivos por lo que no interfieren con
  otros sensores y pueden utilizarse en entornos interiores, donde el uso
- de GPS no es posible.
+ de GPS (
+\emph on
+Global Positioning System
+\emph default
+) no es posible.
  Asímismo, son menos restrictivos que los encoders, los cuales se encuentran
  limitados a robots terrestres y son altamente imprecisos en terrenos irregulare
 s.
