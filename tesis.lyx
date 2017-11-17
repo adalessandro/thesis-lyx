@@ -48,6 +48,21 @@
 }
 
 \input{preamble}
+
+\RequirePackage{colortbl, tabularx}
+\@ifundefined{comment}{}% do nothing if the comment environment is not defined
+  {% redefine the comment environment if it is defined
+   \renewenvironment{comment}
+    {% replaces \begin{comment}
+     \par\medskip\noindent
+     \tabularx{\textwidth}{|>{\columncolor[gray]{0.9}}X|}
+     \hline
+     \emph{\textbf{Comment:}}% You can use any other text instead of "Comment:" or leave it
+    }
+    {% replaces \end{comment}
+     \endtabularx\hrule\par\medskip
+    }
+  }%
 \end_preamble
 \options ruled,vlined
 \use_default_options true
@@ -204,7 +219,7 @@ Reconstrucción densa en tiempo real sobre sistemas SLAM basados en visión
 \begin_layout Standard
 Para poder navegar de manera segura en un entorno desconocido, un robot
  autónomo móvil debe poder construir una representación del ambiente (mapeo)
- en el cual se mueve, al mismo tiempo que estima su posición (localización).
+ en el cual se mueve, al mismo tiempo que estima su pose (localización).
  Este problema es conocido en la robótica móvil como SLAM por el acrónimo
  en inglés de 
 \emph on
@@ -216,8 +231,7 @@ Simultaneous Localization and Mapping
 \begin_layout Standard
 Un mayor nivel de detalle del entorno (mapa) resultará en una posible mejora
  en los algoritmos de navegación del robot, permitiéndole esquivar obstáculos
- con una precisión mayor, obteniendo trayectorias más seguras para la integridad
- del robot y del entorno.
+ con una precisión mayor, obteniendo trayectorias más seguras y optimas.
 \end_layout
 
 \begin_layout Standard
@@ -226,8 +240,8 @@ En este trabajo se propone un sistema de SLAM denso basado en visión estéreo
  SLAM S-PTAM del estado del arte.
  El sistema de SLAM resultante es capaz de generar un mapa denso del entorno
  al mismo tiempo que estima la localización de la cámara.
- Los experimentos preliminares muestran que el método realiza una densificación
- local precisa del mapa en tiempo real.
+ Los experimentos muestran que el método realiza una densificación local
+ precisa del mapa en tiempo real.
  
 \end_layout
 
