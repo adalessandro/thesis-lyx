@@ -153,16 +153,6 @@ features
 \emph on
 Stereo Parallel Tracking and Mapping
 \emph default
-
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Localización y Mapeo Paralelos Estéreo
-\end_layout
-
-\end_inset
-
 ).
  Utilizando una cámara estéreo como sensor principal, construye y mantiene
  un mapa disperso del entorno para obtener una localización precisa de la
@@ -180,7 +170,7 @@ Parallel Tracking and Mapping
 \emph default
 
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Localización y Mapeo Paralelos
@@ -189,8 +179,12 @@ Localización y Mapeo Paralelos
 \end_inset
 
 ) que divide las tareas de localización y mapeo en dos hilos de ejecución
- diferentes -localización, y construcción del mapa (tracking and mapping)-,
- para aprovechar la capacidad de cómputo de procesadores con dos o más núcleos.
+ diferentes —localización, y construcción del mapa (
+\emph on
+tracking and mapping
+\emph default
+)—, para aprovechar la capacidad de cómputo de procesadores con dos o más
+ núcleos.
 \end_layout
 
 \begin_layout Standard
@@ -205,9 +199,17 @@ tracking
  el error de re-proyección entre los puntos del mapa proyectados y sus correspon
 dencias en la imagen.
  Una vez que la pose actual de la cámara es estimada, el par estéreo puede
- ser seleccionado y agregado al mapa, en cuyo caso es denominado como keyframe.
- Al agregar el keyframe al mapa, aquellos features que no fueron asociados
- con puntos en el mapa son triangulados desde el par de imágenes estéreo.
+ ser seleccionado y agregado al mapa, en cuyo caso es denominado como 
+\emph on
+keyframe
+\emph default
+.
+ Al agregar el 
+\emph on
+keyframe
+\emph default
+ al mapa, aquellos features que no fueron asociados con puntos en el mapa
+ son triangulados desde el par de imágenes estéreo.
  Tanto la pose como los nuevos puntos son insertados al grafo de puntos
  y poses, mantenido por S-PTAM.
 \end_layout
@@ -265,7 +267,7 @@ reference "fig:sptam_example-1"
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
