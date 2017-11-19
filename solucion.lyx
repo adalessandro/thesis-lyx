@@ -388,6 +388,17 @@ Mapping
 keyframes
 \emph default
  y las nubes de puntos asociadas cada vez que S-PTAM refina una pose.
+ 
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Donde dice mapa en la figura debe dedir mapa denso.
+\end_layout
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Standard
@@ -415,16 +426,6 @@ status open
 
 \begin_layout Plain Layout
 Estructura general del módulo de densificación 3D densa en tiempo real.
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-Donde dice mapa en la figura debe dedir mapa denso.
-\end_layout
-
-\end_inset
-
- 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:metodo-diagram"
@@ -549,6 +550,19 @@ reference "fig:libelas-tsukuba-1"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Poner cita de dataset en cada figura.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Float figure
 placement tbh
@@ -579,17 +593,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Método LIBELAS - Dataset KITTI
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-Poner cita de dataset.
-\end_layout
-
-\end_inset
-
-.
+Método LIBELAS - Dataset KITTI.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -634,16 +638,6 @@ status open
 
 \begin_layout Plain Layout
 Método LIBELAS - Dataset Tsukuba.
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-Poner cita de dataset.
-\end_layout
-
-\end_inset
-
- 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:libelas-tsukuba-1"

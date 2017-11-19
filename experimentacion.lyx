@@ -501,6 +501,21 @@ reference "fig:tsukuba_1"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Comment
+status collapsed
+
+\begin_layout Plain Layout
+no se ven muchos los mapas de disparidad...
+ Podes o tocar el contraste de las imagenes o podes eleigr otros frames
+ con sus respectivos mapas de disparidad.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Float figure
 placement tbh
@@ -527,18 +542,6 @@ status open
 \begin_layout Plain Layout
 Imágenes pertenecientes al dataset Tsukuba con sus respectivos mapas de
  disparidad (blanco: mayor disparidad, negro: menor disparidad).
- 
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-no se ven muchos los mapas de disparidad...
- Podes o tocar el contraste de las imagenes o podes eleigr otros frames
- con sus respectivos mapas de disparidad.
-\end_layout
-
-\end_inset
-
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -2311,7 +2314,7 @@ ades, donde una sola triangulación estéreo produce resultados ruidosos y
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
