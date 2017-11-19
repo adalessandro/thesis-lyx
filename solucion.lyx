@@ -346,8 +346,27 @@ Expansión y fusión de mapa
 \emph on
 Expansión y fusión de mapa
 \emph default
- usa la pose del keyframe estimada por S-PTAM y el mapa de disparidad asociado
- para extender y ajustar el mapa.
+ usa la pose del 
+\emph on
+keyframe
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+
+\emph on
+Verificar que la palabra keyframe siempre este en italica o que no este
+ en italica.
+ Ser consistente.
+ Lo mismo para todas las palabras en inglés como tracking y mapping.
+\end_layout
+
+\end_inset
+
+
+\emph default
+ estimada por S-PTAM y el mapa de disparidad asociado para extender y ajustar
+ el mapa.
  Los puntos existentes en el mapa 3D denso global se proyectan sobre los
  planos de imagen estéreo para buscar correspondencias con los puntos cercanos
  en la imagen.
@@ -358,10 +377,17 @@ Expansión y fusión de mapa
  Para mantener el mapa denso consistente a la trayectoria estimada por S-PTAM,
  el hilo de 
 \emph on
-Refinamiento de mapa
+Refinamiento de mapa 
 \emph default
- ajusta constantemente la pose de los keyframes y las nubes de puntos asociadas
- cada vez que S-PTAM refina una pose.
+(
+\emph on
+Mapping
+\emph default
+) ajusta constantemente la pose de los 
+\emph on
+keyframes
+\emph default
+ y las nubes de puntos asociadas cada vez que S-PTAM refina una pose.
 \end_layout
 
 \begin_layout Standard
@@ -370,7 +396,7 @@ Refinamiento de mapa
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -389,6 +415,15 @@ status collapsed
 
 \begin_layout Plain Layout
 Estructura general del módulo de densificación 3D densa en tiempo real.
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Donde dice mapa en la figura debe dedir mapa denso.
+\end_layout
+
+\end_inset
+
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -519,7 +554,7 @@ reference "fig:libelas-tsukuba-1"
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -544,7 +579,18 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Método LIBELAS - Dataset KITTI 
+Método LIBELAS - Dataset KITTI
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Poner cita de dataset.
+\end_layout
+
+\end_inset
+
+.
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:libelas-kitti-1"
@@ -587,7 +633,17 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Método LIBELAS - Dataset Tsukuba 
+Método LIBELAS - Dataset Tsukuba.
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Poner cita de dataset.
+\end_layout
+
+\end_inset
+
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:libelas-tsukuba-1"
@@ -692,9 +748,31 @@ En base al mapa de disparidad
 \end_inset
 
 
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+toda ecuacion debe terminar con punto seguido, final o con coma.
+ La ecuación es como si formara parte de la redacción.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Comment
+status collapsed
+
+\begin_layout Plain Layout
+No debe haber sangria luego de una ecuacion que siga de una coma o un punto
+ seguido.
+ 
+\end_layout
+
+\end_inset
+
 siendo 
 \begin_inset Formula $\focalDistance$
 \end_inset
@@ -757,17 +835,14 @@ mapa local
 
 \begin_layout Standard
 A medida que la cámara se traslada, es posible que ciertas áreas del mapa
- 3D local 
+ local 
 \begin_inset Formula $\pointCloud$
 \end_inset
 
  se encuentren duplicadas.
  Asímismo, la reconstrucción ha de ser más precisa desde cierto puntos de
  vista cercanos a la escena.
-\end_layout
-
-\begin_layout Standard
-Proponemos un algoritmo de fusión eficiente para estas áreas duplicadas
+ Proponemos un algoritmo de fusión eficiente para estas áreas duplicadas
  que consiste en lo siguiente.
  Dado dos puntos 
 \begin_inset Formula $\point_{previo}\in\pointCloud$
@@ -818,7 +893,7 @@ reference "fig:stereoscan_projection"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\point_{fusión}=\frac{1}{\inverseDepth_{fusión}}\frac{\point_{actual}}{\norm{\point_{actual}}}\label{eq:point-fusion-definition}
+\point_{fusión}=\frac{1}{\inverseDepth_{fusión}}\frac{\point_{actual}}{\norm{\point_{actual}}},\label{eq:point-fusion-definition}
 \end{equation}
 
 \end_inset
@@ -827,6 +902,16 @@ reference "fig:stereoscan_projection"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Comment
+status collapsed
+
+\begin_layout Plain Layout
+por ejemplo aca no tieen que ir la sangria.
+ 
+\end_layout
+
+\end_inset
+
 donde 
 \begin_inset Formula $\inverseDepth_{fusión}$
 \end_inset
@@ -837,15 +922,11 @@ donde
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\inverseDepth_{fusión}=\frac{\inverseDepth_{actual}+\inverseDepth_{previo}}{2}\label{eq:inverse-depth-fusion-definition}
+\inverseDepth_{fusión}=\frac{\inverseDepth_{actual}+\inverseDepth_{previo}}{2},\label{eq:inverse-depth-fusion-definition}
 \end{equation}
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 y 
 \begin_inset Formula $\inverseDepth_{actual}$
 \end_inset
@@ -895,6 +976,21 @@ reference "eq:inverse-depth-fusion-definition"
 \begin_inset Formula $\pointCloud_{j}$
 \end_inset
 
+ 
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Acá no se entiende si 
+\begin_inset Formula $\pointCloud_{j}$
+\end_inset
+
+ es la nube de puntos únicamente del keyframe j o es el mapa local construido
+ desde el keyframe j.
+\end_layout
+
+\end_inset
+
 .
 \end_layout
 
@@ -938,7 +1034,7 @@ Siendo
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{1}{\inverseDepth_{1}^{\camera_{1}}}=\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}
+\frac{1}{\inverseDepth_{1}^{\camera_{1}}}=\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}.
 \]
 
 \end_inset
@@ -961,7 +1057,7 @@ Resolviendo para
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\inverseDepth_{1}^{\camera_{2}}=\norm{\frac{1}{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}}\rotation_{\camera_{1}\camera_{2}}\ray_{1}^{\camera_{1}}-\translation_{\camera_{1}\camera_{2}}}\approx\inverseDepth_{1}^{\camera_{1}}
+\inverseDepth_{1}^{\camera_{2}}=\norm{\frac{1}{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}}\rotation_{\camera_{1}\camera_{2}}\ray_{1}^{\camera_{1}}-\translation_{\camera_{1}\camera_{2}}}\approx\inverseDepth_{1}^{\camera_{1}}.
 \]
 
 \end_inset
@@ -970,6 +1066,16 @@ Resolviendo para
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+en la ecuacion, la norma (doble pipe) debe alcanzar toda la fracción (incluido
+ el divisor)
+\end_layout
+
+\end_inset
+
 Finalmente, este hilo expande el mapa utilizando los restantes píxeles que
  no encontraron correspondencias y que poseen un valor de disparidad válido.
  El método distingue dos casos: píxeles sin correspondencia en el mapa,
@@ -1104,6 +1210,25 @@ as del mundo.
 \end_inset
 
 , notamos la transformación existente en el mundo y esta cámara como:
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Usa la letra 
+\begin_inset Formula $\camera_{i}$
+\end_inset
+
+ en minúsculas dado que la 
+\begin_inset Formula $\mathrm{w}$
+\end_inset
+
+ está en minúscula.
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1112,6 +1237,7 @@ as del mundo.
 \begin{aligned}\seMatrix^{\camera_{i}\mathrm{w}}= & \begin{bmatrix}\rotation & \translation\\
 \vec{0} & 1
 \end{bmatrix}\end{aligned}
+.
 \]
 
 \end_inset
@@ -1133,6 +1259,7 @@ De la misma manera, siendo
 \begin{aligned}\seMatrix^{\mathrm{\hat{\camera}}_{i}\mathrm{w}}= & \begin{bmatrix}\hat{\rotation} & \hat{\translation}\\
 \vec{0} & 1
 \end{bmatrix}\end{aligned}
+.
 \]
 
 \end_inset
@@ -1169,7 +1296,7 @@ Luego, la actualización de la nube de puntos
 \end{bmatrix}\\
  & =\begin{bmatrix}\hat{\rotation}^{\top}\rotation & \hat{\rotation}^{\top}(\translation-\hat{\translation})\\
 \vec{0} & 1
-\end{bmatrix}
+\end{bmatrix}.
 \end{alignat*}
 
 \end_inset
