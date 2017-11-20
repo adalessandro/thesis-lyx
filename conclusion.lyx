@@ -98,8 +98,8 @@ Conclusiones
 En el presente trabajo se propuso un método de SLAM basado en visión estéreo
  capaz de obtener un reconstrucción densa del entorno en tiempo real.
  En particular, implementamos el método como un nodo ROS, para funcionar
- conjuntamente y de manera desacoplada con el sistema de SLAM estéreo S-PTAM,
- propuesto en 
+ conjuntamente y de manera desacoplada con el sistema de SLAM estéreo S-PTAM
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pire2015"
@@ -107,14 +107,14 @@ key "pire2015"
 \end_inset
 
 .
- Evaluamos nuestro método en un entorno real (KITTI) 
+ Evaluamos nuestro método en un entorno real (dataset KITTI) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "geiger2013vision"
 
 \end_inset
 
- y sintético (Tsukuba) 
+ y sintético (dataset Tsukuba) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "peris2012towards"
@@ -132,8 +132,35 @@ Los resultados experimentales muestran que la precisión del mapa denso y
 s de extensa longitud.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+tenes que explayarte mucho más en esta sección.
+ Te diría que las conclusiones deberian ocupar una página.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Trabajo futuro
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Trabajo futuro tambien tenes que explayar un poco más.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
