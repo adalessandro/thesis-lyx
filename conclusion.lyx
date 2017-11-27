@@ -97,7 +97,7 @@ Conclusiones
 \begin_layout Standard
 En el presente trabajo se propuso un método de SLAM basado en visión estéreo
  capaz de obtener un reconstrucción densa del entorno en tiempo real.
- En particular, implementamos el método como un nodo ROS, para funcionar
+ En particular, implementamos el método como un nodo ROS, para ser ejecutado
  conjuntamente y de manera desacoplada con el sistema de SLAM estéreo S-PTAM
  
 \begin_inset CommandInset citation
@@ -166,8 +166,8 @@ Trabajo futuro tambien tenes que explayar un poco más.
 \begin_layout Standard
 Como trabajo a futuro, se planea implementar y correr el método sobre un
  robot móvil en tiempo real, mejorando sus capacidades de navegación.
- Por otro lado, planeamos simplificar las nubes de puntos simplificando
- regiones en planos, reduciendo el uso de CPU y memoria.
+ Por otro lado, planeamos simplificar las nubes de puntos mediante la detección
+ de regiones planares, reduciendo el uso de CPU y memoria.
 \end_layout
 
 \begin_layout Standard

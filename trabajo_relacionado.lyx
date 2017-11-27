@@ -105,9 +105,12 @@ La presente tesina investiga y propone un método de reconstrucción 3D o
  mapeo denso en tiempo real sobre sistemas de localización y mapeo simultáneo
  (SLAM) basado en visión estéreo.
  En este capítulo, se exponen brevemente los trabajos relacionados al problema
- de mapeo denso en SLAM, describiendo la naturaleza del problema que abordan.
+ de mapeo denso en SLAM.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 esta última frase después de la coma no me convence.
@@ -144,13 +147,16 @@ Dado el enfoque de la presente tesina, resultan de interés principalmente
  
 \begin_inset CommandInset citation
 LatexCommand cite
-key "seitz2006comparison,koch1998multi,pollefeys2004visual,fitzgibbon1998automatic"
+key "pollefeys2004visual,seitz2006comparison,Hwang2011,pire2015,mur2015orb,engel2016dso"
 
 \end_inset
 
+, lo cual demuestra la relevancia actual del problema abordado en esta tesina.
+\end_layout
 
+\begin_layout Standard
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 estas citas son bastante viejas, poner citas mas actuales.
@@ -158,7 +164,7 @@ estas citas son bastante viejas, poner citas mas actuales.
 
 \end_inset
 
-, lo cual demuestra la relevancia actual del problema abordado en esta tesina.
+
 \end_layout
 
 \begin_layout Section
@@ -373,14 +379,14 @@ name "subsec:slam-vslam"
 Recientemente ha habido un creciente interés en sistemas de SLAM visual,
  que utilizan cámaras como sensor principal.
  Las cámaras proveen una rica información de la escena observada y presentan
- importantes ventajas: bajo costo, menor consumo energético -en comparación
- con otros sensores, como lásers-, portabilidad y alta disponibilidad en
+ importantes ventajas: bajo costo, menor consumo energético —en comparación
+ con otros sensores, como lásers—, portabilidad y alta disponibilidad en
  dispositivos móviles.
  Además, las cámaras son sensores pasivos por lo que no interfieren con
  otros sensores y pueden utilizarse en entornos interiores, donde el uso
  de GPS puede verse imposibilitado.
  Asímismo, son menos restrictivos que los encoders, los cuales se encuentran
- limitados a robots terrestres y altamente imprecisos en terrenos irregulares.
+ limitados a robots terrestres y resultan imprecisos en terrenos irregulares.
 \end_layout
 
 \begin_layout Standard
@@ -491,7 +497,7 @@ key "Murphy:etal:TAR13"
  en un entorno de oficinas.
  En la imagen se observan el mapa de puntos (features) disperso y la trayectoria
  del robot (línea verde).
- Sobre el fondo se proyecta el contorno de la habitación para referencia.
+ Como referencia, el contorno de la habitación es proyectado sobre el fondo.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -523,7 +529,7 @@ Los enfoques de SLAM visual basados en características dependen de la calidad
 features
 \emph default
 ) presentes en la imagen.
- Estos puntos salientes -o puntos claves- deben ser descriptos unívocamente
+ Estos puntos salientes —o puntos claves— deben ser descriptos unívocamente
  para poder establecer correspondencias entre diferentes imágenes.
  En la literatura existe una gran variedad de extractores de features, siendo
  los más usados: Shi–Tomasi 
@@ -647,9 +653,9 @@ Independencia en la posición: si el mismo punto clave es extraído en diferente
 
 \begin_layout Itemize
 Robustez frente a transformaciones en la imagen: reconocer el mismo feature
- frente a cambios de iluminación (e.g.
- efecto del sol en entornos exteriores) o perspectiva (observación del mismo
- objeto desde distintas posiciones).
+ frente a cambios de iluminación (por ejemplo efecto del sol en entornos
+ exteriores) o perspectiva (observación del mismo objeto desde distintas
+ posiciones).
 \end_layout
 
 \begin_layout Itemize
@@ -776,7 +782,7 @@ key "geiger2010efficient"
 
 .
  Color amarillo (mayor disparidad), azul (menor disparidad).
- Imagen recuperada de 
+ Imagen obtenida de 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "geiger2010efficient"
@@ -875,9 +881,9 @@ Oclusión: Al observar una escena desde distintas posiciones posiblemente
 
 \begin_layout Itemize
 Especularidad: La percepción de los objetos puede variar a medida que la
- cámara se desplaza debido a la especularidad de estos (i.e.
- variaciones en el brillo debido a la reflectancia de la superficie), dificultan
-do la asociación basada en la apariencia.
+ cámara se desplaza debido a la especularidad de estos (es decir variaciones
+ en el brillo debido a la reflectancia de la superficie), dificultando la
+ asociación basada en la apariencia.
 \end_layout
 
 \begin_layout Itemize
@@ -886,10 +892,10 @@ do la asociación basada en la apariencia.
 Muro blanco
 \emph default
 : Bajo este nombre se denomina al problema de encontrar correspondencias
- en regiones con poca textura -bajo gradiente en la función de intensidad-.
+ en regiones con poca textura —bajo gradiente en la función de intensidad—.
  Los píxeles que se encuentran en el interior de estas regiones no presentan
- suficiente información para ser distinguidos y asociados, e.g.
- una pared completamente blanca.
+ suficiente información para ser distinguidos y asociados, por ejemplo una
+ pared completamente blanca.
 \end_layout
 
 \begin_layout Standard
@@ -1241,8 +1247,8 @@ reference "subsec:Densificación-de-métodos"
 \end_inset
 
  vimos que el enfoque predominante en SLAM se basó tradicionalmente en encontrar
- correspondencias en áreas de la imagen altamente texturadas -características
- visuales de bajo nivel-.
+ correspondencias en áreas de la imagen fuertemente texturadas —características
+ visuales de bajo nivel—.
  En consecuencia largas regiones sin textura, usualmente presentes en entornos
  interiores y urbanos, son difíciles de reconstruir por estos sistemas.
  Para superar esta dificultad y aumentar la densidad de estas reconstrucciones,
@@ -1252,8 +1258,7 @@ reference "subsec:Densificación-de-métodos"
 
 \begin_layout Standard
 Los superpíxeles representan regiones de la imagen con textura homogénea,
- i.e.
- un conjunto de píxeles con valores similares.
+ es decir un conjunto de píxeles con valores similares.
  La segmentación de una imagen en superpíxeles puede variar en forma y tamaño
  de acuerdo al algoritmo 
 \begin_inset CommandInset citation
@@ -1301,7 +1306,7 @@ status open
 
 \begin_layout Plain Layout
 Segmentación de imágenes en superpíxeles de diferente tamaño.
- Imagen recuperada de 
+ Imagen obtenida de 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "achanta2012slic"
@@ -1613,7 +1618,7 @@ key "newcombe2011dtam"
 
 \end_inset
 
- mejorando en tiempo real los mapas provenientes de estos sistemas.
+ densificando en tiempo real los mapas provenientes de estos sistemas.
 \end_layout
 
 \begin_layout Standard
@@ -1624,9 +1629,9 @@ key "concha2015dpptam"
 
 \end_inset
 
- se utiliza información semi-densa (i.e.
- píxeles con alto gradiente en las imágenes) para realizar la reconstrucción
- del entorno agregando superpíxeles 3D.
+ se utiliza información semi-densa (es decir píxeles con alto gradiente
+ en las imágenes) para realizar la reconstrucción del entorno agregando
+ superpíxeles 3D.
 \end_layout
 
 \begin_layout Subsection
@@ -1635,7 +1640,8 @@ Métodos semánticos
 
 \begin_layout Standard
 En SLAM visual se han comenzado a utilizar características visuales de alto
- nivel, que permiten reconocer y mapear objetos presentes en el entorno.
+ nivel de abstracción, que permiten reconocer y mapear objetos presentes
+ en el entorno.
  Este área de investigación se encuentra relacionada a tópicos de aprendizaje
  automatizado e inteligencia artificial.
 \end_layout
@@ -1732,7 +1738,7 @@ status open
 \begin_layout Plain Layout
 Reconstrucción 3D (arriba) y segmentación semántica (abajo) del dataset
  KITTI secuencia 05.
- Imagen recuperada de 
+ Imagen obtenida de 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "vineet2015incremental"
@@ -1778,10 +1784,10 @@ key "stuhmer2010real,graber2011online,newcombe2011dtam"
 features
 \emph default
 ), operan directamente sobre las intensidades de la imagen para realizar
- la localización y mapeo, reduciendo el error fotométrico.
+ la localización y mapeo.
  A su vez, estos métodos aprovechan mayor parte de la información disponible
- en las imágenes -píxeles de alto gradiente, incluyendo vértices, aristas
- y áreas de alta textura- obteniendo mapas 3D de mayor densidad denominados
+ en las imágenes —píxeles de alto gradiente, incluyendo vértices, aristas
+ y áreas de alta textura— obteniendo mapas 3D de mayor densidad denominados
  semi-densos, como puede observarse en la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1832,7 +1838,7 @@ key "geiger2013vision"
  Los mapas de profundidad son coloreados según la distancia de los puntos
  a la cámara utilizando el espectro entre los colores rojo (más cercano)
  y azul (más lejano).
- Imagen recuperada de 
+ Imagen obtenida de 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "engel2015large"

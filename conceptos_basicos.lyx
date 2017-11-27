@@ -1,7 +1,9 @@
 #LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass book
 \begin_preamble
 \usepackage[utf8]{inputenc}
@@ -22,16 +24,16 @@ figs-within-sections
 \language_package default
 \inputencoding utf8
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics pdftex
 \default_output_format default
 \output_sync 0
@@ -106,8 +108,8 @@ Modelo y geometría de una cámara monocular
 \end_layout
 
 \begin_layout Standard
-Una cámara es definida matemáticamente como un mapeo entre el mundo 3D y
- una imagen 2D.
+Una cámara es definida matemáticamente como una correspondencia entre el
+ mundo 3D y una imagen 2D.
  Existen diferentes modelos para representar una cámara, siendo el modelo
  de cámara 
 \emph on
@@ -179,6 +181,10 @@ reference "fig:pinhole"
 
  se ilustra esta definición y las relaciones geométricas involucradas en
  este modelo de cámara.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -436,6 +442,7 @@ z\\
 \end_layout
 
 \begin_layout Standard
+\noindent
 Definiendo la 
 \emph on
 matriz de calibración intrínseca
@@ -511,6 +518,10 @@ reference "fig:camera_coord_system"
 
 , las ecuaciones previamente definidas deben extenderse agregando la transformac
 ión existente entre los sistemas de coordenadas de la cámara y el mundo.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -694,7 +705,7 @@ De esta manera, es posible proyectar cualquier punto 3D
 \begin_layout Subsection
 \begin_inset CommandInset label
 LatexCommand label
-name "sub:Re-proyección"
+name "subsec:Re-proyección"
 
 \end_inset
 
@@ -798,6 +809,10 @@ reference "fig:back_projection"
 \end_inset
 
 .
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -860,28 +875,11 @@ reference "sec:Modelo-y-geometría-estereo"
  cámaras es conocido.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Es necesario esta sección sobre re-proyección?
-\end_layout
-
-\begin_layout Plain Layout
-Revisar ecuación del rayo y su explicación.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 Frustum culling 
 \begin_inset CommandInset label
 LatexCommand label
-name "sub:Frustum-culling"
+name "subsec:Frustum-culling"
 
 \end_inset
 
@@ -906,6 +904,10 @@ reference "fig:frustum_culling"
 .
  Como se verá a continuación, esta región es determinada por los parámetros
  intrínsecos y extrínsecos de la cámara.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -986,7 +988,7 @@ Vértices del campo visual de la cámara
  
 \begin_inset CommandInset label
 LatexCommand label
-name "sub:Vértices-del-frustum"
+name "subsec:Vértices-del-frustum"
 
 \end_inset
 
@@ -1028,19 +1030,6 @@ El vértice de la pirámide es el centro focal
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-el fcercano es la distancia focal f?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 El área rectangular del campo visual sobre estos planos puede ser delimitada
  en función de las dimensiones del plano focal 
 \begin_inset Formula $\plane_{cam}$
@@ -1074,6 +1063,10 @@ reference "fig:frustum-of-view"
 \end_inset
 
  es análogo.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1268,7 +1261,7 @@ Cada plano
  relaciones geométricas enunciadas en la sección anterior 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sub:Vértices-del-frustum"
+reference "subsec:Vértices-del-frustum"
 
 \end_inset
 
@@ -1355,7 +1348,7 @@ name "sec:Modelo-y-geometría-estereo"
 Como se vio en la sección 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sub:Re-proyección"
+reference "subsec:Re-proyección"
 
 \end_inset
 
@@ -1442,6 +1435,10 @@ reference "fig:epipolar_plane"
 \end_inset
 
 .
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1582,11 +1579,8 @@ Cuando solo es conocido el punto
 \begin_inset Formula $\imagePoint^{\prime}$
 \end_inset
 
- en el segundo plano focal puede acotarse mediante la siguiente propiedad.
-\end_layout
-
-\begin_layout Standard
-Partimos del plano 
+ en el segundo plano focal puede acotarse mediante la siguiente propiedad:
+ partiendo del plano 
 \begin_inset Formula $\vec{\pi}$
 \end_inset
 
@@ -1594,9 +1588,8 @@ Partimos del plano
 \begin_inset Formula $\imagePoint$
 \end_inset
 
-.
- De la explicación precedente sabemos que el rayo correspondiente al (desconocid
-o) punto 
+, de la explicación precedente sabemos que el rayo correspondiente al (desconoci
+do) punto 
 \begin_inset Formula $\imagePoint^{\prime}$
 \end_inset
 
@@ -1665,6 +1658,10 @@ reference "fig:epipolar_line"
 \end_inset
 
 , sobre el plano focal de la segunda imagen.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1763,6 +1760,10 @@ reference "fig:rectification"
 \end_inset
 
  ilustra una cámara estéreo rectificada.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1838,6 +1839,10 @@ disparidad
  en la imagen izquierda y derecha de un par de imágenes estéreo.
  Usando el valor de disparidad es posible calcular la posición del punto
  3D asociado, como se verá a continuación.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1975,7 +1980,7 @@ name "fig:images_rectification"
 Triangulación estéreo 
 \begin_inset CommandInset label
 LatexCommand label
-name "sub:Triangulación-estéreo"
+name "subsec:Triangulación-estéreo"
 
 \end_inset
 
@@ -1994,6 +1999,10 @@ reference "fig:triangulation-1"
 
  muestra la geometría involucrada en la triangulación estéreo de un punto
  en el espacio.
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

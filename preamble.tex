@@ -1,9 +1,10 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsopn}
+\usepackage[binary-units=true]{siunitx} % para manejar las unidades
 
 \renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
-\newcommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
@@ -44,5 +45,5 @@
 \newcommand{\inverseDepth}{\rho}
 \newcommand{\disparityMap}{\mathcal D}
 \newcommand{\pointCloud}{\mathcal P}
-\newcommand{\camera}{C}
+\newcommand{\camera}{c}
 \newcommand{\ray}{n}

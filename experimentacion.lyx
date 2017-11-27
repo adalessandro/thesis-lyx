@@ -100,9 +100,20 @@ En este capítulo se presentan los experimentos diseñados para evaluar el
 ón densa basada en disparidad.
  En todos los casos, el hardware utilizado para el procesamiento de los
  experimentos corresponde a una computadora estándar de escritorio con procesado
-r Intel(R) Core(TM) i7-6700HQ de 2.60GHz y 8GiB de memoria RAM.
+r Intel Core i7 de 
+\begin_inset Formula $\SI{2.6}{\GHz}$
+\end_inset
+
+ y 
+\begin_inset Formula $\SI{16}{\giga\byte}$
+\end_inset
+
+ de memoria RAM.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Los valores creo que van separados de las unidades.
@@ -151,18 +162,8 @@ datasets
 \end_layout
 
 \begin_layout Standard
-Evaluamos nuestro sistema S-PTAM Denso 
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-Ojo que a veces usas italicas y minusculas para referirte a S-PTAM Denso.
- Que sea consistente.
-\end_layout
-
-\end_inset
-
-sobre los datasets públicos KITTI 
+Evaluamos nuestro sistema S-PTAM Denso sobre los datasets públicos KITTI
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "geiger2013vision"
@@ -177,6 +178,20 @@ key "peris2012towards"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Comment
+status collapsed
+
+\begin_layout Plain Layout
+Ojo que a veces usas italicas y minusculas para referirte a S-PTAM Denso.
+ Que sea consistente.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -479,7 +494,7 @@ por segundo (30Hz).
 baseline 
 \emph default
 de 
-\begin_inset Formula $sim$
+\begin_inset Formula $\sim$
 \end_inset
 
 10cm y una resolución de 640 x 480 píxeles.
@@ -517,7 +532,7 @@ reference "fig:tsukuba_1"
 
 \begin_layout Standard
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 no se ven muchos los mapas de disparidad...
@@ -543,7 +558,7 @@ status open
 \begin_inset Graphics
 	filename images/tsukuba_1.png
 	lyxscale 20
-	width 8cm
+	width 12cm
 
 \end_inset
 
@@ -664,19 +679,10 @@ reference "fig:tsukuba_reconstructions-1"
 
  muestran distintas reconstrucciones tridimensionales producidas por S-PTAM
  Denso en ambos datasets, en donde puede notarse la alta precisión del método.
- Los resultados pueden ser mejor apreciados en los videos que se encuentran
- en las notas de pie de página.
- El primer video 
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-https://youtu.be/ZLMHx_MU-2k
+ 
 \end_layout
 
-\end_inset
-
- 
+\begin_layout Standard
 \begin_inset Note Comment
 status open
 
@@ -688,8 +694,15 @@ tenes que reahacer estos videos, así está la ultima implementación.
 
 \end_inset
 
-muestra al sistema corriendo en tiempo real una de las secuencias del dataset
- KITTI.
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Los resultados pueden ser mejor apreciados en los videos que se encuentran
+ en las notas de pie de página.
+ El primer video muestra al sistema corriendo en tiempo real una de las
+ secuencias del dataset KITTI.
  El segundo video 
 \begin_inset Foot
 status collapsed
@@ -702,6 +715,11 @@ https://youtu.be/ayp6yk1UnWM
 
  muestra una vista detallada de las nubes de puntos densas locales obtenidas
  por el método propuesto y registradas utilizando la pose estimada por S-PTAM.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -866,12 +884,22 @@ reference "fig:kitti06_frame777"
 
  muestran una comparación entre los mapas de profundidad estimados por LIBELAS,
  a partir de un par de imágenes estéreo, y el mapa de profundidad calculado
- p
+ por nuestro algoritmo.
+ Además mostramos los errores en la reconstrucción.
 \end_layout
 
 \begin_layout Standard
-]or nuestro algoritmo.
- Asímismo mostramos los errores en la reconstrucción.
+\begin_inset Note Comment
+status collapsed
+
+\begin_layout Plain Layout
+ground truth a veces esta en italica.
+ Que sea consistente.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -883,18 +911,11 @@ reference "fig:kitti06_frame612_dense"
 
 \end_inset
 
- se aproxima mejor al ground truth 
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-ground truth a veces esta en italica.
- Que sea consistente.
-\end_layout
-
-\end_inset
-
-
+ se aproxima mejor al 
+\emph on
+ground truth
+\emph default
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:kitti06_frame612_gt"
@@ -925,7 +946,7 @@ reference "fig:kitti06_frame612_error"
 
 .
  Esta notable mejora en la precisión es principalmente el resultado de la
- fusión desde diferentes puntos de vista.
+ fusión desde diferentes puntos de vista realizada por el método propuesto.
  La imágenes del dataset KITTI contienen áreas distantes, que resultan en
  un mayor error estéreo.
  Para tales áreas el error puede ser reducido si la profundidad estéreo
@@ -938,7 +959,7 @@ reference "fig:kitti06_frame612_error"
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1246,8 +1267,11 @@ name "fig:kitti06_frame612_bar"
 
 \begin_layout Plain Layout
 Comparación entre mapas de profundidad obtenidos mediante LIBELAS y S-PTAM
- en relación al ground truth, para una imagen de la secuencia 06 del Dataset
- KITTI.
+ en relación al 
+\emph on
+ground truth
+\emph default
+, para una imagen de la secuencia 06 del Dataset KITTI.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -1271,10 +1295,10 @@ name "fig:kitti06_frame612"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1582,8 +1606,11 @@ name "fig:kitti06_frame777_bar"
 
 \begin_layout Plain Layout
 Comparación entre mapas de profundidad obtenidos mediante LIBELAS y S-PTAM
- en relación al ground truth, para una imagen de la secuencia 06 del Dataset
- KITTI.
+ en relación al 
+\emph on
+ground truth
+\emph default
+, para una imagen de la secuencia 06 del Dataset KITTI.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -1623,9 +1650,9 @@ reference "fig:tsukuba_frame1314"
  en el dataset Tsukuba.
  La razón es que la escena de interior, renderizada por el dataset Tsukuba,
  no contiene áreas distantes.
- La profundidad desde un par de imágenes estéreo es entonces altamente precisa,
- y la mejora obtenida por el algoritmo de fusión desde diferentes puntos
- de vista no resulta tan evidente.
+ La profundidad desde un par de imágenes estéreo es entonces suficientemente
+ precisa, y la mejora obtenida por el algoritmo de fusión desde diferentes
+ puntos de vista no resulta tan evidente.
  
 \begin_inset Note Comment
 status open
@@ -1655,7 +1682,7 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1956,7 +1983,11 @@ name "fig:tsukuba_frame807_bar"
 
 \begin_layout Plain Layout
 Comparación entre mapas de profundidad obtenidos mediante LIBELAS y S-PTAM
- en relación al ground truth, para una imagen del Dataset Tsukuba.
+ en relación al 
+\emph on
+ground truth
+\emph default
+, para una imagen del Dataset Tsukuba.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -2291,7 +2322,11 @@ name "fig:tsukuba_frame1314_bar"
 
 \begin_layout Plain Layout
 Comparación entre mapas de profundidad obtenidos mediante LIBELAS y S-PTAM
- en relación al ground truth, para una imagen del Dataset Tsukuba.
+ en relación al 
+\emph on
+ground truth
+\emph default
+, para una imagen del Dataset Tsukuba.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -2317,8 +2352,8 @@ Análisis del error
 \end_layout
 
 \begin_layout Standard
-Para un análisis cuantitativo de nuestro algoritmo, también evaluamos el
- error de la profundidad a lo largo de toda la secuencia 06 del dataset
+Para obtener un análisis cuantitativo de nuestro algoritmo, también evaluamos
+ el error de la profundidad a lo largo de toda la secuencia 06 del dataset
  KITTI.
  Las Figuras 
 \begin_inset CommandInset ref
@@ -2338,41 +2373,57 @@ reference "fig:kitti06_dense_boxplot"
  cámara, en la secuencia 06 del dataset KITTI, empleando los mapas de profundida
 s de LIBELAS y S-PTAM Denso.
  Los errores se muestran a partir de los 5 metros de distancia, ya que esta
- es la mínima distancia del sensor Velodyne que utilizamos como ground truth.
+ es la mínima distancia del sensor Velodyne que utilizamos como 
+\emph on
+ground truth
+\emph default
+.
 \end_layout
 
 \begin_layout Standard
-La Figura 
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
-poner qué figura
+explicar parallax
 \end_layout
 
 \end_inset
 
-muestra que S-PTAM Denso obtiene errores menores que la estimación realizada
- por LIBELAS.
- Para una mejor evaluación, la Figura 
+
+\end_layout
+
+\begin_layout Standard
+Para una mejor comparación, la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:median_comparison_kitti"
 
 \end_inset
 
- compara el error medio para cada profundidad tanto en S-PTAM Denso como
+ muestra el error medio para cada profundidad tanto en S-PTAM Denso como
  en LIBELAS.
  Nótese que los errores son muy similares para pequeñas profundidades.
  Dado que el 
 \emph on
-parallax 
+parallax
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Paralaje: desviación en la posición aparente de un objeto dependiendo del
+ punto de vista elegido.
+\end_layout
+
+\end_inset
+
+ 
 \emph default
 es grande, la profundidad estimada es lo suficientemente precisa, por lo
- tanto las triangulaciones estéreo adicionales no agregan demasiado información.
- La ganancia obtenida mediante la fusión estéreo es apreciada a grande profundid
-ades, donde una sola triangulación estéreo produce resultados ruidosos y
- la fusión de múltiples vistas es capaz de reducir el error.
+ tanto las triangulaciones estéreo adicionales no agregan demasiada información.
+ La ganancia obtenida mediante la fusión estéreo es apreciada a grandes
+ profundidades, donde una sola triangulación estéreo produce resultados
+ ruidosos y la fusión de múltiples vistas es capaz de reducir el error.
 \end_layout
 
 \begin_layout Standard
@@ -2535,7 +2586,7 @@ reference "fig:tsukuba_dense_boxplot"
  se grafica el error en la profundidad de LIBELAS y S-PTAM Denso, respectivament
 e, para la secuencia del dataset Tsukuba.
  Al igual que en el Dataset KITTI, mostramos el error medio en la profundidad
- para ambos métodos 
+ para ambos métodos en la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:median_comparison_tsukuba"
@@ -2548,7 +2599,7 @@ reference "fig:median_comparison_tsukuba"
 \end_layout
 
 \begin_layout Standard
-El motivo subyacente ya fue detallado anteriormente.
+El motivo subyacente fue detallado anteriormente.
  Las profundidades del escenario de interior generado en el dataset Tsukuba
  son pequeñas (en comparación con las calles en exterior del dataset KITTI).
  El baseline de la cámara estéreo es lo suficientemente grande para producir
@@ -2722,6 +2773,9 @@ reference "fig:kitti_medians_all-1"
 
  se expone un análisis comparativo de las medianas de error correspondientes
  a las restantes secuencias del dataset KITTI.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Comment
 status open
 
@@ -2742,7 +2796,7 @@ Parece ser que el error medio de la reconstrucción de S-PTAM Dense crece
 placement tbh
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -3034,7 +3088,7 @@ name "fig:kitti_medians_all"
 placement tbh
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -3239,32 +3293,8 @@ Costo computacional
 \end_layout
 
 \begin_layout Standard
-Por último, como puede observarse en las Figuras 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:points_kitti"
-
-\end_inset
-
- y 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:points_tsukuba"
-
-\end_inset
-
- muestran el número de puntos que el método generó y fusionó en cada secuencia.
- Denotamos como 
-\emph on
-hipótesis 
-\emph default
-a los puntos nuevos creados, que se convierten en puntos 
-\emph on
-validados 
-\emph default
-cuando nuestro método fusiona la profundidad desde otra triangulación estéreo.
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 este parrafo y el siguiente parece que presentan las mismas figuas, no?
@@ -3292,16 +3322,15 @@ reference "fig:points_tsukuba"
 \end_inset
 
  dividen el número total de puntos al final de cada secuencia entre dos
- clases: aquellos que fueron vistos una única vez -
+ clases: aquellos que fueron vistos una única vez 
 \emph on
-hipótesis
+—hipótesis
 \emph default
--, o en múltiples ocasiones -
+—, o en múltiples ocasiones 
 \emph on
-validados
+—validados
 \emph default
--.
- Finalmente, se detalla el número total de fusiones de profundidad realizadas.
+—, y finalmente se detalla el número total de fusiones de profundidad realizadas.
  Estos valores muestran cómo el método propuesto reduce considerablemente
  el tamaño del mapa comparado con un enfoque 
 \emph on
@@ -3312,8 +3341,8 @@ naive
  del dataset KITTI, ya que la cámara recorre una distancia mucho mayor que
  en la secuencia Tsukuba.
  Por otro lado, el total de fusiones resulta mayor en la secuencia Tsukuba
- dado que mismas regiones de la escena son vistas en múltiples ocasiones,
- a diferencia de la puramente exploratoria trayectoria en el dataset KITTI.
+ dado que la escena es observada desde múltiples puntos de vista, a diferencia
+ del dataset KITTI donde la trayectoria resulta puramente exploratoria.
 \end_layout
 
 \begin_layout Standard
@@ -3322,7 +3351,7 @@ naive
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -3342,8 +3371,8 @@ status collapsed
 
 \begin_layout Plain Layout
 Cantidad total de puntos a lo largo de una ejecución de S-PTAM Denso (creados,
- descartados, presentes en la reconstrucción final -hipótesis (vistos una
- única vez) y validados (fusionados múltiples veces)-, y el número total
+ descartados, presentes en la reconstrucción final —hipótesis (vistos una
+ única vez) y validados (fusionados múltiples veces)—, y el número total
  de fusiones) en la secuencia 06 del dataset KITTI.
  
 \begin_inset CommandInset label
@@ -3371,7 +3400,7 @@ name "fig:points_kitti"
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -3415,9 +3444,7 @@ name "fig:points_tsukuba"
 \end_layout
 
 \begin_layout Standard
-En esta sección se muestran los tiempos de cómputo empleados en cada fase
- del proceso de densificación.
- La Tabla 
+La Tabla 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:table_times"
@@ -3425,10 +3452,15 @@ reference "fig:table_times"
 \end_inset
 
  contiene los pasos más relevantes de nuestro algoritmo -cómputo de disparidad,
- fusión de mapa y refinamiento de mapa- y el tiempo promedio por keyframe.
+ fusión de mapa y refinamiento de mapa- y el tiempo promedio de cómputo
+ por 
+\emph on
+keyframe
+\emph default
+.
  La Tabla muestra que el método de S-PTAM Denso resulta apto para la navegación
  de robots móviles, dado que puede correr en tiempo real a 5 fps en las
- secuencias del dataset KITTI y a 6 fps en el caso de Tsukuba.
+ secuencias del dataset KITTI y a 18 fps en el caso de Tsukuba.
  Cabe destacar que el tiempo computacional empleado en la fusión y expansión
  de mapa es prácticamente el mismo en ambos casos.
  El tiempo consumido por el Refinamiento de mapa es despreciable en comparación
@@ -3441,7 +3473,7 @@ reference "fig:table_times"
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center

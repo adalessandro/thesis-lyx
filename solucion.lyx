@@ -97,13 +97,10 @@ Método propuesto de mapeo denso basado en disparidad estéreo
 \begin_layout Standard
 En este capítulo se expone en detalle la solución propuesta en esta tesina
  para el problema de mapeo denso basado en el uso de información de disparidad.
- El método propuesto, denominado como 
-\emph on
-S-PTAM denso
-\emph default
-, utiliza la localización estimada por el sistema de SLAM disperso y la
- información de disparidad, obtenida desde el par de imágenes estéreo, para
- realizar una reconstrucción 3D completa del entorno.
+ El método propuesto, denominado como S-PTAM Denso, utiliza la localización
+ estimada por el sistema de SLAM disperso y la información de disparidad,
+ obtenida desde el par de imágenes estéreo, para realizar una reconstrucción
+ 3D completa del entorno.
  Asímismo, se encarga de mejorar sucesivamente el mapa mediante la fusión
  de nubes de puntos 3D computadas a lo largo de la trayectoria de la cámara.
  
@@ -124,13 +121,14 @@ Stereo Parallel Tracking and Mapping
 ), por lo que fue diseñado tomando en consideración la interfaz y el funcionamie
 nto del mismo.
  Sin embargo, no se restringe a ser ejecutado sobre este sistema de SLAM
- en particular y el módulo de densificación se implementó en un nodo ROS
- independiente, facilitando su reutilización e integración con diferentes
- implementaciones de SLAM de la comunidad robótica.
+ en particular.
+ El módulo de densificación se implementó en un nodo ROS independiente,
+ facilitando su reutilización e integración con diferentes implementaciones
+ de SLAM de la comunidad robótica.
  En los siguientes subcapítulos, describimos en detalle los distintos componente
-s que forman parte de 
+s que forman parte de S-PTAM Denso
 \emph on
-S-PTAM denso.
+.
 \end_layout
 
 \begin_layout Section
@@ -219,8 +217,12 @@ En paralelo al hilo de
 \emph on
 tracking
 \emph default
-, el hilo de mapping busca activamente observaciones de los puntos del mapa
- existentes en los 
+, el hilo de 
+\emph on
+mapping
+\emph default
+ busca activamente observaciones de los puntos del mapa existentes en los
+ 
 \emph on
 keyframes
 \emph default
@@ -330,8 +332,12 @@ reference "fig:metodo-diagram"
 \end_inset
 
  se muestra la estructura general del módulo de reconstrucción 3D densa.
- Los keyframes generados por el sistema S-PTAM son encolados para ser procesados
- secuencialmente por el hilo de 
+ Los 
+\emph on
+keyframes
+\emph default
+ generados por el sistema S-PTAM son encolados para ser procesados secuencialmen
+te por el hilo de 
 \emph on
 Cómputo de Disparidad
 \emph default
@@ -349,21 +355,6 @@ Expansión y fusión de mapa
  usa la pose del 
 \emph on
 keyframe
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-
-\emph on
-Verificar que la palabra keyframe siempre este en italica o que no este
- en italica.
- Ser consistente.
- Lo mismo para todas las palabras en inglés como tracking y mapping.
-\end_layout
-
-\end_inset
-
-
 \emph default
  estimada por S-PTAM y el mapa de disparidad asociado para extender y ajustar
  el mapa.
@@ -388,9 +379,11 @@ Mapping
 keyframes
 \emph default
  y las nubes de puntos asociadas cada vez que S-PTAM refina una pose.
- 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Donde dice mapa en la figura debe dedir mapa denso.
@@ -399,6 +392,23 @@ Donde dice mapa en la figura debe dedir mapa denso.
 \end_inset
 
  
+\emph on
+
+\begin_inset Note Comment
+status collapsed
+
+\begin_layout Plain Layout
+
+\emph on
+Verificar que la palabra keyframe siempre este en italica o que no este
+ en italica.
+ Ser consistente.
+ Lo mismo para todas las palabras en inglés como tracking y mapping.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -488,7 +498,11 @@ mapa de disparidad
 \end_inset
 
  a la función que representa el mapa de disparidad generado a partir del
- par de imágenes estéreo del keyframe 
+ par de imágenes estéreo del 
+\emph on
+keyframe
+\emph default
+ 
 \begin_inset Formula $\keyframe_{j}$
 \end_inset
 
@@ -497,7 +511,11 @@ mapa de disparidad
 
 \begin_layout Standard
 Cada vez que un nuevo par de imágenes estéreo es seleccionado por S-PTAM
- como keyframe, el hilo de 
+ como 
+\emph on
+keyframe
+\emph default
+, el hilo de 
 \emph on
 Cómputo de Disparidad
 \emph default
@@ -551,7 +569,7 @@ reference "fig:libelas-tsukuba-1"
 
 \begin_layout Standard
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Poner cita de dataset en cada figura.
@@ -593,7 +611,15 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Método LIBELAS - Dataset KITTI.
+Mapa de disparidad obtenido mediente LIBELAS para una imagen izquierda del
+ Dataset KITTI 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2013vision"
+
+\end_inset
+
+.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -637,7 +663,15 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Método LIBELAS - Dataset Tsukuba.
+Mapa de disparidad obtenido mediente LIBELAS para una imagen izquierda del
+ Dataset Tsukuba 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "peris2012towards"
+
+\end_inset
+
+.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:libelas-tsukuba-1"
@@ -700,7 +734,11 @@ Luego que el hilo de
 \emph on
 Cómputo de Disparidad
 \emph default
- computa el mapa de disparidad del keyframe actual 
+ computa el mapa de disparidad del 
+\emph on
+keyframe
+\emph default
+ actual 
 \begin_inset Formula $\keyframe_{j}$
 \end_inset
 
@@ -713,10 +751,7 @@ Expansión y fusión de mapa
 \end_inset
 
  para mejorar y agregar nuevos puntos a la reconstrucción 3D densa.
-\end_layout
-
-\begin_layout Standard
-En base al mapa de disparidad 
+ En base al mapa de disparidad 
 \begin_inset Formula $\disparityMap_{j}$
 \end_inset
 
@@ -736,19 +771,8 @@ En base al mapa de disparidad
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\inverseDepth_{i}=\frac{\disparityMap_{j}}{\baseline\focalDistance}\label{eq:inverse-depth-definition}
+\inverseDepth_{i}=\frac{\disparityMap_{j}}{\baseline\focalDistance},\label{eq:inverse-depth-definition}
 \end{equation}
-
-\end_inset
-
-
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-toda ecuacion debe terminar con punto seguido, final o con coma.
- La ecuación es como si formara parte de la redacción.
-\end_layout
 
 \end_inset
 
@@ -756,17 +780,7 @@ toda ecuacion debe terminar con punto seguido, final o con coma.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-No debe haber sangria luego de una ecuacion que siga de una coma o un punto
- seguido.
- 
-\end_layout
-
-\end_inset
-
+\noindent
 siendo 
 \begin_inset Formula $\focalDistance$
 \end_inset
@@ -779,6 +793,32 @@ siendo
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Comment
+status collapsed
+
+\begin_layout Plain Layout
+toda ecuacion debe terminar con punto seguido, final o con coma.
+ La ecuación es como si formara parte de la redacción.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Comment
+status collapsed
+
+\begin_layout Plain Layout
+No debe haber sangria luego de una ecuacion que siga de una coma o un punto
+ seguido.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Podemos estimar una nube de puntos densa 
 \begin_inset Formula $\pointCloud=\left\{ \point_{1},\hdots,\point_{P}\right\} $
 \end_inset
@@ -787,7 +827,11 @@ Podemos estimar una nube de puntos densa
 \begin_inset Formula $J$
 \end_inset
 
- keyframes estéreo 
+ 
+\emph on
+keyframes
+\emph default
+ estéreo 
 \begin_inset Formula $\left\{ \pointCloud_{j-J},\hdots,\pointCloud_{j}\right\} $
 \end_inset
 
@@ -796,7 +840,7 @@ Podemos estimar una nube de puntos densa
 \begin_inset Formula $\pointCloud$
 \end_inset
 
-, se aplica un proceso de 
+, se aplica 
 \emph on
 Frustum culling
 \emph default
@@ -816,11 +860,15 @@ reference "subsec:Frustum-culling"
 .
 
 \emph default
- Denominamos a la nube de puntos resultante como 
+ Denominamos a la nube de puntos resultante 
 \emph on
 mapa local
 \emph default
- al keyframe 
+ al 
+\emph on
+keyframe
+\emph default
+ 
 \begin_inset Formula $\keyframe_{j}$
 \end_inset
 
@@ -836,8 +884,7 @@ A medida que la cámara se traslada, es posible que ciertas áreas del mapa
  se encuentren duplicadas.
  Asímismo, la reconstrucción ha de ser más precisa desde cierto puntos de
  vista cercanos a la escena.
- Proponemos un algoritmo de fusión eficiente para estas áreas duplicadas
- que consiste en lo siguiente.
+ Proponemos un algoritmo de fusión eficiente para estas áreas duplicadas.
  Dado dos puntos 
 \begin_inset Formula $\point_{previo}\in\pointCloud$
 \end_inset
@@ -846,13 +893,20 @@ A medida que la cámara se traslada, es posible que ciertas áreas del mapa
 \begin_inset Formula $\point_{actual}\in\pointCloud_{j}$
 \end_inset
 
- de la nube de puntos local y del keyframe actual respectivamente, consideramos
- que corresponden al mismo punto 3D si:
+ de la nube de puntos local y del 
+\emph on
+keyframe
+\emph default
+ actual respectivamente, consideramos que corresponden al mismo punto 3D
+ si:
 \end_layout
 
 \begin_layout Itemize
-Su proyecciones en keyframes estéreo cercanos coinciden en las mismas coordenada
-s del píxel en la imagen.
+Sus proyecciones en 
+\emph on
+keyframes
+\emph default
+ estéreo cercanos coinciden en las mismas coordenadas del píxel en la imagen.
 \end_layout
 
 \begin_layout Itemize
@@ -906,6 +960,11 @@ por ejemplo aca no tieen que ir la sangria.
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+\noindent
 donde 
 \begin_inset Formula $\inverseDepth_{fusión}$
 \end_inset
@@ -941,7 +1000,21 @@ y
 \end_layout
 
 \begin_layout Standard
-Nótese que en la Ecuación 
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Explicar propagación de primer orden...
+ ???
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Nótese en la Ecuación 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:inverse-depth-definition"
@@ -960,32 +1033,67 @@ reference "eq:inverse-depth-fusion-definition"
  expresa la incertidumbre.
  En este algoritmo de fusión, estamos asumiendo que la profundidad inversa
  de un punto es similar desde dos puntos de vista diferentes.
- Esta es una suposición razonable mientras los keyframes se encuentren cercanos
- entre sí, lo cual se cumple en nuestro caso, dado que incrementalmente
- fusionamos la nube de puntos local 
-\begin_inset Formula $\pointCloud$
+ Esta es una suposición razonable mientras los 
+\emph on
+keyframes
+\emph default
+ se encuentren cercanos entre sí, lo cual se cumple en nuestro caso, dado
+ que incrementalmente fusionamos el 
+\emph on
+mapa local
+\emph default
+ al 
+\emph on
+keyframe
+\emph default
+ 
+\begin_inset Formula $\keyframe_{j}$
 \end_inset
 
- con la nube de puntos del último keyframe 
+ con la nube de puntos 
 \begin_inset Formula $\pointCloud_{j}$
 \end_inset
 
- 
+ generada desde el mismo.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Acá no se entiende si 
 \begin_inset Formula $\pointCloud_{j}$
 \end_inset
 
- es la nube de puntos únicamente del keyframe j o es el mapa local construido
- desde el keyframe j.
+ es la nube de puntos únicamente del 
+\emph on
+keyframe
+\emph default
+ j o es el mapa local construido desde el 
+\emph on
+keyframe
+\emph default
+ j.
 \end_layout
 
 \end_inset
 
-.
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Explicar intuitivamente? Hay que explicar el enunciado y la resolución para
+ p1c2, etc...
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1041,7 +1149,11 @@ Resolviendo para
 \begin_inset Formula $\inverseDepth_{1}^{\camera_{2}}$
 \end_inset
 
- y asumiendo que los keyframes se encuentran cerca 
+ y asumiendo que los 
+\emph on
+keyframes
+\emph default
+ se encuentran cerca 
 \begin_inset Formula $\translation_{\camera_{1}\camera_{2}}\approx0$
 \end_inset
 
@@ -1061,7 +1173,7 @@ Resolviendo para
 
 \begin_layout Standard
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 en la ecuacion, la norma (doble pipe) debe alcanzar toda la fracción (incluido
@@ -1070,6 +1182,10 @@ en la ecuacion, la norma (doble pipe) debe alcanzar toda la fracción (incluido
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 Finalmente, este hilo expande el mapa utilizando los restantes píxeles que
  no encontraron correspondencias y que poseen un valor de disparidad válido.
  El método distingue dos casos: píxeles sin correspondencia en el mapa,
@@ -1170,22 +1286,25 @@ name "sec:hilo-refinamiento-de-mapa"
 \end_layout
 
 \begin_layout Standard
-El sistema propuesto debe ser capaz de actualizar el mapa denso 3D al recibir
- actualizaciones de poses, aunque cuando los keyframes asociados ya hayan
- sido procesados.
+El sistema propuesto es capaz de actualizar el mapa denso 3D al recibir
+ actualizaciones de poses, cuando los 
+\emph on
+keyframes
+\emph default
+ asociados ya hayan sido procesados.
  Notar que este comportamiento es esperable en sistemas de SLAM, ya que
  el mapa disperso y la trayectoria de la cámara son refinados a lo largo
  de toda la secuencia.
-\end_layout
-
-\begin_layout Standard
-En nuestro caso, cada vez que S-PTAM ajusta un keyframe en la trayectoria,
- el hilo de 
+ En nuestro caso, cada vez que S-PTAM ajusta un 
+\emph on
+keyframe
+\emph default
+ en la trayectoria, el hilo de 
 \emph on
 Refinamiento
 \emph default
  ajusta el mapa.
- Esto ayuda a mantener una reconstrucción 3D densa más precisa.
+ Esto ayuda a mantener una reconstrucción más precisa.
 \end_layout
 
 \begin_layout Standard
@@ -1195,7 +1314,11 @@ as del mundo.
 \begin_inset Formula $\pointCloud_{i}$
 \end_inset
 
-, generada desde el keyframe 
+, generada desde el 
+\emph on
+keyframe
+\emph default
+ 
 \begin_inset Formula $\keyframe_{i}$
 \end_inset
 
@@ -1204,8 +1327,11 @@ as del mundo.
 \end_inset
 
 , notamos la transformación existente en el mundo y esta cámara como:
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Usa la letra 
@@ -1240,6 +1366,7 @@ Usa la letra
 \end_layout
 
 \begin_layout Standard
+\noindent
 De la misma manera, siendo 
 \begin_inset Formula $\hat{\mathrm{\camera}}_{i}$
 \end_inset
@@ -1262,6 +1389,7 @@ De la misma manera, siendo
 \end_layout
 
 \begin_layout Standard
+\noindent
 Luego, la actualización de la nube de puntos 
 \begin_inset Formula $\pointCloud_{i}$
 \end_inset
@@ -1303,9 +1431,9 @@ Por otro lado, el hilo de
 \emph on
 Refinamiento de mapa
 \emph default
- se encarga permanentemente de mover las nubes de puntos no utilizadas a
- memoria secundaria, permitiendo ejecutar el sistema en secuencias de extensa
- longitud, reconstruyendo millones de puntos 3D.
+ se encarga permanentemente de mover nubes de puntos no utilizadas a memoria
+ secundaria, permitiendo ejecutar el sistema en secuencias de extensa longitud,
+ reconstruyendo millones de puntos 3D.
  Dado que el hilo de 
 \emph on
 Expansión y fusión de mapa
