@@ -382,36 +382,6 @@ keyframes
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-Donde dice mapa en la figura debe dedir mapa denso.
-\end_layout
-
-\end_inset
-
- 
-\emph on
-
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-
-\emph on
-Verificar que la palabra keyframe siempre este en italica o que no este
- en italica.
- Ser consistente.
- Lo mismo para todas las palabras en inglés como tracking y mapping.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \align center
 \begin_inset Float figure
 placement tbh
@@ -562,19 +532,6 @@ reference "fig:libelas-tsukuba-1"
 
  pueden observarse resultados de su uso.
 \begin_inset Separator latexpar
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-Poner cita de dataset en cada figura.
-\end_layout
-
 \end_inset
 
 
@@ -793,32 +750,6 @@ siendo
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-toda ecuacion debe terminar con punto seguido, final o con coma.
- La ecuación es como si formara parte de la redacción.
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-No debe haber sangria luego de una ecuacion que siga de una coma o un punto
- seguido.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Podemos estimar una nube de puntos densa 
 \begin_inset Formula $\pointCloud=\left\{ \point_{1},\hdots,\point_{P}\right\} $
 \end_inset
@@ -950,20 +881,6 @@ reference "fig:stereoscan_projection"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-por ejemplo aca no tieen que ir la sangria.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \noindent
 donde 
 \begin_inset Formula $\inverseDepth_{fusión}$
@@ -1059,31 +976,6 @@ keyframe
 
 \begin_layout Standard
 \begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-Acá no se entiende si 
-\begin_inset Formula $\pointCloud_{j}$
-\end_inset
-
- es la nube de puntos únicamente del 
-\emph on
-keyframe
-\emph default
- j o es el mapa local construido desde el 
-\emph on
-keyframe
-\emph default
- j.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
 status open
 
 \begin_layout Plain Layout
@@ -1165,20 +1057,6 @@ keyframes
 \[
 \inverseDepth_{1}^{\camera_{2}}=\norm{\frac{1}{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}}\rotation_{\camera_{1}\camera_{2}}\ray_{1}^{\camera_{1}}-\translation_{\camera_{1}\camera_{2}}}\approx\inverseDepth_{1}^{\camera_{1}}.
 \]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-en la ecuacion, la norma (doble pipe) debe alcanzar toda la fracción (incluido
- el divisor)
-\end_layout
 
 \end_inset
 
@@ -1327,28 +1205,6 @@ keyframe
 \end_inset
 
 , notamos la transformación existente en el mundo y esta cámara como:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-Usa la letra 
-\begin_inset Formula $\camera_{i}$
-\end_inset
-
- en minúsculas dado que la 
-\begin_inset Formula $\mathrm{w}$
-\end_inset
-
- está en minúscula.
- 
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard

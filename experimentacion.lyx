@@ -112,24 +112,6 @@ r Intel Core i7 de
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-Los valores creo que van separados de las unidades.
- Ej: 8 GB.
- Lo mismo para medidas de tiempo, error, etc.
- Hay un paquete de latex que podes encontrar en mi tesis para poner las
- unidades bien.
- Creo que se llama units.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Los experimentos se llevan a cabo sobre el entorno de desarrollo ROS (
 \emph on
 Robot Operating System
@@ -178,20 +160,6 @@ key "peris2012towards"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-Ojo que a veces usas italicas y minusculas para referirte a S-PTAM Denso.
- Que sea consistente.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -531,21 +499,6 @@ reference "fig:tsukuba_1"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-no se ven muchos los mapas de disparidad...
- Podes o tocar el contraste de las imagenes o podes eleigr otros frames
- con sus respectivos mapas de disparidad.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \align center
 \begin_inset Float figure
 placement tbh
@@ -683,18 +636,6 @@ reference "fig:tsukuba_reconstructions-1"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-tenes que reahacer estos videos, así está la ultima implementación.
- Igual no hables de los videos en el informe.
- La idea es que los muestres en la presentación.
-\end_layout
-
-\end_inset
-
-
 \begin_inset Note Note
 status open
 
@@ -886,20 +827,6 @@ reference "fig:kitti06_frame777"
  a partir de un par de imágenes estéreo, y el mapa de profundidad calculado
  por nuestro algoritmo.
  Además mostramos los errores en la reconstrucción.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-ground truth a veces esta en italica.
- Que sea consistente.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1655,7 +1582,7 @@ reference "fig:tsukuba_frame1314"
  puntos de vista no resulta tan evidente.
  
 \begin_inset Note Comment
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Podes comentar las zonas de las imagenes donde si se aprecia mejora y las
@@ -1682,7 +1609,7 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1725,7 +1652,7 @@ name "fig:tsukuba_frame807_rgb"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1768,7 +1695,7 @@ name "fig:tsukuba_frame807_gt"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -2381,19 +2308,6 @@ ground truth
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-explicar parallax
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Para una mejor comparación, la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2411,8 +2325,12 @@ parallax
 status open
 
 \begin_layout Plain Layout
-Paralaje: desviación en la posición aparente de un objeto dependiendo del
- punto de vista elegido.
+
+\emph on
+Parallax
+\emph default
+: desviación en la posición aparente de un objeto dependiendo del punto
+ de vista elegido.
 \end_layout
 
 \end_inset
@@ -2773,21 +2691,6 @@ reference "fig:kitti_medians_all-1"
 
  se expone un análisis comparativo de las medianas de error correspondientes
  a las restantes secuencias del dataset KITTI.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-Parece ser que el error medio de la reconstrucción de S-PTAM Dense crece
- casi cuadraticamente mientras mas distancia haya a la cámara.
- 
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -3290,20 +3193,6 @@ name "fig:kitti_medians_all-1"
 
 \begin_layout Subsection
 Costo computacional
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-este parrafo y el siguiente parece que presentan las mismas figuas, no?
- fusionar o corregir.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard

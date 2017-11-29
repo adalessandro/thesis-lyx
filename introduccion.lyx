@@ -181,20 +181,6 @@ key "Mouragnon2006,Hwang2011"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-Otra palabra que no sea perturbada.
- Ej: La reconstrucción está a un factor de escala.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Determinados enfoques 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -242,19 +228,6 @@ keyframes
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-que sean keyfram-based y que funcionen con camara estéreo
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 La solución propuesta se compone de tres hilos de ejecución paralelos: generació
 n y reproyección de mapas de disparidad, transformación y fusión de nubes
  de puntos, y refinamiento del mapa global.
@@ -283,20 +256,6 @@ key "geiger2011stereoscan"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-se tienen que poner 3 guiones para que se ve el guion largo adecuado en
- el pdf.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Finalmente, el método desarrollado se programó como un nodo del framework
  ROS (
 \emph on
@@ -310,19 +269,6 @@ Robot Operating System
  sin requerir el uso de GPUs, con precisión similar a otros métodos de densifica
 ción presentes en el estado del arte.
  
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-Se programó bajo el framework de ROS
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -341,19 +287,6 @@ El capítulo 2 presenta el estado del arte en sistemas SLAM densos.
  y se discuten los resultados obtenidos.
  Por último, en el capítulo 6 se presentan las conclusiones y trabajo futuro
  que se derivan del presente trabajo de tesina.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-fundamentos de visión y robótica?
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section

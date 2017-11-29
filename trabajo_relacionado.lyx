@@ -108,20 +108,6 @@ La presente tesina investiga y propone un método de reconstrucción 3D o
  de mapeo denso en SLAM.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-esta última frase después de la coma no me convence.
- qué queres decir?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Reconstrucción 3D
 \end_layout
@@ -152,19 +138,6 @@ key "pollefeys2004visual,seitz2006comparison,Hwang2011,pire2015,mur2015orb,engel
 \end_inset
 
 , lo cual demuestra la relevancia actual del problema abordado en esta tesina.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-estas citas son bastante viejas, poner citas mas actuales.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
