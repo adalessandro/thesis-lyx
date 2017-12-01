@@ -243,7 +243,7 @@ ground truth
 placement tbh
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -492,26 +492,22 @@ reference "fig:tsukuba_1"
 
  se muestran algunas imágenes de ejemplo seleccionadas del dataset, con
  sus respectivos mapas de disparidad.
-\begin_inset Separator latexpar
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/tsukuba_1.png
 	lyxscale 20
-	width 12cm
+	width 8cm
 
 \end_inset
 
@@ -599,16 +595,16 @@ ground truth
 \end_layout
 
 \begin_layout Standard
-Por otro lado, utilizamos los mapas de profundidad extraídos mediante LIBELAS
- 
+Por otro lado, utilizamos los mapas de profundidad generados a partir de
+ la librería de disparidad LIBELAS 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "geiger2010efficient"
 
 \end_inset
 
- desde pares de imágenes estéreo para mostrar los beneficios de nuestro
- algoritmo de fusión.
+, sobre distintos pares de imágenes estéreo, para mostrar los beneficios
+ de nuestro algoritmo de fusión.
 \end_layout
 
 \begin_layout Section
@@ -631,7 +627,7 @@ reference "fig:tsukuba_reconstructions-1"
 \end_inset
 
  muestran distintas reconstrucciones tridimensionales producidas por S-PTAM
- Denso en ambos datasets, en donde puede notarse la alta precisión del método.
+ Denso en ambos datasets, donde puede notarse la alta precisión del método.
  
 \end_layout
 
@@ -666,10 +662,10 @@ https://youtu.be/ayp6yk1UnWM
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -696,7 +692,7 @@ status open
 \begin_inset space \enskip{}
 \end_inset
 
- 
+
 \begin_inset Graphics
 	filename images/experimentacion/kitti_3d_3.png
 	lyxscale 10
@@ -737,10 +733,10 @@ name "fig:kitti_reconstructions"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -769,7 +765,7 @@ status open
 \begin_inset space \enskip{}
 \end_inset
 
- 
+
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_3d_3.png
 	lyxscale 10
@@ -787,7 +783,7 @@ status open
 
 \begin_layout Plain Layout
 Distintas reconstrucciones 3D generadas mediante nuestro algoritmo en el
- dataset Tsukuba.
+ dataset sintético Tsukuba.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -881,26 +877,70 @@ reference "fig:kitti06_frame612_error"
 \end_layout
 
 \begin_layout Standard
+En la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame612_libelas_depth"
+
+\end_inset
+
+ puede observarse el área del cielo remarcada, a la que LIBELAS asigna valores
+ de disparidad incorrectos —el cielo se considera que tiene un valor de
+ disparidad nulo, equivalente a una profundidad infinita—.
+ El método propuesto mejora la reconstrucción descartando estos puntos como
+ puede observarse en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame612_dense"
+
+\end_inset
+
+.
+ Otra mejora puede observarse en las Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame612_libelas_error"
+
+\end_inset
+
+ donde la región remarcada presenta error alto en LIBELAS, a diferencia
+ del método propuesto.
+ Como contraparte, el mapa de profundidad de S-PTAM Denso presenta un mayor
+ número de 
+\emph on
+huecos
+\emph default
+ —píxeles sin valor de profundidad— como se observa en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti06_frame612_error"
+
+\end_inset
+
+ debido a que estos puntos no pudieron ser validados.
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Float figure
 placement tbh
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Float figure
 wide false
 sideways false
 status collapsed
 
 \begin_layout Plain Layout
 \align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame612_rgb.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -928,22 +968,18 @@ name "fig:kitti06_frame612_rgb"
 
 \end_inset
 
-
-\begin_inset space \enskip{}
-\end_inset
-
-
+ 
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame612_gt_high50.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -979,14 +1015,14 @@ name "fig:kitti06_frame612_gt"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame612_libelas_depth_high50.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -1014,22 +1050,18 @@ name "fig:kitti06_frame612_libelas_depth"
 
 \end_inset
 
-
-\begin_inset space \enskip{}
-\end_inset
-
-
+ 
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame612_libelas_error_high50.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -1065,14 +1097,14 @@ name "fig:kitti06_frame612_libelas_error"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame612_dense_high50.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -1100,22 +1132,18 @@ name "fig:kitti06_frame612_dense"
 
 \end_inset
 
-
-\begin_inset space \enskip{}
-\end_inset
-
-
+ 
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame612_error_high50.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -1151,7 +1179,7 @@ name "fig:kitti06_frame612_error"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1225,21 +1253,21 @@ name "fig:kitti06_frame612"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame777_rgb.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -1267,22 +1295,18 @@ name "fig:kitti06_frame777_rgb"
 
 \end_inset
 
-
-\begin_inset space \enskip{}
-\end_inset
-
-
+ 
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame777_gt_high50.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -1318,14 +1342,14 @@ name "fig:kitti06_frame777_gt"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame777_libelas_depth_high50.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -1353,22 +1377,18 @@ name "fig:kitti06_frame777_libelas_depth"
 
 \end_inset
 
-
-\begin_inset space \enskip{}
-\end_inset
-
-
+ 
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame777_libelas_error_high50.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -1404,14 +1424,14 @@ name "fig:kitti06_frame777_libelas_error"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame777_dense_high50.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -1439,22 +1459,18 @@ name "fig:kitti06_frame777_dense"
 
 \end_inset
 
-
-\begin_inset space \enskip{}
-\end_inset
-
-
+ 
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_frame777_error_high50.png
 	lyxscale 10
-	width 30page%
+	width 33page%
 
 \end_inset
 
@@ -1490,7 +1506,7 @@ name "fig:kitti06_frame777_error"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1537,7 +1553,7 @@ Comparación entre mapas de profundidad obtenidos mediante LIBELAS y S-PTAM
 \emph on
 ground truth
 \emph default
-, para una imagen de la secuencia 06 del Dataset KITTI.
+, para un par de imágenes estéreo de la secuencia 06 del Dataset KITTI.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -1581,28 +1597,57 @@ reference "fig:tsukuba_frame1314"
  precisa, y la mejora obtenida por el algoritmo de fusión desde diferentes
  puntos de vista no resulta tan evidente.
  
-\begin_inset Note Comment
-status collapsed
-
-\begin_layout Plain Layout
-Podes comentar las zonas de las imagenes donde si se aprecia mejora y las
- zonas de las imagenes donde no se aprecia mejora y fusion de multiples
- mapas arruina la reconstrucción.
- Lo mismo para los samples de KITTI.
 \end_layout
+
+\begin_layout Standard
+Puede observarse que en términos generales el mapa de profundidad de S-PTAM
+ Denso 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tsukuba_frame807_dense"
 
 \end_inset
 
+ presenta un mayor número de 
+\emph on
+huecos
+\emph default
+ y es menos denso que el mapa de LIBELAS 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tsukuba_frame807_libelas_depth"
 
+\end_inset
+
+.
+ Por otro lado, el mapa de profundidad de LIBELAS presenta áreas con mucho
+ error —como la región remarcada en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tsukuba_frame807_libelas_error"
+
+\end_inset
+
+— que son refinadas por el método propuesto, mejorando considerablemente
+ la reconstrucción.
+ Sin embargo, el área remarcada en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tsukuba_frame807_error"
+
+\end_inset
+
+ muestra que S-PTAM Denso descartó algunos puntos que presentaban un error
+ relativamente bajo en el mapa generado por LIBELAS.
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1616,7 +1661,7 @@ status open
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame807_rgb.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1659,7 +1704,7 @@ status open
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame807_gt_high6.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1702,7 +1747,7 @@ status open
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame807_libelas_depth_high6.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1738,14 +1783,14 @@ name "fig:tsukuba_frame807_libelas_depth"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame807_libelas_error_high6.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1781,14 +1826,14 @@ name "fig:tsukuba_frame807_libelas_error"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame807_dense_high6.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1824,14 +1869,14 @@ name "fig:tsukuba_frame807_dense"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame807_error_high6.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1867,14 +1912,14 @@ name "fig:tsukuba_frame807_error"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/high6_bar.pdf
 	lyxscale 10
-	width 35page%
+	width 40page%
 
 \end_inset
 
@@ -1938,7 +1983,7 @@ name "fig:tsukuba_frame807"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
 status collapsed
@@ -1948,14 +1993,14 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame1314_rgb.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -1991,14 +2036,14 @@ name "fig:tsukuba_frame1314_rgb"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame1314_gt_high6.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -2034,14 +2079,14 @@ name "fig:tsukuba_frame1314_gt"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame1314_libelas_depth_high6.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -2077,14 +2122,14 @@ name "fig:tsukuba_frame1314_libelas_depth"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame1314_libelas_error_high6.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -2120,14 +2165,14 @@ name "fig:tsukuba_frame1314_libelas_error"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame1314_dense_high6.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -2163,14 +2208,14 @@ name "fig:tsukuba_frame1314_dense"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_frame1314_error_high6.png
 	lyxscale 10
-	width 25page%
+	width 30page%
 
 \end_inset
 
@@ -2206,14 +2251,14 @@ name "fig:tsukuba_frame1314_error"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/high6_bar.pdf
 	lyxscale 10
-	width 35page%
+	width 40page%
 
 \end_inset
 
@@ -2322,7 +2367,7 @@ reference "fig:median_comparison_kitti"
 \emph on
 parallax
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -2347,17 +2392,17 @@ es grande, la profundidad estimada es lo suficientemente precisa, por lo
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_libelas_boxplot.png
 	lyxscale 10
-	width 70col%
+	width 80col%
 
 \end_inset
 
@@ -2394,17 +2439,17 @@ name "fig:kitti06_libelas_boxplot"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti06_dense_boxplot.png
 	lyxscale 10
-	width 70col%
+	width 80col%
 
 \end_inset
 
@@ -2441,17 +2486,17 @@ name "fig:kitti06_dense_boxplot"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/medians_comparison_kitti.png
 	lyxscale 10
-	width 70col%
+	width 80col%
 
 \end_inset
 
@@ -2533,19 +2578,38 @@ Como conclusión, las triangulaciones desde múltiple pares de imágenes estére
 \end_layout
 
 \begin_layout Standard
+Por completitud, en las Figuras 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti_medians_all"
+
+\end_inset
+
+ y 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:kitti_medians_all-1"
+
+\end_inset
+
+ se expone un análisis comparativo de las medianas de error correspondientes
+ a las restantes secuencias del dataset KITTI.
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_libelas_boxplot.png
 	lyxscale 10
-	width 70col%
+	width 80col%
 
 \end_inset
 
@@ -2582,17 +2646,17 @@ name "fig:tsukuba_libelas_boxplot"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/tsukuba_dense_boxplot.png
 	lyxscale 10
-	width 70col%
+	width 80col%
 
 \end_inset
 
@@ -2629,17 +2693,17 @@ name "fig:tsukuba_dense_boxplot"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/medians_comparison_tsukuba.png
 	lyxscale 10
-	width 70col%
+	width 80col%
 
 \end_inset
 
@@ -2675,28 +2739,9 @@ name "fig:median_comparison_tsukuba"
 \end_layout
 
 \begin_layout Standard
-Por completitud, en las Figuras 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:kitti_medians_all"
-
-\end_inset
-
- y 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:kitti_medians_all-1"
-
-\end_inset
-
- se expone un análisis comparativo de las medianas de error correspondientes
- a las restantes secuencias del dataset KITTI.
-\end_layout
-
-\begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
 status collapsed
@@ -2713,7 +2758,7 @@ status open
 \begin_inset Graphics
 	filename images/experimentacion/kitti_medians/00.png
 	lyxscale 10
-	width 30page%
+	width 35page%
 
 \end_inset
 
@@ -2742,10 +2787,6 @@ name "fig:kitti_00_median"
 \end_inset
 
 
-\begin_inset space \enskip{}
-\end_inset
-
-
 \begin_inset Float figure
 wide false
 sideways false
@@ -2756,7 +2797,7 @@ status open
 \begin_inset Graphics
 	filename images/experimentacion/kitti_medians/01.png
 	lyxscale 10
-	width 30page%
+	width 35page%
 
 \end_inset
 
@@ -2799,7 +2840,7 @@ status open
 \begin_inset Graphics
 	filename images/experimentacion/kitti_medians/02.png
 	lyxscale 10
-	width 30page%
+	width 35page%
 
 \end_inset
 
@@ -2828,10 +2869,6 @@ name "fig:kitti_02_median"
 \end_inset
 
 
-\begin_inset space \enskip{}
-\end_inset
-
-
 \begin_inset Float figure
 wide false
 sideways false
@@ -2842,7 +2879,7 @@ status open
 \begin_inset Graphics
 	filename images/experimentacion/kitti_medians/03.png
 	lyxscale 10
-	width 30page%
+	width 35page%
 
 \end_inset
 
@@ -2885,7 +2922,7 @@ status open
 \begin_inset Graphics
 	filename images/experimentacion/kitti_medians/04.png
 	lyxscale 10
-	width 30page%
+	width 35page%
 
 \end_inset
 
@@ -2914,10 +2951,6 @@ name "fig:kitti_04_median"
 \end_inset
 
 
-\begin_inset space \enskip{}
-\end_inset
-
-
 \begin_inset Float figure
 wide false
 sideways false
@@ -2928,7 +2961,7 @@ status open
 \begin_inset Graphics
 	filename images/experimentacion/kitti_medians/05.png
 	lyxscale 10
-	width 30page%
+	width 35page%
 
 \end_inset
 
@@ -2988,7 +3021,7 @@ name "fig:kitti_medians_all"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
 status collapsed
@@ -2998,14 +3031,14 @@ status collapsed
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti_medians/07.png
 	lyxscale 10
-	width 30page%
+	width 35page%
 
 \end_inset
 
@@ -3034,21 +3067,17 @@ name "fig:kitti_07_median-1"
 \end_inset
 
 
-\begin_inset space \enskip{}
-\end_inset
-
-
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti_medians/08.png
 	lyxscale 10
-	width 30page%
+	width 35page%
 
 \end_inset
 
@@ -3084,14 +3113,14 @@ name "fig:kitti_08_median-1"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti_medians/09.png
 	lyxscale 10
-	width 30page%
+	width 35page%
 
 \end_inset
 
@@ -3120,21 +3149,17 @@ name "fig:kitti_09_median-1"
 \end_inset
 
 
-\begin_inset space \enskip{}
-\end_inset
-
-
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/kitti_medians/10.png
 	lyxscale 10
-	width 30page%
+	width 35page%
 
 \end_inset
 
@@ -3226,7 +3251,10 @@ reference "fig:points_tsukuba"
 naive
 \emph default
  donde simplemente se concatenan las distintas nubes de puntos estéreo generadas.
- Nótese en las figuras que el número de puntos es mayor en las secuencias
+\end_layout
+
+\begin_layout Standard
+Nótese en las figuras que el número de puntos es mayor en las secuencias
  del dataset KITTI, ya que la cámara recorre una distancia mucho mayor que
  en la secuencia Tsukuba.
  Por otro lado, el total de fusiones resulta mayor en la secuencia Tsukuba
@@ -3237,17 +3265,17 @@ naive
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/points_kitti06.png
 	lyxscale 10
-	width 70col%
+	width 80col%
 
 \end_inset
 
@@ -3286,17 +3314,17 @@ name "fig:points_kitti"
 \begin_layout Standard
 \align center
 \begin_inset Float figure
-placement tbh
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/experimentacion/points_tsukuba.png
-	lyxscale 10
-	width 70col%
+	lyxscale 20
+	width 80col%
 
 \end_inset
 
@@ -3362,7 +3390,7 @@ keyframe
 placement tbh
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
