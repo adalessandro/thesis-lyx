@@ -95,11 +95,17 @@ Conclusiones
 \end_layout
 
 \begin_layout Standard
-En el presente trabajo se propuso un método de SLAM basado en visión estéreo
- capaz de obtener un reconstrucción densa del entorno en tiempo real.
- En particular, implementamos el método como un nodo ROS, para ser ejecutado
- conjuntamente y de manera desacoplada con el sistema de SLAM estéreo S-PTAM
- 
+En este trabajo de tesina se presentó un método capaz de realizar una reconstruc
+ción densa del entorno, integrado a un sistema de SLAM disperso de visión
+ estéreo basado en 
+\emph on
+keyframes
+\emph default
+.
+ El método es denominado S-PTAM Denso debido a que la implementación se
+ realizó para ser ejecutada conjuntamente y de manera desacoplada con el
+ sistema de SLAM estéreo S-PTAM (por las siglás en inglés de Stereo Parallel
+ Tracking and Mapping) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pire2015"
@@ -107,7 +113,92 @@ key "pire2015"
 \end_inset
 
 .
- Evaluamos nuestro método en un entorno real (dataset KITTI) 
+\end_layout
+
+\begin_layout Standard
+El sistema se dividió en tres hilos de ejecución concurrentes: generación
+ y reproyección de mapas de disparidad, transformación y fusión de nubes
+ de puntos, y refinamiento del mapa global.
+ Este diseño fuertemente paralelizable permitió aprovechar la capacidad
+ de cómputo de procesadores multinúcleo, mejorando considerablemente el
+ desempeño del método.
+ Los 
+\emph on
+keyframes
+\emph default
+ generados por el sistema S-PTAM son procesados secuencialmente por el hilo
+ de 
+\emph on
+Cómputo de Disparidad
+\emph default
+ generando un mapa de disparidad que, a su vez, es tratado posteriormente
+ en el hilo de 
+\emph on
+Expansión y fusión de mapa
+\emph default
+.
+ El hilo de 
+\emph on
+Expansión y fusión de mapa
+\emph default
+ combina el mapa de disparidad y la pose del 
+\emph on
+keyframe
+\emph default
+ asociado para extender y ajustar el mapa buscando correspondencias con
+ los puntos 3D existentes en el mapa denso.
+ Un tercer hilo de 
+\emph on
+Refinamiento de mapa 
+\emph default
+(
+\emph on
+Mapping
+\emph default
+) ajusta constantemente la pose de los 
+\emph on
+keyframes
+\emph default
+ y las nubes de puntos asociadas cada vez que S-PTAM refina una pose, comportami
+ento esperable en sistemas de SLAM ya que el mapa disperso y la trayectoria
+ de la cámara son refinados a lo largo de toda la secuencia.
+\end_layout
+
+\begin_layout Standard
+Para el cómputo de mapas de disparidad se decidió utilizar una librerı́a
+ externa.
+ Se optó por la librería de código abierto LIBELAS 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2010efficient"
+
+\end_inset
+
+, que demostró satisfacer los requeriminetos del método de densificación
+ generando mapas de disparidad densos abarcando casi la totalidad de la
+ imagen.
+ Contar con suficiente información de disparidad de la escena observada
+ permitió que la heurística empleada por S-PTAM Denso mejore considerablemente
+ la reconstrucción del entorno —mediante la fusión de puntos y descarte
+ de 
+\emph on
+outliers
+\emph default
+— en comparación con un enfoque 
+\emph on
+naive,
+\emph default
+ donde simplemente se concatenan las distintas nubes de puntos.
+\end_layout
+
+\begin_layout Standard
+El método desarrollado se programó como un nodo del framework ROS (
+\emph on
+Robot Operating System
+\emph default
+) para ser ejecutado en paralelo y conjuntamente con el nodo correspondiente
+ al sistema S-PTAM.
+ Evaluamos el sistema en un entorno real (dataset KITTI) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "geiger2013vision"
@@ -122,28 +213,17 @@ key "peris2012towards"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-Los resultados experimentales muestran que la precisión del mapa denso y
- el rendimiento en la reconstrucción (alcanzando una frecuencia de cómputo
- de cinco veces por segundo), hacen que el método sea apto para la navegación
- de robots autónomos, tanto en entornos de interior y exterior como en secuencia
-s de extensa longitud.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-tenes que explayarte mucho más en esta sección.
- Te diría que las conclusiones deberian ocupar una página.
-\end_layout
-
-\end_inset
-
-
+ Los experimentos realizados sobre datasets de dominio público muestran
+ que el sistema es apto para generar en tiempo real una reconstrucción densa,
+ sin requerir el uso de GPUs, con precisión similar a otros métodos de densifica
+ción presentes en el estado del arte.
+ La precisión del mapa denso y el rendimiento en la reconstrucción hacen
+ que el método sea apto para la navegación de robots autónomos, tanto en
+ entornos de interior y exterior como en secuencias de extensa longitud.
+ Sin embargo, los experimentos muestran que la precisión de la reconstrucción
+ en entornos de exterior —Dataset KITTI— superaron ampliamente a los de
+ interior —Dataset Tsukuba— debido principalmente a que el cociente de relación
+ profundidad-baseline es alto en el primer caso, a diferencia del segundo.
 \end_layout
 
 \begin_layout Section
@@ -151,38 +231,142 @@ Trabajo futuro
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
+Como trabajo futuro derivado de la presente tesina identificamos varias
+ mejoras que resultan interesantes de ser investigadas.
+\end_layout
+
+\begin_layout Standard
+Actualmente, la heurística de fusión planteada utiliza solamente información
+ geométrica para la búsqueda de correspondencias entre puntos del mapa.
+ Es posible mejorar la heurística incluyendo información de apariencia que
+ ayudaría a determinar si dos puntos pertenecen al mismo objeto, lo que
+ aumentaría la precisión del método.
+ Por otro lado, teniendo en cuenta el factor de error existente tanto en
+ las poses como en el mapa denso, el criterio para determinar correspondencias
+ puede ampliarse a considerar no solo el píxel del punto 3D proyectado sino
+ un entorno alrededor del mismo.
+\end_layout
+
+\begin_layout Standard
+Otra línea de trabajo planteada a futuro consiste en simplificar las nubes
+ de puntos mediante la detección de regiones planares, reduciendo el uso
+ de CPU y memoria.
+ De la misma manera, el uso de información semántica y técnicas de 
+\emph on
+machine-learning
+\emph default
+ puede permitir detectar características visuales de alto nivel que pueden
+ emplearse para mejorar la precisión del mapa y reducir su complejidad.
+\end_layout
+
+\begin_layout Standard
+Como se describió anteriormente, la implementación actual del sistema se
+ realizó utilizando LIBELAS 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geiger2010efficient"
+
+\end_inset
+
+ para el cálculo de mapas de disparidad y el sistema de SLAM estéreo S-PTAM
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pire2015"
+
+\end_inset
+
+ para posicionamiento.
+ La versatilidad del método permite fácilmente utilizar otros componentes
+ para la realización de estas tareas, por lo que un análisis comparativo
+ de diversos proyectos resultaría en un aporte que podría repercutir considerabl
+emente en la precisión y el desempeño de S-PTAM Denso.
+\end_layout
+
+\begin_layout Standard
+Los experimentos realizados en este trabajo puede extenderse a numerosos
+ datasets que se encuentran disponibles públicamente dentro de la comunidad
+ robótica.
+ Un análisis de la reconstrucción obtenida en diversos escenarios permitiría
+ conocer con mayor certeza la precisión y las limitaciones del método propuesto.
+ Así mismo, se planea correr el método sobre un robot móvil en tiempo real,
+ para lo cual puede resultar necesario modificar y optimizar la implementación
+ de modo que se adapte a las limitaciones de hardware de la plataforma.
+ En este sentido, el soporte y uso de GPU puede resultar de suma importancia
+ y debe ser considerado como una línea de trabajo a futuro.
+\end_layout
+
+\begin_layout Standard
+Por último, para demostrar la utilidad del sistema propuesto, la salida
+ generada por el método podría ser utilizada por sistemas de navegación
+ y detección de obstáculos que requieran de un mapa denso para su funcionamiento.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Trabajo futuro tambien tenes que explayar un poco más.
+* Utilizar información de apariencia para la fusión.
+\end_layout
+
+\begin_layout Plain Layout
+* Probar con otra heurística de fusión.
+ Relajar el matching a una ventana alrededor del píxel.
+\end_layout
+
+\begin_layout Plain Layout
+* Simplificar nubes de puntos agregando planos.
+\end_layout
+
+\begin_layout Plain Layout
+* Detectar objetos.
+ Semántico.
+\end_layout
+
+\begin_layout Plain Layout
+* Probar con otras librerías de disparidad.
+ Análisis comparativo.
+ Ver precisión y tiempo de cómputo.
+\end_layout
+
+\begin_layout Plain Layout
+* Probar con otros sistemas SLAM dispersos basados en keyframes.
+ Análisis comparativo.
+\end_layout
+
+\begin_layout Plain Layout
+* Correr el método sobre un robot real y ver cómo funciona.
+ Puede ser nativo o remoto (?)
+\end_layout
+
+\begin_layout Plain Layout
+* Utilizar GPU.
+\end_layout
+
+\begin_layout Plain Layout
+* ——————-\SpecialChar softhyphen
+
+\end_layout
+
+\begin_layout Plain Layout
+* Agregar loop closure.
+ Hacer globalmente consistente (?)
+\end_layout
+
+\begin_layout Plain Layout
+Con el mismo objetivo, se plantea el uso de técnicas de Loop Closure para
+ reducir el error de desvío acumulado a lo largo de la secuencia.
+\end_layout
+
+\begin_layout Plain Layout
+* Utilizar el mapa denso para algo.
+ Navegación? Detección de obstáculos en tiempo real?
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Como trabajo a futuro, se planea implementar y correr el método sobre un
- robot móvil en tiempo real, mejorando sus capacidades de navegación.
- Por otro lado, planeamos simplificar las nubes de puntos mediante la detección
- de regiones planares, reduciendo el uso de CPU y memoria.
-\end_layout
-
-\begin_layout Standard
-La precisión del método puede incrementarse incluyendo información de apariencia
- en la heurística de fusión.
- Con el mismo objetivo, se plantea el uso de técnicas de Loop Closure para
- reducir el error de desvío acumulado a lo largo de la secuencia.
-\end_layout
-
-\begin_layout Standard
-El sistema implementado puede ser fácilmente configurado y extendido para
- correr sobre un mayor número de datasets, en diferentes escenarios.
- Asímismo, puede resultar de interés la ejecución del nodo ROS acoplado
- a otros sistema de SLAM disperso con el objetivo de analizar su desempeño
- y precisión.
 \end_layout
 
 \end_body
