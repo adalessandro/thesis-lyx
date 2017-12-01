@@ -633,7 +633,7 @@ reference "fig:tsukuba_reconstructions-1"
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Los resultados pueden ser mejor apreciados en los videos que se encuentran
@@ -926,7 +926,7 @@ reference "fig:kitti06_frame612_error"
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1020,7 +1020,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/experimentacion/kitti06_frame612_libelas_depth_high50.png
+	filename images/experimentacion/kitti06_frame612_libelas_depth_high50-m.png
 	lyxscale 10
 	width 33page%
 
@@ -1059,7 +1059,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/experimentacion/kitti06_frame612_libelas_error_high50.png
+	filename images/experimentacion/kitti06_frame612_libelas_error_high50-m.png
 	lyxscale 10
 	width 33page%
 
@@ -1102,7 +1102,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/experimentacion/kitti06_frame612_dense_high50.png
+	filename images/experimentacion/kitti06_frame612_dense_high50-m.png
 	lyxscale 10
 	width 33page%
 
@@ -1141,7 +1141,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/experimentacion/kitti06_frame612_error_high50.png
+	filename images/experimentacion/kitti06_frame612_error_high50-m.png
 	lyxscale 10
 	width 33page%
 
@@ -1600,8 +1600,8 @@ reference "fig:tsukuba_frame1314"
 \end_layout
 
 \begin_layout Standard
-Puede observarse que en términos generales el mapa de profundidad de S-PTAM
- Denso 
+Nótese que en términos generales el mapa de profundidad de S-PTAM Denso
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:tsukuba_frame807_dense"
@@ -1638,7 +1638,8 @@ reference "fig:tsukuba_frame807_error"
 \end_inset
 
  muestra que S-PTAM Denso descartó algunos puntos que presentaban un error
- relativamente bajo en el mapa generado por LIBELAS.
+ relativamente bajo en el mapa generado por LIBELAS, lo cual tiene un impacto
+ negativo en la reconstrucción.
 \end_layout
 
 \begin_layout Standard
