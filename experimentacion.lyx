@@ -926,7 +926,7 @@ reference "fig:kitti06_frame612_error"
 placement tbh
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1648,7 +1648,7 @@ reference "fig:tsukuba_frame807_error"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1789,7 +1789,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/experimentacion/tsukuba_frame807_libelas_error_high6.png
+	filename images/experimentacion/tsukuba_frame807_libelas_error_high6-m.png
 	lyxscale 10
 	width 30page%
 
@@ -1875,7 +1875,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/experimentacion/tsukuba_frame807_error_high6.png
+	filename images/experimentacion/tsukuba_frame807_error_high6-m.png
 	lyxscale 10
 	width 30page%
 
