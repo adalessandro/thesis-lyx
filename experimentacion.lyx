@@ -587,7 +587,8 @@ ground truth
 ground truth
 \emph default
  para cada par de imágenes proyectando las nubes de puntos del láser Velodyne
- en cada plano de imagen, utilizando las correspondientes poses del 
+ en cada plano de imagen, utilizando las correspondientes posiciones del
+ 
 \emph on
 ground truth
 \emph default
@@ -651,7 +652,8 @@ https://youtu.be/ayp6yk1UnWM
 \end_inset
 
  muestra una vista detallada de las nubes de puntos densas locales obtenidas
- por el método propuesto y registradas utilizando la pose estimada por S-PTAM.
+ por el método propuesto y registradas utilizando la posición estimada por
+ S-PTAM.
 \end_layout
 
 \end_inset

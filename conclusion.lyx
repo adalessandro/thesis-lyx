@@ -141,7 +141,7 @@ Expansión y fusión de mapa
 \emph on
 Expansión y fusión de mapa
 \emph default
- combina el mapa de disparidad y la pose del 
+ combina el mapa de disparidad y la posición del 
 \emph on
 keyframe
 \emph default
@@ -155,13 +155,13 @@ Refinamiento de mapa
 \emph on
 Mapping
 \emph default
-) ajusta constantemente la pose de los 
+) ajusta constantemente la posición de los 
 \emph on
 keyframes
 \emph default
- y las nubes de puntos asociadas cada vez que S-PTAM refina una pose, comportami
-ento esperable en sistemas de SLAM ya que el mapa disperso y la trayectoria
- de la cámara son refinados a lo largo de toda la secuencia.
+ y las nubes de puntos asociadas cada vez que S-PTAM refina una posición,
+ comportamiento esperable en sistemas de SLAM ya que el mapa disperso y
+ la trayectoria de la cámara son refinados a lo largo de toda la secuencia.
 \end_layout
 
 \begin_layout Standard
@@ -242,9 +242,9 @@ Actualmente, la heurística de fusión planteada utiliza solamente información
  ayudaría a determinar si dos puntos pertenecen al mismo objeto, lo que
  aumentaría la precisión del método.
  Por otro lado, teniendo en cuenta el factor de error existente tanto en
- las poses como en el mapa denso, el criterio para determinar correspondencias
- puede ampliarse a considerar no solo el píxel del punto 3D proyectado sino
- un entorno alrededor del mismo.
+ las posiciones como en el mapa denso, el criterio para determinar correspondenc
+ias puede ampliarse a considerar no solo el píxel del punto 3D proyectado
+ sino un entorno alrededor del mismo.
 \end_layout
 
 \begin_layout Standard

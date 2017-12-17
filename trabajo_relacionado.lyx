@@ -251,8 +251,8 @@ reference "fig:slam-problem"
 \emph on
 landmarks
 \emph default
-), los sistemas de SLAM pueden estimar tanto la pose del robot como la ubicación
- de estas marcas en el entorno.
+), los sistemas de SLAM pueden estimar tanto la posición del robot como
+ la ubicación de estas marcas en el entorno.
  El mapa es construído incrementalmente con las posiciones estimadas de
  dichas marcas, las cuales son ajustadas a lo largo de la trayectoria a
  medida que son observadas.

@@ -207,7 +207,7 @@ key "newcombe2011dtam,yingze2013dense"
 \begin_layout Standard
 El presente trabajo se centra en dotar a un robot móvil con la capacidad
  de realizar una reconstrucción densa del entorno, al mismo tiempo que se
- estima su pose, utilizando como único sensor una cámara estéreo.
+ estima su posición, utilizando como único sensor una cámara estéreo.
  Para esto se trabajó sobre el sistema de SLAM estéreo S-PTAM 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -216,7 +216,7 @@ key "pire2015"
 \end_inset
 
  que mantiene un mapa disperso del entorno para obtener una estimación precisa
- de la pose de la cámara en tiempo real.
+ de la posición de la cámara en tiempo real.
  Dada la localización del robot estimada por S-PTAM, una reconstrucción
  3D completa es computada paralelamente por el módulo de densificación.
  Si bien nuestro trabajo se implementó sobre este sistema, puede ser empleado
@@ -262,7 +262,7 @@ Finalmente, el método desarrollado se programó como un nodo del framework
 Robot Operating System
 \emph default
 ) para ser ejecutado en paralelo y conjuntamente con el sistema S-PTAM,
- del que se obtienen las poses globales.
+ del que se obtienen las posiciones globales.
  Haremos referencia al sistema propuesto en esta tesina como S-PTAM Denso.
  Los experimentos realizados sobre datasets de dominio público muestran
  que el sistema es apto para generar en tiempo real una reconstrucción densa,

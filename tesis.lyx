@@ -219,7 +219,7 @@ Reconstrucción densa en tiempo real sobre sistemas SLAM basados en visión
 \begin_layout Standard
 Para poder navegar de manera segura en un entorno desconocido, un robot
  autónomo móvil debe poder construir una representación del ambiente (mapeo)
- en el cual se mueve, al mismo tiempo que estima su pose (localización).
+ en el cual se mueve, al mismo tiempo que estima su posición (localización).
  Este problema es conocido en la robótica móvil como SLAM por el acrónimo
  en inglés de 
 \emph on

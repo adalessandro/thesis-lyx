@@ -193,11 +193,12 @@ El sistema comienza con la cámara en el centro del sistema de referencia
 \emph on
 tracking
 \emph default
- estima la pose actual para cada nuevo par de imágenes estéreo, minimizando
+ estima la posición actual para cada nuevo par de imágenes estéreo, minimizando
  el error de re-proyección entre los puntos del mapa proyectados y sus correspon
 dencias en la imagen.
- Una vez que la pose actual de la cámara es estimada, el par estéreo puede
- ser seleccionado y agregado al mapa, en cuyo caso es denominado como 
+ Una vez que la posición actual de la cámara es estimada, el par estéreo
+ puede ser seleccionado y agregado al mapa, en cuyo caso es denominado como
+ 
 \emph on
 keyframe
 \emph default
@@ -208,8 +209,8 @@ keyframe
 \emph default
  al mapa, aquellos features que no fueron asociados con puntos en el mapa
  son triangulados desde el par de imágenes estéreo.
- Tanto la pose como los nuevos puntos son insertados al grafo de puntos
- y poses, mantenido por S-PTAM.
+ Tanto la posición como los nuevos puntos son insertados al grafo de puntos
+ y posiciones, mantenido por S-PTAM.
 \end_layout
 
 \begin_layout Standard
@@ -235,7 +236,8 @@ mapping
 \emph on
 Local Bundle Adjustment 
 \emph default
-(LBA) sobre el subgrafo de puntos y poses definido por los últimos 
+(LBA) sobre el subgrafo de puntos y posiciones definido por los últimos
+ 
 \emph on
 keyframes
 \emph default
@@ -352,7 +354,7 @@ Expansión y fusión de mapa
 \emph on
 Expansión y fusión de mapa
 \emph default
- usa la pose del 
+ usa la posición del 
 \emph on
 keyframe
 \emph default
@@ -374,11 +376,11 @@ Refinamiento de mapa
 \emph on
 Mapping
 \emph default
-) ajusta constantemente la pose de los 
+) ajusta constantemente la posición de los 
 \emph on
 keyframes
 \emph default
- y las nubes de puntos asociadas cada vez que S-PTAM refina una pose.
+ y las nubes de puntos asociadas cada vez que S-PTAM refina una posición.
 \end_layout
 
 \begin_layout Standard
@@ -703,7 +705,7 @@ keyframe
 \emph on
 Expansión y fusión de mapa
 \emph default
- utiliza este mapa y la pose correspondiente a 
+ utiliza este mapa y la posición correspondiente a 
 \begin_inset Formula $\keyframe_{j}$
 \end_inset
 
@@ -1209,7 +1211,7 @@ name "sec:hilo-refinamiento-de-mapa"
 
 \begin_layout Standard
 El sistema propuesto es capaz de actualizar el mapa denso 3D al recibir
- actualizaciones de poses, cuando los 
+ actualizaciones de posiciones, cuando los 
 \emph on
 keyframes
 \emph default
@@ -1244,7 +1246,7 @@ keyframe
 \begin_inset Formula $\keyframe_{i}$
 \end_inset
 
- utilizando la pose de la cámara 
+ utilizando la posición de la cámara 
 \begin_inset Formula $\mathrm{\camera}_{i}$
 \end_inset
 
@@ -1271,7 +1273,7 @@ De la misma manera, siendo
 \begin_inset Formula $\hat{\mathrm{\camera}}_{i}$
 \end_inset
 
- la pose actualizada de la cámara en cuestión, notamos:
+ la posición actualizada de la cámara en cuestión, notamos:
 \end_layout
 
 \begin_layout Standard
