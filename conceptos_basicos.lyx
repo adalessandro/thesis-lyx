@@ -312,7 +312,7 @@ punto principal.
 
 \begin_layout Standard
 Consideremos que el centro focal se encuentra en el origen de coordenadas
- y el plano focal expresado como  
+ y el plano focal expresado como 
 \begin_inset Formula $Z=f$
 \end_inset
 
@@ -1599,7 +1599,14 @@ do) punto
 \end_inset
 
 .
- Por lo tanto, el punto 
+ Por lo tanto, como se ilustra en la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:epipolar_line"
+
+\end_inset
+
+, el punto 
 \begin_inset Formula $\imagePoint^{\prime}$
 \end_inset
 
