@@ -2290,7 +2290,7 @@ De manera compacta, es posible definir la matriz de re-proyección
 \begin_inset Formula $\begin{bmatrix}u_{l} & v_{l} & d & 1\end{bmatrix}^{\top}$
 \end_inset
 
- en puntos 3D expresados en coordenadas homogeneas:
+ en puntos 3D expresados en coordenadas homogéneas:
 \end_layout
 
 \begin_layout Standard
