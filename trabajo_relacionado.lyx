@@ -161,17 +161,7 @@ mente, usar este mapa para determinar su posición y orientación en el mismo.
 El interés sobre el problema de SLAM ha crecido en gran medida debido a
  que su solución resulta útil en la navegación autónoma de robots.
  Recientemente, el problema de SLAM ha sido extensivamente estudiado utilizando
- diferentes sensores: IMUs (Inertial Measurement Units
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-unidades de medición inercial
-\end_layout
-
-\end_inset
-
-) 
+ diferentes sensores: IMUs (Unidades de Medición Inercial) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nutzi2011fusion"
@@ -199,21 +189,7 @@ key "cole2006using"
 
 \end_inset
 
-, GPS (
-\emph on
-Global Positioning System
-\emph default
-
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-sistema de posicionamiento global
-\end_layout
-
-\end_inset
-
-) 
+, GPS (Sistema de Posicionamiento Global) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "carlson2010mapping"
@@ -687,7 +663,7 @@ disparidad
 \emph default
 
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 la disparidad se define como la distancia entre dos puntos correspondientes
@@ -906,21 +882,8 @@ key "jung2003high,paalanen2008towards"
 
 \end_inset
 
- utilizan sistemas de SLAM basados en EKF (
-\emph on
-Extended Kallman Filter
-\emph default
-
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Filtro de Kallman Extendido
-\end_layout
-
-\end_inset
-
-) para realizar la localización y mapeo, densificando luego el mapa resultante
+ utilizan sistemas de SLAM basados en EKF (Filtro de Kallman Extendido)
+ para realizar la localización y mapeo, densificando luego el mapa resultante
  mediante información de disparidad densa.
 \end_layout
 
@@ -991,22 +954,9 @@ key "newcombe2010live,teixeira2016real,pan2009proforma"
  los puntos del mapa disperso son utilizados como vértices para obtener
  una 
 \emph on
-malla
+mesh 
 \emph default
-
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-en inglés, 
-\size normal
-\emph on
-mesh
-\end_layout
-
-\end_inset
-
- continua de triángulos.
+(malla) continua de triángulos.
  En la Figura 
 \begin_inset CommandInset ref
 LatexCommand ref

@@ -111,21 +111,11 @@ Modelo y geometría de una cámara monocular
 Una cámara es definida matemáticamente como una correspondencia entre el
  mundo 3D y una imagen 2D.
  Existen diferentes modelos para representar una cámara, siendo el modelo
- de cámara 
+ de 
 \emph on
-pinhole
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-modelo de cámara estenopeica
-\end_layout
-
-\end_inset
-
- 
+cámara pinhole
 \emph default
-aquel que resulta más simple y mayormente utilizado.
+ (cámara estenopeica) aquel que resulta más simple y mayormente utilizado.
 \end_layout
 
 \begin_layout Subsection
@@ -145,19 +135,11 @@ el punto de la imagen
 
 es determinado como la intersección entre el 
 \emph on
-plano de la imagen
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
+plano de la imagen —
+\emph default
 también denominado 
 \emph on
-plano focal.
-\end_layout
-
-\end_inset
-
-
+plano focal—
 \emph default
  y el rayo que une el punto del mundo 3D 
 \begin_inset Formula $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$
