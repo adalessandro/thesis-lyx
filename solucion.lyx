@@ -114,12 +114,8 @@ key "pire2015"
 
 \end_inset
 
- (
-\emph on
-Stereo Parallel Tracking and Mapping
-\emph default
-), por lo que fue diseñado tomando en consideración la interfaz y el funcionamie
-nto del mismo.
+, por lo que fue diseñado tomando en consideración la interfaz y el funcionamien
+to del mismo.
  Sin embargo, no se restringe a ser ejecutado sobre este sistema de SLAM
  en particular.
  El módulo de densificación se implementó en un nodo ROS independiente,

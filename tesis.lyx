@@ -237,7 +237,11 @@ Un mayor nivel de detalle del entorno (mapa) resultará en una posible mejora
 \begin_layout Standard
 En este trabajo se propone un sistema de SLAM denso basado en visión estéreo
  que resulta de la inclusión de un módulo de densificación al sistema de
- SLAM S-PTAM del estado del arte.
+ SLAM S-PTAM (
+\emph on
+Stereo Parallel Tracking and Mapping
+\emph default
+) del estado del arte.
  El sistema de SLAM resultante es capaz de generar un mapa denso del entorno
  al mismo tiempo que estima la localización de la cámara.
  Los experimentos muestran que el método realiza una densificación local
