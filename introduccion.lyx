@@ -188,11 +188,16 @@ key "stuhmer2010real,graber2011online,newcombe2011dtam"
 
 \end_inset
 
- han sido capaces de reconstruir representaciones semi-densas del entorno.
+ han sido capaces de reconstruir representaciones semi-densas del entorno,
+ que emplean los píxeles de la imagen con alto gradiente, incluyendo vértices,
+ aristas y áreas de alta textura.
  Sin embargo, estas reconstrucciones pueden ocultar detalles importantes
  para la navegación, por lo que las reconstrucciones densas resultan claves
  para el planeamiento seguro de trayectorias para un robot.
- Enfoques completamente densos han aparecido recientemente en la literatura
+\end_layout
+
+\begin_layout Standard
+Métodos completamente densos han aparecido recientemente en la literatura
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -200,8 +205,11 @@ key "newcombe2011dtam,yingze2013dense"
 
 \end_inset
 
-, sin embargo, estas soluciones no resultan prácticas en tiempo real, o
- requieren hardware dedicado (por ejemplo, GPU).
+.
+ Estos enfoques, a diferencia de las soluciones semi-densas, utilizan todos
+ los píxeles de la imagen para generar reconstrucciones completas del entorno,
+ aunque no resultan prácticos en tiempo real o requieren hardware dedicado
+ (por ejemplo, GPU).
 \end_layout
 
 \begin_layout Standard
@@ -215,7 +223,8 @@ key "pire2015"
 
 \end_inset
 
- que mantiene un mapa disperso del entorno para obtener una estimación precisa
+ que mantiene un mapa disperso del entorno —compuesto únicamente por característ
+icas visuales detectadas en las imágenes— para obtener una estimación precisa
  de la posición de la cámara en tiempo real.
  Dada la localización del robot estimada por S-PTAM, una reconstrucción
  3D completa es computada paralelamente por el módulo de densificación.
