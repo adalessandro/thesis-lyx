@@ -963,20 +963,6 @@ keyframe
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-Explicar intuitivamente? Hay que explicar el enunciado y la resolución para
- p1c2, etc...
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Siendo 
 \begin_inset Formula $\inverseDepth_{i}^{\camera_{j}}$
 \end_inset
@@ -1016,7 +1002,7 @@ Siendo
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}=\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}.
+\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}=\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}.
 \]
 
 \end_inset
@@ -1025,31 +1011,7 @@ Siendo
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\frac{1}{\inverseDepth_{1}^{\camera_{1}}}=\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Resolviendo para 
-\begin_inset Formula $\inverseDepth_{1}^{\camera_{2}}$
-\end_inset
-
- y asumiendo que los 
+Aplicando la norma euclideana lado a lado y asumiendo que los 
 \emph on
 keyframes
 \emph default
@@ -1061,33 +1023,13 @@ keyframes
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\inverseDepth_{1}^{\camera_{2}}=\norm{\frac{1}{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}}\rotation_{\camera_{1}\camera_{2}}\ray_{1}^{\camera_{1}}-\translation_{\camera_{1}\camera_{2}}}\approx\inverseDepth_{1}^{\camera_{1}}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}} & =\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}\\
-\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}-\translation_{\camera_{1}\camera_{2}} & =\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}\\
-\rotation_{\camera_{2}\camera_{1}}\left(\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}-\translation_{\camera_{1}\camera_{2}}\right) & =\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}\\
-\inverseDepth_{1}^{\camera_{2}} & =\left(\rotation_{\camera_{2}\camera_{1}}\left(\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}-\translation_{\camera_{1}\camera_{2}}\right)\right)^{-1}\ray_{1}^{\camera_{2}}\\
-\inverseDepth_{1}^{\camera_{2}} & =\left(\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}-\translation_{\camera_{1}\camera_{2}}\right)^{+}\rotation_{\camera_{1}\camera_{2}}\ray_{1}^{\camera_{2}}
+\norm{\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}} & =\norm{\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}}\\
+\norm{\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}} & =\norm{\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}}\\
+\norm{\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}} & =\norm{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}}\\
+\frac{1}{\inverseDepth_{2}^{\camera_{2}}} & =\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\\
+\inverseDepth_{2}^{\camera_{2}} & =\inverseDepth_{1}^{\camera_{1}}.
 \end{align*}
 
 \end_inset
