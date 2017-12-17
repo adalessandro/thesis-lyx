@@ -311,12 +311,13 @@ punto principal.
 \end_layout
 
 \begin_layout Standard
-Considerando que el centro focal se encuentra en el origen de coordenadas
- y el plano focal 
+Consideremos que el centro focal se encuentra en el origen de coordenadas
+ y el plano focal expresado como  
 \begin_inset Formula $Z=f$
 \end_inset
 
-, utilizando la propiedad de semejanza de triángulos puede verse facilmente
+.
+ Utilizando la propiedad de semejanza de triángulos puede verse facilmente
  que el punto 3D 
 \begin_inset Formula $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$
 \end_inset
