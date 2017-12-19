@@ -2233,6 +2233,37 @@ z= & \frac{bf}{u_{l}-u_{r}}\;.
 \end_layout
 
 \begin_layout Standard
+Es interesante notar en la Ecuación 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:disparity"
+
+\end_inset
+
+ que la profundidad 
+\begin_inset Formula $z$
+\end_inset
+
+ es inversamente proporcional a la disparidad 
+\begin_inset Formula $d$
+\end_inset
+
+.
+ Cuando el valor de disparidad 
+\begin_inset Formula $d$
+\end_inset
+
+ es cercano a 
+\begin_inset Formula $0$
+\end_inset
+
+, pequeñas diferencias de disparidad producen un gran cambio en la profundidad
+ del punto.
+ En consecuencia, la reconstrucción 3D del ambiente mediante cámaras estéreo
+ es más precisa para puntos cercanos a la cámara.
+\end_layout
+
+\begin_layout Standard
 De manera compacta, es posible definir la matriz de re-proyección 
 \begin_inset Formula $\vec{Q}$
 \end_inset
@@ -2276,37 +2307,6 @@ donde
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Es interesante notar en la Ecuación 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:disparity"
-
-\end_inset
-
- que la profundidad 
-\begin_inset Formula $z$
-\end_inset
-
- es inversamente proporcional a la disparidad 
-\begin_inset Formula $d$
-\end_inset
-
-.
- Cuando el valor de disparidad 
-\begin_inset Formula $d$
-\end_inset
-
- es cercano a 
-\begin_inset Formula $0$
-\end_inset
-
-, pequeñas diferencias de disparidad producen un gran cambio en la profundidad
- del punto.
- En consecuencia, la reconstrucción 3D del ambiente mediante cámaras estéreo
- es más precisa para puntos cercanos a la cámara.
 \end_layout
 
 \end_body
