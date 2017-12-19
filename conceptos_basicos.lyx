@@ -2309,5 +2309,12 @@ donde
 
 \end_layout
 
+\begin_layout Standard
+En el presente capítulo se presentaron los fundamentos básicos de visión
+ y robótica utilizados a lo largo de toda la tesina.
+ A continuación se detallará el método de SLAM denso propuesto, utilizando
+ los conceptos matemáticos y geométricos desarrollados.
+\end_layout
+
 \end_body
 \end_document
