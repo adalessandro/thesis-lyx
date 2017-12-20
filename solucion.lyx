@@ -905,20 +905,6 @@ y
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Comment
-status open
-
-\begin_layout Plain Layout
-Explicar propagación de primer orden...
- ???
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Nótese en la Ecuación 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -927,16 +913,37 @@ reference "eq:inverse-depth-definition"
 \end_inset
 
  que la profundidad inversa tiene una relación lineal con la disparidad.
- Una propagación de primer orden resulta en una covarianza constante de
- la profundidad inversa, y por lo tanto, el promedio en la Ecuación 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:inverse-depth-fusion-definition"
+ Es posible expresar la desviación estándar de la profundidad inversa con
+ respecto a la disparidad como
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sigma_{\inverseDepth_{i}}=\frac{\partial\inverseDepth_{i}}{\partial\disparityMap_{i}}\sigma_{\disparityMap_{i}}=\frac{1}{bf}\sigma_{\disparityMap_{i}}.\label{eq:standard-deviation-eq}
+\end{equation}
 
 \end_inset
 
- expresa la incertidumbre.
- En este algoritmo de fusión, estamos asumiendo que la profundidad inversa
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Asumiendo que la variación estándar en la disparidad es constante, la Ecuación
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:standard-deviation-eq"
+
+\end_inset
+
+ expresa que la incertidumbre en la profundidad inversa también resulta
+ constante.
+\end_layout
+
+\begin_layout Standard
+En este algoritmo de fusión, estamos asumiendo que la profundidad inversa
  de un punto es similar desde dos puntos de vista diferentes.
  Esta es una suposición razonable mientras los 
 \emph on
