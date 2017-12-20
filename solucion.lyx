@@ -996,14 +996,14 @@ Siendo
 \end_inset
 
 .
- El siguiente enunciado se cumple:
+ La siguiente igualdad se cumple:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}=\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}.
-\]
+\begin{equation}
+\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}=\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}.\label{eq:translation-equality}
+\end{equation}
 
 \end_inset
 
@@ -1011,7 +1011,14 @@ Siendo
 \end_layout
 
 \begin_layout Standard
-Aplicando la norma euclideana lado a lado y asumiendo que los 
+Aplicando la norma euclideana lado a lado en la Ecuación 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:translation-equality"
+
+\end_inset
+
+ y asumiendo que los 
 \emph on
 keyframes
 \emph default
@@ -1019,7 +1026,7 @@ keyframes
 \begin_inset Formula $\translation_{\camera_{1}\camera_{2}}\approx0$
 \end_inset
 
-
+, vemos que
 \end_layout
 
 \begin_layout Standard
