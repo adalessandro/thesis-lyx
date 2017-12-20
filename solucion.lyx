@@ -1025,9 +1025,10 @@ keyframes
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\norm{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}} & =\norm{\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}}\\
-\norm{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}} & =\norm{\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}}\\
+\norm{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}} & =\norm{\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}}\qquad\:\,\;\textrm{despreciando el término {\displaystyle \translation_{\camera_{1}\camera_{2}}\approx0}}\\
+\norm{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}} & =\norm{\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}}\qquad\qquad\qquad\textrm{dado que {\displaystyle \rotation_{\camera_{1}\camera_{2}}} es ortonormal}\\
 \norm{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}} & =\norm{\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}}\\
+\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\norm{\ray_{1}^{\camera_{1}}} & =\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\norm{\ray_{1}^{\camera_{2}}}\qquad\qquad\qquad\qquad\textrm{dado que {\displaystyle \ray_{1}^{\camera_{1}}} y {\displaystyle \ray_{1}^{\camera_{1}}} son versores}\\
 \frac{1}{\inverseDepth_{2}^{\camera_{1}}} & =\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\\
 \inverseDepth_{2}^{\camera_{1}} & =\inverseDepth_{1}^{\camera_{2}}.
 \end{align*}
