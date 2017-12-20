@@ -1002,7 +1002,7 @@ Siendo
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}=\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}.
+\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}=\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}.
 \]
 
 \end_inset
@@ -1025,11 +1025,11 @@ keyframes
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\norm{\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}} & =\norm{\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}}\\
-\norm{\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}} & =\norm{\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}}\\
-\norm{\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}} & =\norm{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}}\\
-\frac{1}{\inverseDepth_{2}^{\camera_{2}}} & =\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\\
-\inverseDepth_{2}^{\camera_{2}} & =\inverseDepth_{1}^{\camera_{1}}.
+\norm{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}} & =\norm{\translation_{\camera_{1}\camera_{2}}+\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}}\\
+\norm{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}} & =\norm{\rotation_{\camera_{1}\camera_{2}}\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}}\\
+\norm{\frac{1}{\inverseDepth_{1}^{\camera_{1}}}\ray_{1}^{\camera_{1}}} & =\norm{\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\ray_{1}^{\camera_{2}}}\\
+\frac{1}{\inverseDepth_{2}^{\camera_{1}}} & =\frac{1}{\inverseDepth_{1}^{\camera_{2}}}\\
+\inverseDepth_{2}^{\camera_{1}} & =\inverseDepth_{1}^{\camera_{2}}.
 \end{align*}
 
 \end_inset
@@ -1065,7 +1065,7 @@ Finalmente, este hilo expande el mapa utilizando los restantes píxeles que
 placement tbh
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
